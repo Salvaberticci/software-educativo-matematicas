@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathQuest - ¡Aprender es una Aventura!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- tsParticles & Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style.css?v=6.0">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Fredoka', 'sans-serif'],
+                    },
+                    colors: {
+                        candyPink: '#FF85A1',
+                        candyBlue: '#7BDFF2',
+                        candyYellow: '#F9F871',
+                        candyPurple: '#B088F9',
+                        candyRed: '#FF6B6B',
+                        candyTeal: '#4ECDC4',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Container for Animated Theme Backgrounds -->
+    <div id="tsparticles" class="fixed inset-0 pointer-events-none" style="z-index: -1;"></div>
+
+    <!-- Preloader / Loading Screen -->
+    <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500"
+        style="background: linear-gradient(135deg, hsl(150,30%,97%) 0%, hsl(280,30%,96%) 100%)">
+        <div class="text-center">
+            <div class="relative w-28 h-28 mx-auto mb-6">
+                <div class="absolute inset-0 rounded-full border-8 border-t-transparent animate-spin"
+                    style="border-color: hsl(344,100%,70%) transparent hsl(175,65%,57%) hsl(265,90%,76%)"></div>
+                <div class="absolute inset-4 flex items-center justify-center text-4xl"
+                    style="animation: floating 1.5s ease-in-out infinite">🧮</div>
+            </div>
+            <h2 class="text-2xl font-bold"
+                style="background: linear-gradient(135deg, hsl(348,100%,60%), hsl(265,90%,68%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                Cargando Aventura...</h2>
+            <p class="text-sm mt-1" style="color: hsl(220,10%,60%)">Preparando tu missión ✨</p>
+        </div>
+    </div>
+
+    <!-- Main Container for Views -->
+    <main id="app" class="relative min-h-screen overflow-hidden">
+        <!-- Content will be injected here by app.js -->
+    </main>
+
+    <!-- Global Sound Toggle / UI Elements -->
+    <div class="fixed bottom-6 right-6 z-40">
+        <button id="soundToggle" class="candy-btn candy-btn-accent p-4 rounded-full shadow-lg">
+            <span class="text-2xl text-grey-800">🔊</span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="js/app.js?v=6.0"></script>
+</body>
+
+</html>

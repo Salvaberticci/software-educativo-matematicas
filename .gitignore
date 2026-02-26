@@ -1,0 +1,5 @@
+software-educativo-matematicas.rar
+*.sql.bak
+.vscode/
+.idea/
+php_error.log
