@@ -98,55 +98,66 @@ document.addEventListener('DOMContentLoaded', () => {
             if (child.theme_class === 'theme-hero') {
                 particleOptions = {
                     particles: {
-                        number: { value: 30 },
-                        shape: { type: "char", options: { char: { value: ["🦸‍♂️", "🦸‍♀️", "⚡", "💥", "🚀"], font: "Arial" } } },
-                        size: { value: { min: 20, max: 40 } },
-                        move: { enable: true, speed: 3, direction: "top", random: true, outModes: "out" },
-                        opacity: { value: 0.8 }
+                        number: { value: 40, density: { enable: true, area: 800 } },
+                        color: { value: ["#FF6B6B", "#FF85A1", "#F9F871"] },
+                        shape: { type: "circle" },
+                        opacity: { value: 0.6, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+                        size: { value: { min: 3, max: 7 }, random: true },
+                        move: { enable: true, speed: 2, direction: "top", random: true, outModes: "out" },
+                        wobble: { enable: true, distance: 5, speed: 10 }
                     }
                 };
             } else if (child.theme_class === 'theme-space') {
                 particleOptions = {
                     particles: {
-                        number: { value: 60 },
-                        color: { value: ["#ffffff", "#f9f871", "#7BDFF2"] },
-                        shape: { type: ["circle", "star", "char"], options: { char: { value: ["👨‍🚀", "🛸", "🪐", "🌍"], font: "Arial" } } },
-                        size: { value: { min: 2, max: 30 } },
-                        move: { enable: true, speed: 1.5, direction: "none", random: true, outModes: "out" },
-                        opacity: { value: { min: 0.2, max: 0.8 } }
+                        number: { value: 100, density: { enable: true, area: 800 } },
+                        color: { value: "#ffffff" },
+                        shape: { type: "circle" },
+                        opacity: { value: { min: 0.1, max: 0.8 }, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+                        size: { value: { min: 1, max: 3 }, random: true },
+                        links: { enable: true, distance: 150, color: "#ffffff", opacity: 0.2, width: 1 },
+                        move: { enable: true, speed: 0.5, direction: "none", random: true, outModes: "out" }
                     },
-                    interactivity: { events: { onHover: { enable: true, mode: "bubble" } }, modes: { bubble: { size: 40, duration: 2 } } }
+                    interactivity: {
+                        events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" } },
+                        modes: { grab: { distance: 140, links: { opacity: 0.5 } }, push: { quantity: 4 } }
+                    }
                 };
             } else if (child.theme_class === 'theme-dino') {
                 particleOptions = {
                     particles: {
-                        number: { value: 25 },
-                        shape: { type: "char", options: { char: { value: ["🦖", "🦕", "🌿", "🌴", "🦴"], font: "Arial" } } },
-                        size: { value: { min: 20, max: 45 } },
-                        move: { enable: true, speed: 2, direction: "none", random: true, outModes: "out" },
-                        opacity: { value: 0.9 },
+                        number: { value: 50, density: { enable: true, area: 800 } },
+                        color: { value: ["#4ECDC4", "#FFD93D", "#6BCB77"] },
+                        shape: { type: ["circle", "polygon"], options: { polygon: { sides: 5 } } },
+                        opacity: { value: 0.5, random: true },
+                        size: { value: { min: 4, max: 10 }, random: true },
+                        move: { enable: true, speed: 1.5, direction: "bottom", random: true, outModes: "out" },
                         rotate: { value: { min: 0, max: 360 }, direction: "random", animation: { enable: true, speed: 5 } }
                     }
                 };
             } else if (child.theme_class === 'theme-fantasy') {
                 particleOptions = {
                     particles: {
-                        number: { value: 35 },
-                        shape: { type: "char", options: { char: { value: ["🐉", "🧙‍♂️", "✨", "🏰", "🦄"], font: "Arial" } } },
-                        size: { value: { min: 15, max: 45 } },
-                        move: { enable: true, speed: 2, direction: "none", random: true, outModes: "out" },
-                        opacity: { value: { min: 0.5, max: 1 } }
+                        number: { value: 60, density: { enable: true, area: 800 } },
+                        color: { value: ["#B088F9", "#FF85A1", "#7BDFF2"] },
+                        shape: { type: "star" },
+                        opacity: { value: { min: 0.3, max: 0.9 }, random: true, anim: { enable: true, speed: 2, opacity_min: 0.1, sync: false } },
+                        size: { value: { min: 2, max: 5 }, random: true },
+                        move: { enable: true, speed: 1.2, direction: "none", random: true, outModes: "out" },
+                        twinkle: { particles: { enable: true, color: "#ffffff", frequency: 0.05, opacity: 1 } }
                     }
                 };
             } else if (child.theme_class === 'theme-royal') {
                 particleOptions = {
                     particles: {
-                        number: { value: 40 },
-                        shape: { type: "char", options: { char: { value: ["👑", "🪙", "🤴", "👸", "🛡️", "💎"], font: "Arial" } } },
-                        size: { value: { min: 15, max: 35 } },
-                        move: { enable: true, speed: 3, direction: "bottom", outModes: "out" },
-                        opacity: { value: 0.9 },
-                        rotate: { value: { min: 0, max: 360 }, animation: { enable: true, speed: 10 } }
+                        number: { value: 40, density: { enable: true, area: 800 } },
+                        color: { value: "#F9F871" },
+                        shape: { type: "polygon", options: { polygon: { sides: 6 } } },
+                        opacity: { value: 0.7, random: true },
+                        size: { value: { min: 3, max: 8 }, random: true },
+                        move: { enable: true, speed: 2, direction: "bottom-right", random: true, outModes: "out" },
+                        rotate: { value: { min: 0, max: 360 }, animation: { enable: true, speed: 8 } },
+                        roll: { enable: true, speed: { min: 5, max: 15 }, darked: 0.3, lightened: 0.2 }
                     }
                 };
             }
@@ -196,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Components / Templates
     const views = {
         login: () => `
-            <div class="flex items-center justify-center min-h-screen p-4" style="background: radial-gradient(ellipse at 20% 50%, hsla(344,100%,76%,0.18) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, hsla(175,65%,57%,0.15) 0%, transparent 60%), radial-gradient(ellipse at 60% 80%, hsla(265,90%,76%,0.12) 0%, transparent 50%)">
+            <div class="flex items-center justify-center min-h-screen p-4">
                 <!-- Floating decorative blobs -->
                 <div class="fixed top-10 left-10 w-40 h-40 rounded-full floating-slow pointer-events-none" style="background: radial-gradient(circle, hsla(344,100%,80%,0.35), transparent 70%); filter: blur(20px);"></div>
                 <div class="fixed bottom-20 right-10 w-52 h-52 rounded-full floating pointer-events-none" style="background: radial-gradient(circle, hsla(175,65%,60%,0.3), transparent 70%); filter: blur(24px); animation-delay: 1.5s"></div>
@@ -234,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `,
 
         register: () => `
-            <div class="flex items-center justify-center min-h-screen p-4" style="background: radial-gradient(ellipse at 30% 40%, hsla(265,90%,76%,0.18) 0%, transparent 60%), radial-gradient(ellipse at 70% 70%, hsla(344,100%,76%,0.15) 0%, transparent 60%)">
+            <div class="flex items-center justify-center min-h-screen p-4">
                 <div class="fixed top-16 right-16 w-44 h-44 rounded-full floating pointer-events-none" style="background: radial-gradient(circle, hsla(265,90%,78%,0.32), transparent 70%); filter: blur(22px);"></div>
                 <div class="fixed bottom-16 left-16 w-36 h-36 rounded-full floating-slow pointer-events-none" style="background: radial-gradient(circle, hsla(344,100%,76%,0.3), transparent 70%); filter: blur(18px); animation-delay: 1s"></div>
 
@@ -267,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `,
 
         profileSelection: () => `
-            <div class="min-h-screen p-8" style="background: radial-gradient(ellipse at 25% 25%, hsla(344,100%,76%,0.15) 0%, transparent 55%), radial-gradient(ellipse at 75% 75%, hsla(175,65%,57%,0.13) 0%, transparent 55%)">
+            <div class="min-h-screen p-8">
                 <div class="max-w-5xl mx-auto">
                     <div class="text-center mb-14 animate-slide-down">
                         <div class="text-5xl mb-3">🎮</div>
@@ -322,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `,
 
         levelMap: () => `
-            <div class="min-h-screen p-4 pb-36" style="background: radial-gradient(ellipse at 10% 20%, hsla(344,100%,76%,0.12) 0%, transparent 50%), radial-gradient(ellipse at 90% 80%, hsla(175,65%,57%,0.12) 0%, transparent 50%)">
+            <div class="min-h-screen p-4 pb-36">
                 <!-- Header -->
                 <header class="max-w-4xl mx-auto flex justify-between items-center mb-10 animate-slide-down">
                     <div class="candy-card px-5 py-3 flex items-center gap-3">
@@ -389,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `,
 
         game: () => `
-            <div class="min-h-screen p-4 pb-8" style="background: radial-gradient(ellipse at 50% 0%, hsla(344,100%,76%,0.15) 0%, transparent 60%), radial-gradient(ellipse at 0% 100%, hsla(175,65%,57%,0.12) 0%, transparent 50%)">
+            <div class="min-h-screen p-4 pb-8">
                 <!-- Top Bar -->
                 <div class="max-w-2xl mx-auto flex justify-between items-center mb-6 animate-slide-down">
                     <button onclick="render('levelMap')" class="candy-btn candy-btn-secondary px-5 py-2">
@@ -442,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `,
 
         rewards: () => `
-            <div class="min-h-screen p-8" style="background: radial-gradient(ellipse at 20% 20%, hsla(265,90%,76%,0.15) 0%, transparent 55%), radial-gradient(ellipse at 80% 80%, hsla(52,94%,70%,0.12) 0%, transparent 50%)">
+            <div class="min-h-screen p-8">
                 <div class="max-w-5xl mx-auto">
                     <!-- Header -->
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-5 mb-12 animate-slide-down">
@@ -471,7 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `,
 
         dashboard: () => `
-            <div class="min-h-screen p-8" style="background: radial-gradient(ellipse at 10% 10%, hsla(175,65%,57%,0.1) 0%, transparent 50%), radial-gradient(ellipse at 90% 90%, hsla(265,90%,76%,0.1) 0%, transparent 50%)">
+            <div class="min-h-screen p-8">
                 <div class="max-w-6xl mx-auto">
                     <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 animate-slide-down">
                         <div>
