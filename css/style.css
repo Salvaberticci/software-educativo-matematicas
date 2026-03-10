@@ -86,7 +86,7 @@ body {
     transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
         box-shadow 0.25s ease;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .candy-card::before {
@@ -806,129 +806,409 @@ body {
 /* ==========================================
    THEMES
    ========================================== */
-/* Hero Theme */
-body.theme-hero {
-    --primary: hsl(220, 80%, 50%);
-    --primary-dark: hsl(220, 80%, 38%);
-    --primary-shadow: hsla(220, 80%, 40%, 0.4);
-    --secondary: hsl(0, 78%, 60%);
-    --secondary-dark: hsl(0, 78%, 48%);
-    --secondary-shadow: hsla(0, 78%, 40%, 0.35);
+/* ==========================================
+   THEMES (20 SERIES)
+   ========================================== */
+/* BOYS THEMES */
+body.theme-pokemon {
+    --primary: hsl(48, 100%, 50%);
+    --primary-dark: hsl(48, 100%, 35%);
+    --primary-shadow: hsla(48, 100%, 40%, 0.4);
+    --secondary: hsl(210, 100%, 45%);
+    --secondary-dark: hsl(210, 100%, 30%);
+    --secondary-shadow: hsla(210, 100%, 35%, 0.4);
+    --accent: hsl(0, 80%, 50%);
+    --background: hsl(48, 80%, 95%);
+    background-image: none;
+}
+
+body.theme-pokemon .candy-card {
+    border-color: hsl(48, 80%, 80%);
+}
+
+body.theme-pokemon .candy-card::before {
+    background: linear-gradient(90deg, hsl(48, 100%, 50%), hsl(210, 100%, 55%), hsl(0, 80%, 55%));
+}
+
+body.theme-ben10 {
+    --primary: hsl(120, 100%, 35%);
+    --primary-dark: hsl(120, 100%, 25%);
+    --primary-shadow: hsla(120, 100%, 30%, 0.4);
+    --secondary: hsl(0, 0%, 20%);
+    --secondary-dark: hsl(0, 0%, 10%);
+    --secondary-shadow: hsla(0, 0%, 15%, 0.4);
+    --accent: hsl(120, 100%, 55%);
+    --background: hsl(120, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-ben10 .candy-card {
+    border-color: hsl(120, 50%, 80%);
+}
+
+body.theme-ben10 .candy-card::before {
+    background: linear-gradient(90deg, hsl(120, 100%, 45%), hsl(0, 0%, 30%), hsl(120, 100%, 65%));
+}
+
+body.theme-ninjago {
+    --primary: hsl(0, 85%, 50%);
+    --primary-dark: hsl(0, 85%, 35%);
+    --primary-shadow: hsla(0, 85%, 40%, 0.4);
+    --secondary: hsl(45, 100%, 50%);
+    --secondary-dark: hsl(45, 100%, 35%);
+    --secondary-shadow: hsla(45, 100%, 40%, 0.4);
+    --accent: hsl(0, 0%, 20%);
+    --background: hsl(0, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-ninjago .candy-card {
+    border-color: hsl(0, 50%, 85%);
+}
+
+body.theme-ninjago .candy-card::before {
+    background: linear-gradient(90deg, hsl(0, 85%, 55%), hsl(45, 100%, 55%), hsl(0, 0%, 30%));
+}
+
+body.theme-teentitans {
+    --primary: hsl(180, 100%, 40%);
+    --primary-dark: hsl(180, 100%, 25%);
+    --primary-shadow: hsla(180, 100%, 30%, 0.4);
+    --secondary: hsl(300, 100%, 40%);
+    --secondary-dark: hsl(300, 100%, 25%);
+    --secondary-shadow: hsla(300, 100%, 30%, 0.4);
+    --accent: hsl(60, 100%, 50%);
+    --background: hsl(180, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-teentitans .candy-card {
+    border-color: hsl(180, 50%, 85%);
+}
+
+body.theme-teentitans .candy-card::before {
+    background: linear-gradient(90deg, hsl(180, 100%, 45%), hsl(300, 100%, 55%), hsl(60, 100%, 55%));
+}
+
+body.theme-sonic {
+    --primary: hsl(220, 100%, 50%);
+    --primary-dark: hsl(220, 100%, 35%);
+    --primary-shadow: hsla(220, 100%, 40%, 0.4);
+    --secondary: hsl(0, 90%, 50%);
+    --secondary-dark: hsl(0, 90%, 35%);
+    --secondary-shadow: hsla(0, 90%, 40%, 0.4);
+    --accent: hsl(45, 100%, 50%);
+    --background: hsl(220, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-sonic .candy-card {
+    border-color: hsl(220, 50%, 85%);
+}
+
+body.theme-sonic .candy-card::before {
+    background: linear-gradient(90deg, hsl(220, 100%, 55%), hsl(0, 90%, 55%), hsl(45, 100%, 55%));
+}
+
+body.theme-avatar {
+    --primary: hsl(200, 80%, 60%);
+    --primary-dark: hsl(200, 80%, 45%);
+    --primary-shadow: hsla(200, 80%, 50%, 0.4);
+    --secondary: hsl(30, 100%, 50%);
+    --secondary-dark: hsl(30, 100%, 35%);
+    --secondary-shadow: hsla(30, 100%, 40%, 0.4);
+    --accent: hsl(60, 80%, 50%);
+    --background: hsl(200, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-avatar .candy-card {
+    border-color: hsl(200, 50%, 85%);
+}
+
+body.theme-avatar .candy-card::before {
+    background: linear-gradient(90deg, hsl(200, 80%, 65%), hsl(30, 100%, 55%), hsl(60, 80%, 55%));
+}
+
+body.theme-pawpatrol {
+    --primary: hsl(210, 90%, 50%);
+    --primary-dark: hsl(210, 90%, 35%);
+    --primary-shadow: hsla(210, 90%, 40%, 0.4);
+    --secondary: hsl(0, 85%, 55%);
+    --secondary-dark: hsl(0, 85%, 40%);
+    --secondary-shadow: hsla(0, 85%, 45%, 0.4);
+    --accent: hsl(50, 100%, 50%);
+    --background: hsl(210, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-pawpatrol .candy-card {
+    border-color: hsl(210, 50%, 85%);
+}
+
+body.theme-pawpatrol .candy-card::before {
+    background: linear-gradient(90deg, hsl(210, 90%, 55%), hsl(0, 85%, 60%), hsl(50, 100%, 55%));
+}
+
+body.theme-jurassic {
+    --primary: hsl(100, 50%, 30%);
+    --primary-dark: hsl(100, 50%, 20%);
+    --primary-shadow: hsla(100, 50%, 25%, 0.4);
+    --secondary: hsl(30, 50%, 40%);
+    --secondary-dark: hsl(30, 50%, 30%);
+    --secondary-shadow: hsla(30, 50%, 35%, 0.4);
+    --accent: hsl(40, 80%, 50%);
+    --background: hsl(100, 20%, 95%);
+    background-image: none;
+}
+
+body.theme-jurassic .candy-card {
+    border-color: hsl(100, 30%, 85%);
+}
+
+body.theme-jurassic .candy-card::before {
+    background: linear-gradient(90deg, hsl(100, 50%, 40%), hsl(30, 50%, 50%), hsl(40, 80%, 55%));
+}
+
+body.theme-spongebob {
+    --primary: hsl(50, 100%, 50%);
+    --primary-dark: hsl(50, 100%, 35%);
+    --primary-shadow: hsla(50, 100%, 40%, 0.4);
+    --secondary: hsl(190, 80%, 60%);
+    --secondary-dark: hsl(190, 80%, 45%);
+    --secondary-shadow: hsla(190, 80%, 50%, 0.4);
+    --accent: hsl(25, 60%, 40%);
+    --background: hsl(50, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-spongebob .candy-card {
+    border-color: hsl(50, 50%, 85%);
+}
+
+body.theme-spongebob .candy-card::before {
+    background: linear-gradient(90deg, hsl(50, 100%, 55%), hsl(190, 80%, 65%), hsl(25, 60%, 55%));
+}
+
+body.theme-dragonball {
+    --primary: hsl(25, 100%, 50%);
+    --primary-dark: hsl(25, 100%, 35%);
+    --primary-shadow: hsla(25, 100%, 40%, 0.4);
+    --secondary: hsl(220, 80%, 40%);
+    --secondary-dark: hsl(220, 80%, 25%);
+    --secondary-shadow: hsla(220, 80%, 30%, 0.4);
+    --accent: hsl(50, 100%, 50%);
+    --background: hsl(25, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-dragonball .candy-card {
+    border-color: hsl(25, 50%, 85%);
+}
+
+body.theme-dragonball .candy-card::before {
+    background: linear-gradient(90deg, hsl(25, 100%, 55%), hsl(220, 80%, 55%), hsl(50, 100%, 55%));
+}
+
+/* GIRLS THEMES */
+body.theme-ladybug {
+    --primary: hsl(355, 85%, 50%);
+    --primary-dark: hsl(355, 85%, 35%);
+    --primary-shadow: hsla(355, 85%, 40%, 0.4);
+    --secondary: hsl(0, 0%, 15%);
+    --secondary-dark: hsl(0, 0%, 5%);
+    --secondary-shadow: hsla(0, 0%, 10%, 0.4);
+    --accent: hsl(355, 85%, 65%);
+    --background: hsl(355, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-ladybug .candy-card {
+    border-color: hsl(355, 50%, 85%);
+}
+
+body.theme-ladybug .candy-card::before {
+    background: linear-gradient(90deg, hsl(355, 85%, 55%), hsl(0, 0%, 25%), hsl(355, 85%, 65%));
+}
+
+body.theme-gabby {
+    --primary: hsl(320, 80%, 65%);
+    --primary-dark: hsl(320, 80%, 50%);
+    --primary-shadow: hsla(320, 80%, 55%, 0.4);
+    --secondary: hsl(175, 70%, 55%);
+    --secondary-dark: hsl(175, 70%, 40%);
+    --secondary-shadow: hsla(175, 70%, 45%, 0.4);
+    --accent: hsl(270, 70%, 65%);
+    --background: hsl(320, 30%, 95%);
+    background-image: none;
+}
+
+body.theme-gabby .candy-card {
+    border-color: hsl(320, 50%, 85%);
+}
+
+body.theme-gabby .candy-card::before {
+    background: linear-gradient(90deg, hsl(320, 80%, 70%), hsl(175, 70%, 65%), hsl(270, 70%, 70%));
+}
+
+body.theme-bluey {
+    --primary: hsl(200, 90%, 70%);
+    --primary-dark: hsl(200, 90%, 55%);
+    --primary-shadow: hsla(200, 90%, 60%, 0.4);
+    --secondary: hsl(220, 80%, 40%);
+    --secondary-dark: hsl(220, 80%, 25%);
+    --secondary-shadow: hsla(220, 80%, 30%, 0.4);
+    --accent: hsl(35, 90%, 60%);
+    --background: hsl(200, 40%, 95%);
+    background-image: none;
+}
+
+body.theme-bluey .candy-card {
+    border-color: hsl(200, 60%, 85%);
+}
+
+body.theme-bluey .candy-card::before {
+    background: linear-gradient(90deg, hsl(200, 90%, 75%), hsl(220, 80%, 55%), hsl(35, 90%, 65%));
+}
+
+body.theme-mlp {
+    --primary: hsl(300, 80%, 70%);
+    --primary-dark: hsl(300, 80%, 55%);
+    --primary-shadow: hsla(300, 80%, 60%, 0.4);
+    --secondary: hsl(330, 80%, 65%);
+    --secondary-dark: hsl(330, 80%, 50%);
+    --secondary-shadow: hsla(330, 80%, 55%, 0.4);
+    --accent: hsl(190, 80%, 65%);
+    --background: hsl(300, 30%, 96%);
+    background-image: none;
+}
+
+body.theme-mlp .candy-card {
+    border-color: hsl(300, 50%, 85%);
+}
+
+body.theme-mlp .candy-card::before {
+    background: linear-gradient(90deg, hsl(300, 80%, 75%), hsl(330, 80%, 70%), hsl(190, 80%, 70%));
+}
+
+body.theme-barbie {
+    --primary: hsl(328, 100%, 55%);
+    --primary-dark: hsl(328, 100%, 40%);
+    --primary-shadow: hsla(328, 100%, 45%, 0.4);
+    --secondary: hsl(330, 80%, 80%);
+    --secondary-dark: hsl(330, 80%, 65%);
+    --secondary-shadow: hsla(330, 80%, 70%, 0.4);
+    --accent: hsl(340, 90%, 60%);
+    --background: hsl(328, 50%, 96%);
+    background-image: none;
+}
+
+body.theme-barbie .candy-card {
+    border-color: hsl(328, 60%, 85%);
+}
+
+body.theme-barbie .candy-card::before {
+    background: linear-gradient(90deg, hsl(328, 100%, 60%), hsl(330, 80%, 85%), hsl(340, 90%, 65%));
+}
+
+body.theme-winx {
+    --primary: hsl(320, 90%, 50%);
+    --primary-dark: hsl(320, 90%, 35%);
+    --primary-shadow: hsla(320, 90%, 40%, 0.4);
+    --secondary: hsl(190, 90%, 50%);
+    --secondary-dark: hsl(190, 90%, 35%);
+    --secondary-shadow: hsla(190, 90%, 40%, 0.4);
+    --accent: hsl(50, 100%, 50%);
+    --background: hsl(320, 30%, 96%);
+    background-image: none;
+}
+
+body.theme-winx .candy-card {
+    border-color: hsl(320, 50%, 85%);
+}
+
+body.theme-winx .candy-card::before {
+    background: linear-gradient(90deg, hsl(320, 90%, 55%), hsl(190, 90%, 55%), hsl(50, 100%, 55%));
+}
+
+body.theme-peppa {
+    --primary: hsl(340, 80%, 75%);
+    --primary-dark: hsl(340, 80%, 60%);
+    --primary-shadow: hsla(340, 80%, 65%, 0.4);
+    --secondary: hsl(140, 60%, 55%);
+    --secondary-dark: hsl(140, 60%, 40%);
+    --secondary-shadow: hsla(140, 60%, 45%, 0.4);
+    --accent: hsl(200, 80%, 65%);
+    --background: hsl(340, 40%, 96%);
+    background-image: none;
+}
+
+body.theme-peppa .candy-card {
+    border-color: hsl(340, 60%, 88%);
+}
+
+body.theme-peppa .candy-card::before {
+    background: linear-gradient(90deg, hsl(340, 80%, 80%), hsl(140, 60%, 65%), hsl(200, 80%, 75%));
+}
+
+body.theme-disneyprincess {
+    --primary: hsl(340, 90%, 75%);
+    --primary-dark: hsl(340, 90%, 60%);
+    --primary-shadow: hsla(340, 90%, 65%, 0.4);
+    --secondary: hsl(45, 100%, 55%);
+    --secondary-dark: hsl(45, 100%, 40%);
+    --secondary-shadow: hsla(45, 100%, 45%, 0.4);
+    --accent: hsl(280, 80%, 65%);
+    --background: hsl(340, 40%, 96%);
+    background-image: none;
+}
+
+body.theme-disneyprincess .candy-card {
+    border-color: hsl(340, 60%, 88%);
+}
+
+body.theme-disneyprincess .candy-card::before {
+    background: linear-gradient(90deg, hsl(340, 90%, 80%), hsl(45, 100%, 65%), hsl(280, 80%, 75%));
+}
+
+body.theme-sofia {
+    --primary: hsl(270, 70%, 65%);
+    --primary-dark: hsl(270, 70%, 50%);
+    --primary-shadow: hsla(270, 70%, 55%, 0.4);
+    --secondary: hsl(0, 0%, 90%);
+    --secondary-dark: hsl(0, 0%, 75%);
+    --secondary-shadow: hsla(0, 0%, 80%, 0.4);
     --accent: hsl(45, 100%, 55%);
-    --background: hsl(215, 60%, 96%);
+    --background: hsl(270, 30%, 96%);
     background-image: none;
 }
 
-body.theme-hero .candy-card {
-    border-color: hsl(215, 80%, 88%);
+body.theme-sofia .candy-card {
+    border-color: hsl(270, 50%, 85%);
 }
 
-body.theme-hero .candy-card::before {
-    background: linear-gradient(90deg, hsl(220, 80%, 55%), hsl(0, 78%, 65%), hsl(45, 100%, 60%));
+body.theme-sofia .candy-card::before {
+    background: linear-gradient(90deg, hsl(270, 70%, 70%), hsl(0, 0%, 95%), hsl(45, 100%, 65%));
 }
 
-/* Space Theme */
-body.theme-space {
-    --primary: hsl(285, 80%, 68%);
-    --primary-dark: hsl(285, 80%, 55%);
-    --primary-shadow: hsla(285, 80%, 45%, 0.45);
-    --secondary: hsl(195, 85%, 58%);
-    --secondary-dark: hsl(195, 85%, 45%);
-    --secondary-shadow: hsla(195, 85%, 40%, 0.4);
-    --accent: hsl(52, 100%, 60%);
-    --background: hsl(230, 35%, 11%);
-    --surface: hsl(230, 30%, 18%);
-    --text-dark: hsl(220, 20%, 90%);
-    --text-medium: hsl(220, 15%, 70%);
-    color: hsl(220, 20%, 90%);
-}
-
-body.theme-space .candy-card {
-    background: rgba(44, 48, 70, 0.85);
-    border-color: rgba(100, 110, 170, 0.4);
-}
-
-body.theme-space .candy-card::before {
-    background: linear-gradient(90deg, hsl(285, 80%, 68%), hsl(195, 85%, 58%), hsl(52, 100%, 60%));
-}
-
-body.theme-space h1,
-body.theme-space h2,
-body.theme-space h3,
-body.theme-space p,
-body.theme-space label {
-    color: hsl(220, 20%, 88%) !important;
-}
-
-body.theme-space {
-    background-image:
-        radial-gradient(circle at 20% 20%, hsla(285, 80%, 68%, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, hsla(195, 85%, 58%, 0.12) 0%, transparent 50%),
-        radial-gradient(1px 1px at 10% 10%, white 100%, transparent),
-        radial-gradient(1px 1px at 90% 90%, white 100%, transparent),
-        radial-gradient(1px 1px at 50% 30%, hsl(52, 100%, 80%) 100%, transparent);
-}
-
-body.theme-dino {
-    --primary: hsl(132, 58%, 43%);
-    --primary-dark: hsl(132, 58%, 32%);
-    --primary-shadow: hsla(132, 58%, 35%, 0.4);
-    --secondary: hsl(34, 85%, 52%);
-    --secondary-dark: hsl(34, 85%, 40%);
-    --secondary-shadow: hsla(34, 85%, 40%, 0.35);
-    --accent: hsl(70, 80%, 53%);
-    --background: hsl(130, 40%, 95%);
+body.theme-masha {
+    --primary: hsl(330, 80%, 45%);
+    --primary-dark: hsl(330, 80%, 30%);
+    --primary-shadow: hsla(330, 80%, 35%, 0.4);
+    --secondary: hsl(90, 50%, 50%);
+    --secondary-dark: hsl(90, 50%, 35%);
+    --secondary-shadow: hsla(90, 50%, 40%, 0.4);
+    --accent: hsl(30, 60%, 40%);
+    --background: hsl(330, 30%, 96%);
     background-image: none;
 }
 
-body.theme-dino .candy-card {
-    border-color: hsl(130, 50%, 85%);
+body.theme-masha .candy-card {
+    border-color: hsl(330, 40%, 85%);
 }
 
-body.theme-dino .candy-card::before {
-    background: linear-gradient(90deg, hsl(132, 58%, 48%), hsl(70, 80%, 58%), hsl(34, 85%, 57%));
-}
-
-body.theme-fantasy {
-    --primary: hsl(288, 75%, 52%);
-    --primary-dark: hsl(288, 75%, 40%);
-    --primary-shadow: hsla(288, 75%, 42%, 0.4);
-    --secondary: hsl(340, 85%, 62%);
-    --secondary-dark: hsl(340, 85%, 50%);
-    --secondary-shadow: hsla(340, 85%, 45%, 0.35);
-    --accent: hsl(160, 80%, 55%);
-    --background: hsl(280, 35%, 96%);
-    background-image: none;
-}
-
-body.theme-fantasy .candy-card {
-    border-color: hsl(280, 60%, 88%);
-    border-width: 4px;
-}
-
-body.theme-fantasy .candy-card::before {
-    background: linear-gradient(90deg, hsl(288, 75%, 58%), hsl(340, 85%, 67%), hsl(160, 80%, 60%));
-}
-
-body.theme-royal {
-    --primary: hsl(35, 100%, 48%);
-    --primary-dark: hsl(35, 100%, 36%);
-    --primary-shadow: hsla(35, 100%, 40%, 0.4);
-    --secondary: hsl(0, 80%, 50%);
-    --secondary-dark: hsl(0, 80%, 38%);
-    --secondary-shadow: hsla(0, 80%, 40%, 0.35);
-    --accent: hsl(50, 100%, 52%);
-    --background: hsl(45, 50%, 96%);
-    background-image: none;
-}
-
-body.theme-royal .candy-card {
-    border-color: hsl(45, 70%, 80%);
-    box-shadow: 0 8px 0 rgba(255, 215, 0, 0.2), 0 20px 40px rgba(0, 0, 0, 0.08);
-}
-
-body.theme-royal .candy-card::before {
-    background: linear-gradient(90deg, hsl(35, 100%, 53%), hsl(50, 100%, 57%), hsl(0, 80%, 55%));
+body.theme-masha .candy-card::before {
+    background: linear-gradient(90deg, hsl(330, 80%, 55%), hsl(90, 50%, 60%), hsl(30, 60%, 50%));
 }
 
 /* ==========================================

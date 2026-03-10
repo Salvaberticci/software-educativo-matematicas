@@ -7,13 +7,14 @@ check_auth();
 $child_id = isset($_GET['child_id']) ? intval($_GET['child_id']) : 0;
 
 if ($child_id > 0) {
-    // Return rewards with ownership status for a specific child
+    // Return rewards with ownership status for a specific child, filtered by their avatar_id (gender)
     $sql = "SELECT r.*, 
             CASE WHEN i.id IS NOT NULL THEN 1 ELSE 0 END as owned,
             CASE WHEN c.equipped_reward_id = r.id THEN 1 ELSE 0 END as equipped
             FROM rewards r 
+            CROSS JOIN children c ON c.id = ?
             LEFT JOIN child_inventory i ON r.id = i.reward_id AND i.child_id = ?
-            LEFT JOIN children c ON c.id = ?
+            WHERE (r.target_avatar_id = c.avatar_id OR r.target_avatar_id = 0)
             ORDER BY r.cost ASC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$child_id, $child_id]);

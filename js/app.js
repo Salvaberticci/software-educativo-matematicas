@@ -76,12 +76,26 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyTheme(child) {
         const body = document.body;
 
-        // 1. Reset Classes (remove old themes)
-        body.classList.remove('theme-hero', 'theme-space', 'theme-dino', 'theme-fantasy', 'theme-royal');
+        // 1. Reset Classes (remove all themes)
+        body.classList.remove(
+            'theme-pokemon', 'theme-ben10', 'theme-ninjago', 'theme-teentitans', 'theme-sonic',
+            'theme-avatar', 'theme-pawpatrol', 'theme-jurassic', 'theme-spongebob', 'theme-dragonball',
+            'theme-ladybug', 'theme-gabby', 'theme-bluey', 'theme-mlp', 'theme-barbie',
+            'theme-winx', 'theme-peppa', 'theme-disneyprincess', 'theme-sofia', 'theme-masha'
+        );
 
         // 2. Apply New Theme if equipped
         if (child.theme_class) {
             body.classList.add(child.theme_class);
+            // Dinamically set the background image based on theme
+            const bgName = child.theme_class.replace('theme-', 'bg_') + '.jpg';
+            body.style.backgroundImage = `url('assets/img/backgrounds/${bgName}')`;
+            body.style.backgroundSize = 'cover';
+            body.style.backgroundPosition = 'center';
+            body.style.backgroundAttachment = 'fixed';
+            body.style.backgroundRepeat = 'no-repeat';
+        } else {
+            body.style.backgroundImage = "none";
         }
 
         // 2.5 Generate Animated Background with tsParticles
@@ -94,72 +108,48 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             let particleOptions = null;
+            const tc = child.theme_class;
 
-            if (child.theme_class === 'theme-hero') {
-                particleOptions = {
-                    particles: {
-                        number: { value: 40, density: { enable: true, area: 800 } },
-                        color: { value: ["#FF6B6B", "#FF85A1", "#F9F871"] },
-                        shape: { type: "circle" },
-                        opacity: { value: 0.6, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
-                        size: { value: { min: 3, max: 7 }, random: true },
-                        move: { enable: true, speed: 2, direction: "top", random: true, outModes: "out" },
-                        wobble: { enable: true, distance: 5, speed: 10 }
-                    }
-                };
-            } else if (child.theme_class === 'theme-space') {
-                particleOptions = {
-                    particles: {
-                        number: { value: 100, density: { enable: true, area: 800 } },
-                        color: { value: "#ffffff" },
-                        shape: { type: "circle" },
-                        opacity: { value: { min: 0.1, max: 0.8 }, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
-                        size: { value: { min: 1, max: 3 }, random: true },
-                        links: { enable: true, distance: 150, color: "#ffffff", opacity: 0.2, width: 1 },
-                        move: { enable: true, speed: 0.5, direction: "none", random: true, outModes: "out" }
-                    },
-                    interactivity: {
-                        events: { onHover: { enable: true, mode: "grab" }, onClick: { enable: true, mode: "push" } },
-                        modes: { grab: { distance: 140, links: { opacity: 0.5 } }, push: { quantity: 4 } }
-                    }
-                };
-            } else if (child.theme_class === 'theme-dino') {
-                particleOptions = {
-                    particles: {
-                        number: { value: 50, density: { enable: true, area: 800 } },
-                        color: { value: ["#4ECDC4", "#FFD93D", "#6BCB77"] },
-                        shape: { type: ["circle", "polygon"], options: { polygon: { sides: 5 } } },
-                        opacity: { value: 0.5, random: true },
-                        size: { value: { min: 4, max: 10 }, random: true },
-                        move: { enable: true, speed: 1.5, direction: "bottom", random: true, outModes: "out" },
-                        rotate: { value: { min: 0, max: 360 }, direction: "random", animation: { enable: true, speed: 5 } }
-                    }
-                };
-            } else if (child.theme_class === 'theme-fantasy') {
-                particleOptions = {
-                    particles: {
-                        number: { value: 60, density: { enable: true, area: 800 } },
-                        color: { value: ["#B088F9", "#FF85A1", "#7BDFF2"] },
-                        shape: { type: "star" },
-                        opacity: { value: { min: 0.3, max: 0.9 }, random: true, anim: { enable: true, speed: 2, opacity_min: 0.1, sync: false } },
-                        size: { value: { min: 2, max: 5 }, random: true },
-                        move: { enable: true, speed: 1.2, direction: "none", random: true, outModes: "out" },
-                        twinkle: { particles: { enable: true, color: "#ffffff", frequency: 0.05, opacity: 1 } }
-                    }
-                };
-            } else if (child.theme_class === 'theme-royal') {
-                particleOptions = {
-                    particles: {
-                        number: { value: 40, density: { enable: true, area: 800 } },
-                        color: { value: "#F9F871" },
-                        shape: { type: "polygon", options: { polygon: { sides: 6 } } },
-                        opacity: { value: 0.7, random: true },
-                        size: { value: { min: 3, max: 8 }, random: true },
-                        move: { enable: true, speed: 2, direction: "bottom-right", random: true, outModes: "out" },
-                        rotate: { value: { min: 0, max: 360 }, animation: { enable: true, speed: 8 } },
-                        roll: { enable: true, speed: { min: 5, max: 15 }, darked: 0.3, lightened: 0.2 }
-                    }
-                };
+            if (tc === 'theme-pokemon') {
+                particleOptions = { particles: { number: { value: 60, density: { enable: true, area: 800 } }, color: { value: ["#FFD700", "#FF0000"] }, shape: { type: "circle" }, opacity: { value: 0.8 }, size: { value: { min: 4, max: 8 }, random: true }, move: { enable: true, speed: 2, direction: "top", outModes: "out" } } };
+            } else if (tc === 'theme-ben10') {
+                particleOptions = { particles: { number: { value: 50 }, color: { value: ["#00FF00", "#000000"] }, shape: { type: "polygon", options: { polygon: { sides: 6 } } }, opacity: { value: 0.7 }, size: { value: { min: 5, max: 10 } }, move: { enable: true, speed: 3, direction: "none" }, links: { enable: true, distance: 150, color: "#00FF00", opacity: 0.4, width: 2 } } };
+            } else if (tc === 'theme-ninjago') {
+                particleOptions = { particles: { number: { value: 40 }, color: { value: ["#FF0000", "#FFD700", "#111111"] }, shape: { type: "star" }, size: { value: { min: 5, max: 12 } }, move: { enable: true, speed: 4, direction: "bottom" }, rotate: { animation: { enable: true, speed: 10 } } } };
+            } else if (tc === 'theme-teentitans') {
+                particleOptions = { particles: { number: { value: 50 }, color: { value: ["#00FFFF", "#FF00FF", "#FFFF00"] }, shape: { type: ["circle", "triangle", "square"] }, opacity: { value: 1 }, size: { value: { min: 4, max: 12 } }, move: { enable: true, speed: 3, direction: "top-right" }, rotate: { animation: { enable: true, speed: 5 } } } };
+            } else if (tc === 'theme-sonic') {
+                particleOptions = { particles: { number: { value: 30 }, color: { value: ["#FFD700", "#FFF"] }, shape: { type: "circle" }, opacity: { value: 1 }, size: { value: 10 }, move: { enable: true, speed: 15, direction: "right" } } };
+            } else if (tc === 'theme-avatar') {
+                particleOptions = { particles: { number: { value: 100 }, color: { value: ["#FFFFFF", "#ADD8E6"] }, shape: { type: "circle" }, opacity: { value: 0.5 }, size: { value: { min: 1, max: 4 } }, move: { enable: true, speed: 6, direction: "top-left", wobble: { enable: true, distance: 10, speed: 10 } } } };
+            } else if (tc === 'theme-pawpatrol') {
+                particleOptions = { particles: { number: { value: 40 }, color: { value: ["#FF0000", "#0000FF", "#FFFF00"] }, shape: { type: "circle" }, size: { value: { min: 6, max: 12 } }, move: { enable: true, speed: 2, direction: "bottom" } } };
+            } else if (tc === 'theme-jurassic') {
+                particleOptions = { particles: { number: { value: 60 }, color: { value: ["#228B22", "#8B4513", "#DAA520"] }, shape: { type: "polygon", options: { polygon: { sides: 3 } } }, size: { value: { min: 4, max: 15 } }, move: { enable: true, speed: 2, direction: "bottom" }, rotate: { animation: { enable: true, speed: 5 } } } };
+            } else if (tc === 'theme-spongebob') {
+                particleOptions = { particles: { number: { value: 60 }, color: { value: ["#87CEEB", "#FFD700", "#FFF"] }, shape: { type: "circle" }, opacity: { value: 0.5 }, size: { value: { min: 8, max: 20 } }, move: { enable: true, speed: 2, direction: "top", wobble: { enable: true, distance: 10, speed: 10 } } } };
+            } else if (tc === 'theme-dragonball') {
+                particleOptions = { particles: { number: { value: 70 }, color: { value: ["#FFA500", "#FFD700", "#FFFFE0"] }, shape: { type: "circle" }, opacity: { value: { min: 0.3, max: 1 }, anim: { enable: true, speed: 3 } }, size: { value: { min: 2, max: 8 } }, move: { enable: true, speed: 6, direction: "top", outModes: "out" } } };
+            } else if (tc === 'theme-ladybug') {
+                particleOptions = { particles: { number: { value: 50 }, color: { value: ["#FF0000", "#000000"] }, shape: { type: "circle" }, size: { value: { min: 4, max: 8 } }, move: { enable: true, speed: 2, direction: "none", random: true } } };
+            } else if (tc === 'theme-gabby') {
+                particleOptions = { particles: { number: { value: 50 }, color: { value: ["#FF69B4", "#9370DB", "#20B2AA"] }, shape: { type: ["circle", "star"] }, size: { value: { min: 4, max: 10 } }, move: { enable: true, speed: 1.5, direction: "top" } } };
+            } else if (tc === 'theme-bluey') {
+                particleOptions = { particles: { number: { value: 40 }, color: { value: ["#87CEEB", "#4682B4", "#FFF"] }, shape: { type: "circle" }, opacity: { value: 0.6 }, size: { value: { min: 5, max: 15 } }, move: { enable: true, speed: 2, direction: "top", wobble: { enable: true, distance: 5, speed: 10 } } } };
+            } else if (tc === 'theme-mlp') {
+                particleOptions = { particles: { number: { value: 70 }, color: { value: ["#FFB6C1", "#DDA0DD", "#FFF"] }, shape: { type: "star" }, size: { value: { min: 3, max: 8 } }, move: { enable: true, speed: 1, direction: "none" }, twinkle: { particles: { enable: true, color: "#FFF", frequency: 0.05, opacity: 1 } } } };
+            } else if (tc === 'theme-barbie') {
+                particleOptions = { particles: { number: { value: 60 }, color: { value: ["#FF1493", "#FF69B4", "#FFF"] }, shape: { type: "circle" }, size: { value: { min: 4, max: 8 } }, move: { enable: true, speed: 2, direction: "top-right" } } };
+            } else if (tc === 'theme-winx') {
+                particleOptions = { particles: { number: { value: 100 }, color: { value: ["#FF00FF", "#00FFFF", "#FFD700"] }, shape: { type: "circle" }, opacity: { value: 0.8, anim: { enable: true, speed: 2 } }, size: { value: { min: 1, max: 4 } }, move: { enable: true, speed: 1.5, direction: "none" } } };
+            } else if (tc === 'theme-peppa') {
+                particleOptions = { particles: { number: { value: 40 }, color: { value: ["#FFC0CB", "#87CEFA", "#98FB98"] }, shape: { type: "circle" }, size: { value: { min: 5, max: 12 } }, move: { enable: true, speed: 1.5, direction: "top" } } };
+            } else if (tc === 'theme-disneyprincess') {
+                particleOptions = { particles: { number: { value: 80 }, color: { value: ["#FFD700", "#FF69B4", "#FFF"] }, shape: { type: "star" }, opacity: { value: 0.8 }, size: { value: { min: 4, max: 8 } }, move: { enable: true, speed: 1, direction: "none" }, twinkle: { particles: { enable: true, color: "#FFD700", frequency: 0.05, opacity: 1 } } } };
+            } else if (tc === 'theme-sofia') {
+                particleOptions = { particles: { number: { value: 50 }, color: { value: ["#9370DB", "#E6E6FA", "#FFD700"] }, shape: { type: "star" }, size: { value: { min: 4, max: 10 } }, move: { enable: true, speed: 1, direction: "top" } } };
+            } else if (tc === 'theme-masha') {
+                particleOptions = { particles: { number: { value: 60 }, color: { value: ["#C71585", "#228B22", "#8B4513"] }, shape: { type: "circle" }, size: { value: { min: 4, max: 10 } }, move: { enable: true, speed: 2, direction: "bottom" } } };
             }
 
             if (particleOptions) {
@@ -295,7 +285,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                  onmouseout="this.style.transform='translateY(0) scale(1)'">
                                 <div class="w-32 h-32 rounded-full mx-auto mb-5 flex items-center justify-center text-6xl relative"
                                      style="background: linear-gradient(135deg, hsl(52,94%,72%), hsl(45,100%,62%)); box-shadow: 0 8px 0 hsl(45,100%,50%), 0 12px 30px hsla(52,94%,60%,0.4);">
-                                    ${child.theme_icon ? child.theme_icon : (child.avatar_id == 2 ? '👧' : '👦')}
+                                    ${child.theme_icon
+                ? (child.theme_icon.includes('.png')
+                    ? `<img src="/software-educativo-matematicas/assets/img/icons/${child.theme_icon}" alt="Avatar" style="width: 64px; height: 64px; object-fit: contain;">`
+                    : child.theme_icon)
+                : (child.avatar_id == 2 ? '\uD83D\uDC67' : '\uD83D\uDC66')}
                                     ${child.theme_icon ? '<div class="absolute -top-2 -right-2 text-2xl floating">✨</div>' : ''}
                                 </div>
                                 <h3 class="text-2xl font-bold mb-1" style="color: var(--text-dark)">${child.name}</h3>
@@ -337,7 +331,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <!-- Header -->
                 <header class="max-w-4xl mx-auto flex justify-between items-center mb-10 animate-slide-down">
                     <div class="candy-card px-5 py-3 flex items-center gap-3">
-                        <span class="text-3xl floating">${state.activeChild.theme_icon || (state.activeChild.avatar_id == 2 ? '👧' : '👦')}</span>
+                        <span class="text-3xl floating">
+                            ${(state.activeChild.theme_icon && state.activeChild.theme_icon.includes('.png'))
+                ? `<img src="/software-educativo-matematicas/assets/img/icons/${state.activeChild.theme_icon}" alt="Avatar" style="width: 36px; height: 36px; object-fit: contain;">`
+                : (state.activeChild.theme_icon || (state.activeChild.avatar_id == 2 ? '👧' : '👦'))}
+                        </span>
                         <div>
                             <p class="font-bold leading-tight" style="color: var(--text-dark)">${state.activeChild.name}</p>
                             <p class="text-xs font-bold uppercase" style="color: var(--secondary)">${state.activeChild.grade}\u00ba Grado</p>
@@ -363,16 +361,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         <div class="relative z-10 grid grid-cols-3 gap-x-8 gap-y-12 justify-items-center stagger">
                             ${state.levels.map((level, i) => {
-            const isLocked = level.id > state.activeChild.current_level;
-            const isCompleted = level.id < state.activeChild.current_level;
-            const isActive = level.id === state.activeChild.current_level;
-            let nodeClass, icon;
+                    const isLocked = level.id > state.activeChild.current_level;
+                    const isCompleted = level.id < state.activeChild.current_level;
+                    const isActive = level.id === state.activeChild.current_level;
+                    let nodeClass, icon;
 
-            if (isLocked) { nodeClass = 'level-node level-node-locked'; icon = '\uD83D\uDD12'; }
-            else if (isCompleted) { nodeClass = 'level-node level-node-completed'; icon = '\u2705'; }
-            else { nodeClass = 'level-node level-node-active'; icon = '\u2B50'; }
+                    if (isLocked) { nodeClass = 'level-node level-node-locked'; icon = '\uD83D\uDD12'; }
+                    else if (isCompleted) { nodeClass = 'level-node level-node-completed'; icon = '\u2705'; }
+                    else { nodeClass = 'level-node level-node-active'; icon = '\u2B50'; }
 
-            return `
+                    return `
                                 <div class="flex flex-col items-center gap-3 animate-slide-up">
                                     <button ${isLocked ? 'disabled' : ''}
                                         onclick="startLevel(${level.id})"
@@ -383,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                         Nivel ${level.id}
                                     </span>
                                 </div>`;
-        }).join('')}
+                }).join('')}
                         </div>
                     </div>
                 </div>
@@ -471,7 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                     <!-- Grid -->
-                    <div id="rewardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger">
+                    <div id="rewardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-10 stagger">
                         <div class="text-center col-span-full py-16">
                             <div class="text-6xl mb-4 floating">✨</div>
                             <p class="font-bold text-xl animate-pulse" style="color: var(--purple)">Cargando tesoros mágicos...</p>
@@ -868,11 +866,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     </button>`;
                 }
 
+                // Determine if icon is emoji or image file
+                let iconDisplay = item.icon;
+                if (item.icon && (item.icon.includes('.png') || item.icon.includes('icon_'))) {
+                    iconDisplay = `<img class="reward-icon-img" src="/software-educativo-matematicas/assets/img/icons/${item.icon}?v=3" alt="${item.name}" style="width: 400px; height: 400px; object-fit: contain; display:block; margin: 0 auto; filter: drop-shadow(0px 8px 14px rgba(0,0,0,0.4)); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">`;
+                }
+
                 return `
-                <div class="reward-card p-6 text-center ${isEquipped ? 'equipped' : isOwned ? 'owned' : ''} ${state.activeChild.coins < item.cost && !isOwned ? 'opacity-60' : ''} animate-slide-up" style="animation-delay: ${i * 0.07}s">
-                    <div class="text-6xl mb-4" style="transition: transform 0.3s ease;"
-                         onmouseover="this.style.transform='scale(1.2) rotate(5deg)'"
-                         onmouseout="this.style.transform='scale(1) rotate(0deg)'">${item.icon}</div>
+                <div class="reward-card p-6 text-center ${isEquipped ? 'equipped' : isOwned ? 'owned' : ''} ${state.activeChild.coins < item.cost && !isOwned ? 'opacity-60' : ''} animate-slide-up" style="animation-delay: ${i * 0.07}s; min-height: 550px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="position:relative; display:flex; justify-content:center; align-items:center; height: 400px; width: 100%; margin-bottom: 20px;"
+                         onmouseover="let img = this.querySelector('.reward-icon-img'); if(img) img.style.transform='scale(1.05) translateY(-5px)'"
+                         onmouseout="let img = this.querySelector('.reward-icon-img'); if(img) img.style.transform='scale(1) translateY(0)'">${iconDisplay}</div>
                     <h4 class="font-bold mb-2" style="color: hsl(220, 20%, 20%)">${item.name}</h4>
                     <div class="flex items-center justify-center gap-2 mb-5">
                         <img src="assets/img/coin.gif" width="22" height="22" class="inline-block" alt="Moneda">
@@ -884,7 +888,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (err) {
             grid.innerHTML = `
-                <div class="col-span-full text-center p-10 candy-card" style="border-color: hsla(0,80%,65%,0.3)">
+                        <div class="col-span-full text-center p-10 candy-card" style="border-color: hsla(0,80%,65%,0.3)">
                     <div class="text-5xl mb-4">🙈</div>
                     <p class="font-bold text-xl mb-4" style="color: var(--primary)">¡Oh no! Los tesoros se escondieron.</p>
                     <button onclick="loadRewards()" class="candy-btn candy-btn-secondary px-6 py-2">Intentar de nuevo</button>
@@ -956,7 +960,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Dashboard ---
     window.updateDashboard = async (childId) => {
         try {
-            const res = await fetch(`api/get_reports.php?child_id=${childId}`);
+            const res = await fetch(`api / get_reports.php ? child_id = ${childId} `);
             const data = await res.json();
 
             // Stats
@@ -973,7 +977,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentCoins = localChild ? localChild.coins : (stats.current_coins || 0);
 
             document.getElementById('dashStats').innerHTML = `
-                <div class="stat-card animate-slide-up">
+                        < div class="stat-card animate-slide-up" >
                     <span class="stat-card-icon">🎯</span>
                     <p class="font-bold text-sm uppercase mb-1" style="color: var(--text-medium)">Aciertos Promedio</p>
                     <h3 class="text-5xl font-bold" style="background: linear-gradient(135deg, var(--primary), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${Math.round(avgScore * 100)}%</h3>
@@ -991,17 +995,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h3 class="text-5xl font-bold" style="color: hsl(35,100%,45%)">${currentCoins}</h3>
                     </div>
                 </div>
-            `;
+                    `;
 
             // Logs
             const safeLogs = Array.isArray(data.logs) ? data.logs : [];
             document.getElementById('auditLogsBody').innerHTML = safeLogs.map(log => `
-                <tr style="border-bottom: 1px solid rgba(0,0,0,0.04)">
+                        < tr style = "border-bottom: 1px solid rgba(0,0,0,0.04)" >
                     <td class="py-3 font-bold" style="color: var(--primary)">${log.action_type || 'Acción'}</td>
                     <td class="py-3" style="color: var(--text-medium)">${log.details || ''}</td>
                     <td class="py-3 font-mono text-xs" style="color: var(--text-light)">${log.timestamp || '--'}</td>
-                </tr>
-            `).join('');
+                </tr >
+                        `).join('');
 
             // Chart
             const history = Array.isArray(data.history) ? data.history : [];
