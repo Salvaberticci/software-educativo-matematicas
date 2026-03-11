@@ -42,6 +42,38 @@ switch ($level['operation']) {
         $operator = '×';
         $answer = $n1 * $n2;
         break;
+    case 'division':
+        // Generate a valid integer division n1 / n2 = answer
+        // We'll use n1 as the divisor and n2 as the result, then n1 * n2 is the dividend
+        $divisor = rand($level['min_val'], $level['max_val']);
+        if ($divisor == 0) $divisor = 1;
+        $res = rand(1, 10); // Quotient
+        $dividend = $divisor * $res;
+        
+        $n1 = $dividend;
+        $n2 = $divisor;
+        $operator = '÷';
+        $answer = $res;
+        break;
+    case 'aleatorio':
+        $ops = ['suma', 'resta', 'multiplicacion', 'division'];
+        $op = $ops[array_rand($ops)];
+        // Recursive call (simplified logic)
+        if ($op === 'suma') { $operator = '+'; $answer = $n1 + $n2; }
+        elseif ($op === 'resta') { 
+            if ($n1 < $n2) { $t = $n1; $n1 = $n2; $n2 = $t; }
+            $operator = '-'; $answer = $n1 - $n2; 
+        }
+        elseif ($op === 'multiplicacion') { $operator = '×'; $answer = $n1 * $n2; }
+        else {
+            $divisor = rand(1, 10);
+            $res = rand(1, 10);
+            $n1 = $divisor * $res;
+            $n2 = $divisor;
+            $operator = '÷';
+            $answer = $res;
+        }
+        break;
 }
 
 send_json([

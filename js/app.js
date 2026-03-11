@@ -180,12 +180,16 @@ document.addEventListener('DOMContentLoaded', () => {
         view: 'login',
         children: [],
         levels: [
-            { id: 1, name: "Nivel 1" },
-            { id: 2, name: "Nivel 2" },
-            { id: 3, name: "Nivel 3" },
-            { id: 4, name: "Nivel 4" },
-            { id: 5, name: "Nivel 5" },
-            { id: 6, name: "Nivel 6" }
+            { id: 1, name: "Sumas Básicas 🦸‍♂️", pos: {x: 8, y: 70} },
+            { id: 2, name: "Restas Rápidas 👧", pos: {x: 20, y: 85} },
+            { id: 3, name: "Sumas Grandes 🦸‍♂️", pos: {x: 35, y: 75} },
+            { id: 4, name: "Restas Duras 👧", pos: {x: 25, y: 45} },
+            { id: 5, name: "Tablas 1 al 5 🐉", pos: {x: 45, y: 25} },
+            { id: 6, name: "Todas las Tablas 🐉", pos: {x: 65, y: 40} },
+            { id: 7, name: "Multiplicación Fuerte 👨‍🚀", pos: {x: 80, y: 65} },
+            { id: 8, name: "Iniciando División 👨‍🚀", pos: {x: 92, y: 80} },
+            { id: 9, name: "Divisiones Máximas 👑", pos: {x: 85, y: 45} },
+            { id: 10, name: "¡El Gran Desafío Final! 🏰", pos: {x: 75, y: 20} }
         ]
     };
 
@@ -356,40 +360,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 </header>
 
                 <!-- Title -->
-                <div class="text-center mb-10 animate-slide-down" style="animation-delay:0.1s">
-                    <h2 class="text-4xl font-bold" style="background: linear-gradient(135deg, hsl(348,100%,60%), hsl(265,90%,68%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🗺️ Mapa de Aventuras</h2>
-                    <p style="color: var(--text-medium)" class="font-medium">Completa niveles para desbloquear nuevas aventuras</p>
+                <div class="text-center mb-6 animate-slide-down" style="animation-delay:0.1s">
+                    <h2 class="text-4xl font-bold" style="background: linear-gradient(135deg, hsl(348,100%,60%), hsl(265,90%,68%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🗺️ Viaje Matemático</h2>
+                    <p style="color: var(--text-medium)" class="font-medium">¡Llega al castillo para el gran desafío final!</p>
                 </div>
 
-                <!-- Level Grid -->
-                <div class="max-w-4xl mx-auto">
-                    <div class="candy-card p-10 relative overflow-hidden">
-                        <!-- Decorative background grid -->
-                        <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(hsl(175,65%,57%) 2px, transparent 2px); background-size: 32px 32px;"></div>
+                <!-- Adventure Map -->
+                <div class="max-w-6xl mx-auto candy-card p-3 relative overflow-hidden bg-blue-50">
+                    <div class="overflow-x-auto overflow-y-hidden relative rounded-2xl border-4 border-white shadow-inner bg-blue-100 scrollbar-hide" style="height: 600px; cursor: grab;">
+                        <div style="min-width: 1200px; height: 100%; position: relative; background: url('assets/img/adventure/map.png') center/cover no-repeat;">
+                            
+                            <!-- Decor: Castle & Dragon -->
+                            <div class="absolute z-10 flex items-end" style="top: 2%; right: 2%; width: 280px; pointer-events: none;">
+                                <img src="assets/img/adventure/dragon.png" class="w-24 h-auto drop-shadow-md animate-pulse" style="animation-duration: 3s; margin-right: -40px; margin-bottom: 20px; z-index: 2;" alt="Dragon">
+                                <img src="assets/img/adventure/castle.png" class="w-full h-auto drop-shadow-lg" alt="Castle">
+                            </div>
 
-                        <div class="relative z-10 grid grid-cols-3 gap-x-8 gap-y-12 justify-items-center stagger">
+                            <!-- Level Nodes -->
                             ${state.levels.map((level, i) => {
-                    const isLocked = level.id > state.activeChild.current_level;
-                    const isCompleted = level.id < state.activeChild.current_level;
-                    const isActive = level.id === state.activeChild.current_level;
-                    let nodeClass, icon;
+                                const isLocked = level.id > state.activeChild.current_level;
+                                const isCompleted = level.id < state.activeChild.current_level;
+                                const isActive = level.id === state.activeChild.current_level;
+                                let nodeStyle = `position: absolute; left: ${level.pos.x}%; top: ${level.pos.y}%; transform: translate(-50%, -50%); z-index: 20;`;
+                                let btnClass = "w-14 h-14 rounded-full font-bold text-xl border-4 shadow-lg flex items-center justify-center transition-all duration-300";
+                                let bg, color, border;
+                                
+                                if (isLocked) {
+                                    bg = 'bg-gray-200'; color = 'text-gray-400'; border = 'border-gray-400';
+                                } else if (isCompleted) {
+                                    bg = 'bg-green-400'; color = 'text-white'; border = 'border-white';
+                                } else {
+                                    bg = 'bg-yellow-400'; color = 'text-white'; border = 'border-white';
+                                    btnClass += " animate-bounce";
+                                }
 
-                    if (isLocked) { nodeClass = 'level-node level-node-locked'; icon = '\uD83D\uDD12'; }
-                    else if (isCompleted) { nodeClass = 'level-node level-node-completed'; icon = '\u2705'; }
-                    else { nodeClass = 'level-node level-node-active'; icon = '\u2B50'; }
-
-                    return `
-                                <div class="flex flex-col items-center gap-3 animate-slide-up">
-                                    <button ${isLocked ? 'disabled' : ''}
-                                        onclick="startLevel(${level.id})"
-                                        class="${nodeClass}">
-                                        ${icon}
+                                return `
+                                <div style="${nodeStyle}" class="group text-center">
+                                    <button ${isLocked ? 'disabled' : ''} onclick="startLevel(${level.id})"
+                                        class="${btnClass} ${bg} ${color} ${border} hover:scale-110">
+                                        ${isLocked ? '🔒' : level.id}
                                     </button>
-                                    <span class="text-sm font-bold" style="color: ${isCompleted ? 'var(--secondary)' : isActive ? 'var(--primary)' : 'var(--text-light)'}">
-                                        Nivel ${level.id}
-                                    </span>
-                                </div>`;
-                }).join('')}
+                                    <div class="${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} group-hover:opacity-100 group-hover:scale-100 transition-all absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white px-3 py-1 rounded-full shadow-md text-sm font-bold w-max pointer-events-none" style="color: var(--primary)">
+                                        ${level.name}
+                                    </div>
+                                </div>
+                                `;
+                            }).join('')}
+
+                            <!-- Player Character -->
+                            <div id="playerCharacter" class="absolute z-30 transition-all duration-1000 ease-in-out pointer-events-none" 
+                                style="width: 70px; height: 90px; transform: translate(-50%, -100%);">
+                                <!-- The player character's position is updated in attachListeners or updateMap() -->
+                                <img src="assets/img/adventure/${state.activeChild.avatar_id == 2 ? 'player_girl' : 'player_boy'}.png" class="w-full h-full object-contain" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); transform-origin: bottom center; animation: floating-fast 2s ease-in-out infinite;">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -575,6 +598,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (state.view === 'dashboard') {
             updateDashboard(document.getElementById('dashChildSelect').value);
+        }
+        if (state.view === 'levelMap') {
+            const player = document.getElementById('playerCharacter');
+            const mapContainer = document.querySelector('.overflow-x-auto');
+            if (player && state.activeChild && mapContainer) {
+                const currentLevelId = Math.min(state.activeChild.current_level, 10);
+                const levelData = state.levels.find(l => l.id === currentLevelId) || state.levels[0];
+                
+                player.style.transition = 'none';
+                player.style.left = levelData.pos.x + '%';
+                player.style.top = levelData.pos.y + '%';
+                
+                // Scroll the container so the player is roughly centered horizontally
+                // Total width is min-width = 1200px.
+                const mapWidth = 1200;
+                const playerX_px = (levelData.pos.x / 100) * mapWidth;
+                const containerWidth = mapContainer.clientWidth;
+                const scrollTarget = playerX_px - (containerWidth / 2);
+                
+                mapContainer.scrollLeft = Math.max(0, scrollTarget);
+
+                // Drag-to-scroll
+                let isDragging = false;
+                let startX, scrollLeftStart;
+                mapContainer.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    startX = e.pageX - mapContainer.offsetLeft;
+                    scrollLeftStart = mapContainer.scrollLeft;
+                    mapContainer.style.cursor = 'grabbing';
+                    mapContainer.style.userSelect = 'none';
+                });
+                mapContainer.addEventListener('mouseleave', () => {
+                    isDragging = false;
+                    mapContainer.style.cursor = 'grab';
+                });
+                mapContainer.addEventListener('mouseup', () => {
+                    isDragging = false;
+                    mapContainer.style.cursor = 'grab';
+                });
+                mapContainer.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const x = e.pageX - mapContainer.offsetLeft;
+                    const walk = (x - startX) * 1.5;
+                    mapContainer.scrollLeft = scrollLeftStart - walk;
+                });
+            }
         }
     }
 
