@@ -487,8 +487,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <!-- Header -->
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-5 mb-12 animate-slide-down">
                         <div>
-                            <h2 class="text-5xl font-bold" style="background: linear-gradient(135deg, hsl(265,90%,63%), hsl(344,100%,65%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🎁 Bazár Mágico</h2>
-                            <p class="font-medium mt-1" style="color: var(--text-medium)">¡Gasta tus monedas en tesoros increíbles!</p>
+                            <h2 class="text-5xl font-bold drop-shadow-md" style="color: var(--primary); text-shadow: 2px 2px 0 rgba(0,0,0,0.15);">🎁 Bazár Mágico</h2>
+                            <p class="font-medium mt-1" style="color: var(--secondary); text-shadow: 1px 1px 0 rgba(0,0,0,0.2);">¡Gasta tus monedas en tesoros increíbles!</p>
                         </div>
                         <div class="flex items-center gap-4">
                             <div class="candy-card px-6 py-3 flex items-center gap-3">
@@ -515,8 +515,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="max-w-6xl mx-auto">
                     <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 animate-slide-down">
                         <div>
-                            <h2 class="text-4xl font-bold" style="background: linear-gradient(135deg, hsl(175,65%,45%), hsl(265,90%,63%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">📊 Centro de Mando</h2>
-                            <p class="font-medium" style="color: var(--text-medium)">Progreso y estadísticas detalladas</p>
+                            <h2 class="text-4xl font-bold drop-shadow-md" style="color: var(--primary); text-shadow: 2px 2px 0 rgba(0,0,0,0.15);">📊 Centro de Mando</h2>
+                            <p class="font-medium" style="color: var(--secondary); text-shadow: 1px 1px 0 rgba(0,0,0,0.2);">Progreso y estadísticas detalladas</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-3">
                             <select id="dashChildSelect" onchange="updateDashboard(this.value)" class="candy-input" style="border-radius: var(--radius-full); padding: 0.6rem 1.5rem; font-weight: 700; font-size: 1rem;">
