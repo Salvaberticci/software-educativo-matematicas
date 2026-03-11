@@ -62,7 +62,7 @@ if ($action === 'register') {
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
     if ($stmt->fetch()) {
-        send_json(['error' => 'El correo ya está registrado'], 400);
+        send_json(['error' => 'No puedes usar este correo porque ya un usuario ya lo tiene registrado'], 400);
     }
 
     try {

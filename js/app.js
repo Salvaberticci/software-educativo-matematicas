@@ -206,7 +206,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="candy-card w-full max-w-md p-10 text-center relative z-10 animate-bounce-in">
                     <!-- Logo -->
                     <div class="mb-8">
-                        <div class="text-6xl mb-3 floating">🧮</div>
+                        <div class="flex justify-center mb-6">
+                            <img src="assets/img/logo.jpeg" alt="MathQuest Logo" 
+                                 class="w-44 h-44 rounded-2xl shadow-candy border-8 border-white object-contain bg-white floating">
+                        </div>
                         <h1 class="text-6xl font-bold mb-2" style="background: linear-gradient(135deg, hsl(348,100%,60%), hsl(265,90%,68%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
                             MathQuest
                         </h1>
@@ -490,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 animate-slide-down">
                         <div>
                             <h2 class="text-4xl font-bold" style="background: linear-gradient(135deg, hsl(175,65%,45%), hsl(265,90%,63%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">📊 Centro de Mando</h2>
-                            <p class="font-medium" style="color: var(--text-medium)">Progreso, estadísticas y auditoría completa</p>
+                            <p class="font-medium" style="color: var(--text-medium)">Progreso y estadísticas detalladas</p>
                         </div>
                         <div class="flex flex-wrap items-center gap-3">
                             <select id="dashChildSelect" onchange="updateDashboard(this.value)" class="candy-input" style="border-radius: var(--radius-full); padding: 0.6rem 1.5rem; font-weight: 700; font-size: 1rem;">
@@ -512,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
                         <div class="candy-card p-8" style="min-height: 380px">
-                            <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">🔍 Auditoría Forense</h4>
+                            <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">🔍 Historial de Actividad y Progresos</h4>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left">
                                     <thead>
