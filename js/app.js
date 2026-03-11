@@ -361,8 +361,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <!-- Title -->
                 <div class="text-center mb-6 animate-slide-down" style="animation-delay:0.1s">
-                    <h2 class="text-4xl font-bold" style="background: linear-gradient(135deg, hsl(348,100%,60%), hsl(265,90%,68%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🗺️ Viaje Matemático</h2>
-                    <p style="color: var(--text-medium)" class="font-medium">¡Llega al castillo para el gran desafío final!</p>
+                    <h2 class="text-4xl font-bold drop-shadow-md" style="color: var(--primary); text-shadow: 2px 2px 0 rgba(0,0,0,0.15);">🗺️ Viaje Matemático</h2>
+                    <p class="font-medium mt-1" style="color: var(--secondary); text-shadow: 1px 1px 0 rgba(0,0,0,0.2);">¡Llega al castillo para el gran desafío final!</p>
                 </div>
 
                 <!-- Adventure Map -->
