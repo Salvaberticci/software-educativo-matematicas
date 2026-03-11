@@ -230,6 +230,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="mt-6 text-sm" style="color: var(--text-light)">
                         ¿No tienes cuenta? <a href="#" onclick="render('register')" class="font-bold hover:underline" style="color: var(--secondary)">Regístrate aquí ✨</a>
                     </div>
+                    <div class="mt-6">
+                        <a href="about.html" target="_blank" class="text-xs font-bold uppercase tracking-wider opacity-60 hover:opacity-100 transition-opacity" style="color: var(--text-medium)">
+                            ℹ️ Acerca de MathQuest
+                        </a>
+                    </div>
                 </div>
             </div>
         `,
@@ -873,7 +878,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 return `
-                <div class="reward-card p-6 text-center ${isEquipped ? 'equipped' : isOwned ? 'owned' : ''} ${state.activeChild.coins < item.cost && !isOwned ? 'opacity-60' : ''} animate-slide-up" style="animation-delay: ${i * 0.07}s; min-height: 550px; display: flex; flex-direction: column; justify-content: space-between;">
+                <div class="reward-card p-6 text-center ${isEquipped ? 'equipped' : isOwned ? 'owned' : ''} ${state.activeChild.coins < item.cost && !isOwned ? 'opacity-60' : ''} animate-slide-up" style="animation-delay: ${i * 0.07}s; min-height: 550px; display: flex; flex-direction: column; justify-content: space-between; overflow: visible !important;">
                     <div style="position:relative; display:flex; justify-content:center; align-items:center; height: 400px; width: 100%; margin-bottom: 20px;"
                          onmouseover="let img = this.querySelector('.reward-icon-img'); if(img) img.style.transform='scale(1.05) translateY(-5px)'"
                          onmouseout="let img = this.querySelector('.reward-icon-img'); if(img) img.style.transform='scale(1) translateY(0)'">${iconDisplay}</div>

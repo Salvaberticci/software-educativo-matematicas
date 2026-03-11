@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de MathQuest - Aventuras Matemáticas</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS for layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css?v=13.0">
+    <style>
+        body {
+            background-color: var(--background);
+            background-image: url('assets/img/bg-primary.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .about-card {
+            max-width: 800px;
+            width: 100%;
+            margin: auto;
+        }
+        .section-title {
+            background: linear-gradient(135deg, var(--primary), var(--purple-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="about-card candy-card p-8 md:p-12 animate-bounce-in">
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <div class="text-6xl mb-4 floating">🚀</div>
+            <h1 class="text-5xl font-bold section-title mb-4">¿Qué es MathQuest?</h1>
+            <p class="text-xl font-medium" style="color: var(--text-medium)">Tu pasaporte a un mundo donde las matemáticas son pura magia.</p>
+        </header>
+
+        <!-- Content -->
+        <div class="space-y-10">
+            <!-- Concept -->
+            <section class="flex flex-col md:flex-row gap-6 items-start">
+                <div class="icon-circle shrink-0" style="color: var(--primary)">✨</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-3" style="color: var(--text-dark)">Software Educativo Innovador</h2>
+                    <p class="leading-relaxed" style="color: var(--text-medium)">
+                        MathQuest es una plataforma educativa diseñada para transformar el aprendizaje de las matemáticas en una experiencia gamificada y emocionante. No es solo una aplicación de ejercicios; es una aventura donde cada acierto te acerca a convertirte en un maestro matemático.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Objectives -->
+            <section class="flex flex-col md:flex-row gap-6 items-start">
+                <div class="icon-circle shrink-0" style="color: var(--secondary)">🎯</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-3" style="color: var(--text-dark)">Nuestros Objetivos</h2>
+                    <ul class="list-disc list-inside space-y-2 leading-relaxed" style="color: var(--text-medium)">
+                        <li>Fomentar la agilidad mental mediante el cálculo rápido.</li>
+                        <li>Convertir los errores en oportunidades de aprendizaje sin frustraciones.</li>
+                        <li>Incentivar la constancia diaria a través de un sistema de recompensas motivador.</li>
+                        <li>Proporcionar un entorno seguro y divertido para el desarrollo lógico.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Gameplay -->
+            <section class="flex flex-col md:flex-row gap-6 items-start">
+                <div class="icon-circle shrink-0" style="color: var(--accent-dark)">🎮</div>
+                <div>
+                    <h2 class="text-2xl font-bold mb-3" style="color: var(--text-dark)">¿Cómo se juega?</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-2xl bg-white/50 border border-white">
+                            <h4 class="font-bold text-lg mb-1" style="color: var(--primary)">🔢 Desafíos</h4>
+                            <p class="text-sm">Completa niveles de operaciones matemáticas adaptadas a tu grado escolar.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/50 border border-white">
+                            <h4 class="font-bold text-lg mb-1" style="color: var(--candy-orange)">💰 Gana Monedas</h4>
+                            <p class="text-sm">Por cada respuesta correcta y nivel superado, recibirás monedas mágicas.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/50 border border-white">
+                            <h4 class="font-bold text-lg mb-1" style="color: var(--purple-dark)">🎁 Bazar de Premios</h4>
+                            <p class="text-sm">Visita la tienda y canjea tus monedas por increíbles temas para tu perfil.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/50 border border-white">
+                            <h4 class="font-bold text-lg mb-1" style="color: var(--secondary)">🖌️ Personalización</h4>
+                            <p class="text-sm">Equipa temas de tus series favoritas: Pokémon, Barbie, Sonic y ¡muchos más!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Closing -->
+            <footer class="text-center pt-8 border-t border-gray-100">
+                <button onclick="window.close()" class="candy-btn candy-btn-primary px-10 py-4 text-xl">
+                    ¡Listo, vamos a jugar! 🍭
+                </button>
+                <p class="mt-4 text-sm font-medium" style="color: var(--text-light)">Sicmec © 2026 - Diversión que Enseña</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
