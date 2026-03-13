@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-03-2026 a las 15:58:10
+-- Tiempo de generación: 13-03-2026 a las 02:53:21
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -109,7 +109,35 @@ INSERT INTO `audit_logs` (`id`, `user_id`, `action_type`, `details`, `timestamp`
 (67, 3, 'logout', NULL, '2026-02-27 20:45:58'),
 (68, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-02-27 20:47:07'),
 (69, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-04 17:24:43'),
-(70, 3, 'logout', NULL, '2026-03-04 17:24:55');
+(70, 3, 'logout', NULL, '2026-03-04 17:24:55'),
+(71, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-09 15:27:11'),
+(72, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 1 (Súper Héroe)', '2026-03-09 15:27:35'),
+(73, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-10 18:03:19'),
+(74, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 1 (Pokémon: Horizontes)', '2026-03-10 18:04:34'),
+(75, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 2 (Ben 10)', '2026-03-10 21:43:30'),
+(76, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-10 21:47:27'),
+(77, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 10 (Dragon Ball)', '2026-03-10 21:48:25'),
+(78, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 6 (Avatar: La leyenda de Aang)', '2026-03-10 21:55:34'),
+(79, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 11 (Miraculous Ladybug)', '2026-03-10 21:56:15'),
+(80, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 4 (Los Jóvenes Titanes)', '2026-03-10 22:06:20'),
+(81, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 5 (Sonic Prime)', '2026-03-10 22:07:49'),
+(82, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 9 (Bob Esponja)', '2026-03-10 22:09:27'),
+(83, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 7 (Paw Patrol)', '2026-03-10 22:10:42'),
+(84, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 18 (Princesas de Disney)', '2026-03-10 22:11:40'),
+(85, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 16 (El Club Winx)', '2026-03-10 22:13:03'),
+(86, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 14 (My Little Pony)', '2026-03-10 22:20:06'),
+(87, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 1 (Pokémon: Horizontes)', '2026-03-10 22:33:34'),
+(88, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 2 (Ben 10)', '2026-03-10 22:34:17'),
+(89, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 10 (Dragon Ball)', '2026-03-10 22:34:51'),
+(90, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 15 (Barbie)', '2026-03-10 22:36:15'),
+(91, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 8 (Jurassic World)', '2026-03-11 13:14:15'),
+(92, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 9 (Bob Esponja)', '2026-03-11 13:14:54'),
+(93, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-11 20:34:40'),
+(94, 3, 'logout', NULL, '2026-03-11 20:45:35'),
+(95, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-11 21:22:35'),
+(96, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 3 (LEGO Ninjago)', '2026-03-11 21:26:46'),
+(97, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 4 (Los Jóvenes Titanes)', '2026-03-11 21:27:16'),
+(98, 3, 'game_session_saved', 'Niño ID: 6, Nivel ID: 2, Aciertos: 9', '2026-03-11 21:43:58');
 
 -- --------------------------------------------------------
 
@@ -135,10 +163,10 @@ CREATE TABLE `children` (
 INSERT INTO `children` (`id`, `user_id_parent`, `name`, `grade`, `avatar_id`, `coins`, `current_level`, `equipped_reward_id`) VALUES
 (1, 2, 'Juan', 2, 1, 0, 1, NULL),
 (2, 2, 'Sofia', 1, 1, 0, 1, NULL),
-(3, 3, 'Explorador', 1, 1, 50, 2, NULL),
-(4, 3, 'Juan', 1, 1, 3000, 7, 6),
+(3, 3, 'Explorador', 1, 1, 150, 2, 4),
+(4, 3, 'Juan', 1, 1, 800, 7, 7),
 (5, 4, 'Explorador', 1, 1, 0, 1, NULL),
-(6, 3, 'Olay', 2, 2, 0, 2, 1);
+(6, 3, 'Olay', 2, 2, 1795, 3, 18);
 
 -- --------------------------------------------------------
 
@@ -158,13 +186,26 @@ CREATE TABLE `child_inventory` (
 --
 
 INSERT INTO `child_inventory` (`id`, `child_id`, `reward_id`, `purchased_at`) VALUES
-(1, 4, 1, '2026-01-10 18:21:06'),
-(2, 4, 2, '2026-01-14 21:18:51'),
-(3, 4, 3, '2026-02-25 20:17:00'),
-(4, 4, 4, '2026-02-25 21:31:27'),
-(5, 4, 5, '2026-02-25 21:31:42'),
-(6, 4, 6, '2026-02-25 21:31:51'),
-(7, 6, 1, '2026-02-27 20:25:50');
+(9, 4, 1, '2026-03-10 18:04:34'),
+(10, 4, 2, '2026-03-10 21:43:30'),
+(11, 4, 10, '2026-03-10 21:48:25'),
+(12, 4, 6, '2026-03-10 21:55:34'),
+(13, 6, 11, '2026-03-10 21:56:15'),
+(14, 4, 4, '2026-03-10 22:06:20'),
+(15, 4, 5, '2026-03-10 22:07:49'),
+(16, 4, 9, '2026-03-10 22:09:27'),
+(17, 4, 7, '2026-03-10 22:10:42'),
+(18, 6, 18, '2026-03-10 22:11:40'),
+(19, 6, 16, '2026-03-10 22:13:03'),
+(20, 6, 14, '2026-03-10 22:20:06'),
+(21, 3, 1, '2026-03-10 22:33:34'),
+(22, 3, 2, '2026-03-10 22:34:17'),
+(23, 3, 10, '2026-03-10 22:34:51'),
+(24, 6, 15, '2026-03-10 22:36:15'),
+(25, 3, 8, '2026-03-11 13:14:15'),
+(26, 3, 9, '2026-03-11 13:14:54'),
+(27, 3, 3, '2026-03-11 21:26:46'),
+(28, 3, 4, '2026-03-11 21:27:16');
 
 -- --------------------------------------------------------
 
@@ -260,7 +301,8 @@ INSERT INTO `game_sessions` (`id`, `child_id`, `level_id`, `score_correct`, `sco
 (71, 5, 2, 8, 10, 104, '2026-02-25 02:52:45'),
 (72, 5, 1, 10, 10, 85, '2026-02-26 02:52:45'),
 (73, 3, 1, 10, 10, 40, '2026-02-25 21:55:54'),
-(74, 6, 1, 10, 10, 32, '2026-02-27 20:25:22');
+(74, 6, 1, 10, 10, 32, '2026-02-27 20:25:22'),
+(75, 6, 2, 9, 10, 28, '2026-03-11 21:43:58');
 
 -- --------------------------------------------------------
 
@@ -288,7 +330,11 @@ INSERT INTO `levels` (`id`, `grade`, `operation`, `min_val`, `max_val`, `target_
 (3, 2, 'suma', 5, 20, 7, '2026-01-10 17:52:38'),
 (4, 2, 'resta', 5, 20, 7, '2026-01-10 17:52:38'),
 (5, 3, 'multiplicacion', 1, 5, 7, '2026-01-10 17:52:38'),
-(6, 3, 'multiplicacion', 1, 10, 7, '2026-01-10 17:52:38');
+(6, 3, 'multiplicacion', 1, 10, 7, '2026-01-10 17:52:38'),
+(7, 4, 'multiplicacion', 5, 12, 7, '2026-03-11 21:14:19'),
+(8, 4, 'division', 2, 10, 7, '2026-03-11 21:14:19'),
+(9, 5, 'division', 5, 20, 7, '2026-03-11 21:14:19'),
+(10, 6, 'aleatorio', 10, 50, 7, '2026-03-11 21:14:19');
 
 -- --------------------------------------------------------
 
@@ -300,23 +346,38 @@ CREATE TABLE `rewards` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `cost` int(11) NOT NULL,
-  `icon` varchar(10) NOT NULL,
+  `icon` varchar(150) DEFAULT NULL,
   `category` varchar(50) DEFAULT 'avatar',
+  `target_avatar_id` int(11) DEFAULT 0,
   `theme_class` varchar(50) DEFAULT NULL,
-  `bgm_file` varchar(50) DEFAULT NULL
+  `bgm_file` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `rewards`
 --
 
-INSERT INTO `rewards` (`id`, `name`, `cost`, `icon`, `category`, `theme_class`, `bgm_file`) VALUES
-(1, 'Súper Héroe', 50, '🦸‍♂️', 'avatar', 'theme-hero', 'hero.mp3'),
-(2, 'Astronauta', 100, '👨‍🚀', 'avatar', 'theme-space', 'space.mp3'),
-(3, 'Dinosaurio', 150, '🦖', 'avatar', 'theme-dino', 'dino.mp3'),
-(4, 'Dragón Loco', 200, '🐉', 'avatar', 'theme-fantasy', 'fantasy.mp3'),
-(5, 'Fondo Espacial', 300, '🌌', 'avatar', 'theme-space', 'space.mp3'),
-(6, 'Corona Real', 500, '👑', 'avatar', 'theme-royal', 'royal.mp3');
+INSERT INTO `rewards` (`id`, `name`, `cost`, `icon`, `category`, `target_avatar_id`, `theme_class`, `bgm_file`) VALUES
+(1, 'Pokémon: Horizontes', 50, 'icon_pokemon.png', 'avatar', 1, 'theme-pokemon', 'bgm_pokemon.mp3'),
+(2, 'Ben 10', 100, 'icon_ben10.png', 'avatar', 1, 'theme-ben10', 'bgm_ben10.mp3'),
+(3, 'LEGO Ninjago', 150, 'icon_ninjago.png', 'avatar', 1, 'theme-ninjago', 'bgm_ninjago.mp3'),
+(4, 'Los Jóvenes Titanes', 200, 'icon_teentitans.png', 'avatar', 1, 'theme-teentitans', 'bgm_teentitans.mp3'),
+(5, 'Sonic Prime', 250, 'icon_sonic.png', 'avatar', 1, 'theme-sonic', 'bgm_sonic.mp3'),
+(6, 'Avatar: La leyenda de Aang', 300, 'icon_avatar.png', 'avatar', 1, 'theme-avatar', 'bgm_avatar.mp3'),
+(7, 'Paw Patrol', 350, 'icon_pawpatrol.png', 'avatar', 1, 'theme-pawpatrol', 'bgm_pawpatrol.mp3'),
+(8, 'Jurassic World', 400, 'icon_jurassic.png', 'avatar', 1, 'theme-jurassic', 'bgm_jurassic.mp3'),
+(9, 'Bob Esponja', 450, 'icon_spongebob.png', 'avatar', 1, 'theme-spongebob', 'bgm_spongebob.mp3'),
+(10, 'Dragon Ball', 500, 'icon_dragonball.png', 'avatar', 1, 'theme-dragonball', 'bgm_dragonball.mp3'),
+(11, 'Miraculous Ladybug', 50, 'icon_ladybug.png', 'avatar', 2, 'theme-ladybug', 'bgm_ladybug.mp3'),
+(12, 'Gabby\'s Dollhouse', 100, 'icon_gabby.png', 'avatar', 2, 'theme-gabby', 'bgm_gabby.mp3'),
+(13, 'Bluey', 150, 'icon_bluey.png', 'avatar', 2, 'theme-bluey', 'bgm_bluey.mp3'),
+(14, 'My Little Pony', 200, 'icon_mlp.png', 'avatar', 2, 'theme-mlp', 'bgm_mlp.mp3'),
+(15, 'Barbie', 250, 'icon_barbie.png', 'avatar', 2, 'theme-barbie', 'bgm_barbie.mp3'),
+(16, 'El Club Winx', 300, 'icon_winx.png', 'avatar', 2, 'theme-winx', 'bgm_winx.mp3'),
+(17, 'Peppa Pig', 350, 'icon_peppa.png', 'avatar', 2, 'theme-peppa', 'bgm_peppa.mp3'),
+(18, 'Princesas de Disney', 400, 'icon_disneyprincess.png', 'avatar', 2, 'theme-disneyprincess', 'bgm_disneyprincess.mp3'),
+(19, 'Princesita Sofía', 450, 'icon_sofia.png', 'avatar', 2, 'theme-sofia', 'bgm_sofia.mp3'),
+(20, 'Masha y el Oso', 500, 'icon_masha.png', 'avatar', 2, 'theme-masha', 'bgm_masha.mp3');
 
 -- --------------------------------------------------------
 
@@ -403,7 +464,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT de la tabla `children`
@@ -415,25 +476,25 @@ ALTER TABLE `children`
 -- AUTO_INCREMENT de la tabla `child_inventory`
 --
 ALTER TABLE `child_inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `game_sessions`
 --
 ALTER TABLE `game_sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `levels`
 --
 ALTER TABLE `levels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `rewards`
 --
 ALTER TABLE `rewards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
