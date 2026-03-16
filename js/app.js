@@ -1491,6 +1491,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                    <div class="admin-card">
+                        <h4 class="text-lg font-bold mb-6 flex items-center gap-2"><span>📊</span> Rendimiento Global</h4>
+                        <div class="h-64">
+                             <canvas id="adminGlobalPerformance"></canvas>
+                        </div>
+                    </div>
+                    <div class="admin-card">
+                        <h4 class="text-lg font-bold mb-6 flex items-center gap-2"><span>🔍</span> Diagnóstico por Tema</h4>
+                        <div class="h-64">
+                             <canvas id="adminDiagnosticChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="admin-card">
                     <h4 class="text-xl font-bold mb-6 flex items-center gap-2"><span>📈</span> Distribución por Niveles</h4>
                     <div id="levelDistChart" class="h-64 flex items-end gap-2 border-b border-slate-700 pb-2">

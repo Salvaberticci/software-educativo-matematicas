@@ -43,6 +43,17 @@ try {
                          ORDER BY al.timestamp DESC LIMIT 30");
     $master_logs = $stmt->fetchAll();
 
+    // 6. Diagnostic Breakdown (Hits/Errors per Level/Topic)
+    $stmt = $pdo->query("SELECT 
+        level_id,
+        SUM(score_correct) as total_hits,
+        SUM(score_total - score_correct) as total_errors,
+        COUNT(*) as sessions_count
+        FROM game_sessions
+        GROUP BY level_id
+        ORDER BY level_id ASC");
+    $diagnostics = $stmt->fetchAll();
+
     send_json([
         'success' => true,
         'totals' => [
@@ -53,7 +64,8 @@ try {
         'performance' => $global_stats,
         'level_distribution' => $level_dist,
         'users' => $users_list,
-        'logs' => $master_logs
+        'logs' => $master_logs,
+        'diagnostics' => $diagnostics
     ]);
 
 } catch (Exception $e) {
