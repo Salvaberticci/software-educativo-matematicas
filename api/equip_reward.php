@@ -11,11 +11,27 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $child_id = isset($_POST['child_id']) ? intval($_POST['child_id']) : 0;
 $reward_id = isset($_POST['reward_id']) ? intval($_POST['reward_id']) : 0;
 
-if ($child_id <= 0 || $reward_id <= 0) {
+if ($child_id <= 0) {
     send_json(['error' => 'Datos inválidos'], 400);
 }
 
 try {
+    if ($reward_id === 0) {
+        // UNEQUIP LOGIC
+        $update = $pdo->prepare("UPDATE children SET equipped_reward_id = NULL WHERE id = ?");
+        $update->execute([$child_id]);
+        
+        send_json([
+            'success' => true,
+            'message' => '¡Estilo por defecto restaurado!',
+            'theme' => [
+                'icon' => null,
+                'theme_class' => null,
+                'bgm_file' => null
+            ]
+        ]);
+    }
+
     // 2. Security Check: Does the child actually OWN this item?
     $check = $pdo->prepare("SELECT id FROM child_inventory WHERE child_id = ? AND reward_id = ?");
     $check->execute([$child_id, $reward_id]);

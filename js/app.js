@@ -1355,7 +1355,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!data.success) throw new Error('Error de datos');
 
-            grid.innerHTML = data.rewards.map((item, i) => {
+            const isAnyEquipped = state.activeChild.equipped_reward_id == null;
+            const defaultCard = `
+                <div class="reward-card p-6 text-center animate-slide-up" 
+                     style="min-height: 550px; display: flex; flex-direction: column; justify-content: space-between; border: 4px dashed rgba(0,0,0,0.1); background: rgba(255,255,255,0.5);">
+                    <div style="height: 400px; display:flex; justify-content:center; align-items:center;">
+                        <span style="font-size: 8rem; filter: grayscale(1)">🧥</span>
+                    </div>
+                    <h4 class="font-bold mb-2">Estilo Normal</h4>
+                    <p class="text-xs text-slate-400 mb-4">Vuelve al estilo original</p>
+                    ${isAnyEquipped 
+                        ? `<button disabled class="candy-btn w-full py-2" style="background: #ccc; color: white;">✅ Por Defecto</button>`
+                        : `<button onclick="handleRewardAction(0, 0, true)" class="candy-btn candy-btn-secondary w-full py-2">Restaurar</button>`
+                    }
+                </div>
+            `;
+
+            grid.innerHTML = defaultCard + data.rewards.map((item, i) => {
                 let btnHtml = '';
                 const isEquipped = item.equipped == 1;
                 const isOwned = item.owned == 1;
