@@ -508,9 +508,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
 
                     <!-- Answer Field -->
-                    <div class="max-w-xs mx-auto mb-8">
+                    <div id="answerContainer" class="max-w-xs mx-auto mb-8">
                         <input type="number" id="answerField" autofocus placeholder="?"
                                class="candy-input-answer" disabled>
+                    </div>
+
+                    <div id="fractionAnswerContainer" class="max-w-xs mx-auto mb-8 hidden flex flex-col items-center gap-2">
+                        <input type="number" id="numerField" placeholder="Numerador"
+                               class="candy-input-answer text-4xl w-32 py-2" style="border-bottom: 4px solid var(--text-dark); border-radius: 12px 12px 0 0">
+                        <input type="number" id="denomField" placeholder="Denominador"
+                               class="candy-input-answer text-4xl w-32 py-2" style="border-radius: 0 0 12px 12px">
                     </div>
 
                     <!-- Submit Button -->
@@ -1031,20 +1038,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-        if (data.operator === 'fraccion') {
-            document.getElementById('equation').innerHTML = renderFractionVisual(data.fraction_data);
-        } else if (data.operator === 'equiv') {
-            document.getElementById('equation').innerHTML = renderEquivFractionVisual(data.fraction_data);
+        if (data.operator === 'fraccion' || data.operator === 'equiv') {
+            document.getElementById('answerContainer').classList.add('hidden');
+            document.getElementById('fractionAnswerContainer').classList.remove('hidden');
+            document.getElementById('numerField').value = '';
+            document.getElementById('denomField').value = '';
+            document.getElementById('numerField').disabled = false;
+            document.getElementById('denomField').disabled = false;
+            document.getElementById('numerField').focus();
+            
+            if (data.operator === 'fraccion') {
+                document.getElementById('equation').innerHTML = renderFractionVisual(data.fraction_data);
+            } else {
+                document.getElementById('equation').innerHTML = renderEquivFractionVisual(data.fraction_data);
+            }
         } else {
+            document.getElementById('answerContainer').classList.remove('hidden');
+            document.getElementById('fractionAnswerContainer').classList.add('hidden');
             document.getElementById('equation').innerText = `${data.n1} ${data.operator} ${data.n2}`;
             document.getElementById('equation').style.color = 'var(--text-dark)';
+            document.getElementById('answerField').value = '';
+            document.getElementById('answerField').disabled = false;
+            document.getElementById('answerField').focus();
         }
         
-        document.getElementById('answerField').value = '';
-        document.getElementById('answerField').disabled = false;
         document.getElementById('submitBtn').disabled = false;
-        document.getElementById('answerField').focus();
-
         startTimer();
     }
 
@@ -1103,9 +1121,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.submitAnswer = async (timeout = false) => {
         clearTimeout(gameData.timer);
-        const input = document.getElementById('answerField');
-        const userAnswer = parseInt(input.value);
-        const isCorrect = !timeout && userAnswer === gameData.currentAnswer;
+        
+        let isCorrect = false;
+        if (!timeout) {
+            if (typeof gameData.currentAnswer === 'object') {
+                const uNumer = parseInt(document.getElementById('numerField').value);
+                const uDenom = parseInt(document.getElementById('denomField').value);
+                isCorrect = uNumer === gameData.currentAnswer.numer && uDenom === gameData.currentAnswer.denom;
+            } else {
+                const input = document.getElementById('answerField');
+                const userAnswer = parseInt(input.value);
+                isCorrect = userAnswer === gameData.currentAnswer;
+            }
+        }
 
         if (isCorrect) {
             playSound('correct');

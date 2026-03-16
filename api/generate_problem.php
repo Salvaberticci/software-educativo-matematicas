@@ -112,7 +112,7 @@ send_json([
     'n1' => $n1,
     'n2' => $n2,
     'operator' => $operator,
-    'answer' => $answer,
+    'answer' => ($operator === 'fraccion' || $operator === 'equiv') ? ['numer' => $answer, 'denom' => ($operator === 'fraccion' ? $denom : $denom_equiv)] : $answer,
     'total_questions' => (int)$level['total_questions'],
     'fraction_data' => $fraction_data,
     'level_info' => [
