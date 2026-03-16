@@ -92,7 +92,13 @@ switch ($level['operation']) {
             if ($n1 < $n2) { $t = $n1; $n1 = $n2; $n2 = $t; }
             $operator = '-'; $answer = $n1 - $n2; 
         }
-        elseif ($op === 'multiplicacion') { $operator = '×'; $answer = $n1 * $n2; }
+        elseif ($op === 'multiplicacion') { 
+            // Cap to single digits for children (1-10)
+            $n1 = rand(1, 10);
+            $n2 = rand(1, 10);
+            $operator = '×'; 
+            $answer = $n1 * $n2; 
+        }
         elseif ($op === 'division') {
             $d = rand(1, 10); $r = rand(1, 10); $n1 = $d * $r; $n2 = $d; $operator = '÷'; $answer = $r;
         } else {
