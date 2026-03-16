@@ -66,21 +66,23 @@ switch ($level['operation']) {
         ];
         break;
     case 'fraccion_equiv':
+        // Simplificado: Ahora solo pedimos identificar la fracción resultante (ej: 3/6)
+        // para mantener un solo visual como pidió el usuario.
+        $mult = rand(2, 3);
         $denom_base = rand(2, 4);
         $numer_base = rand(1, $denom_base - 1);
-        $mult = rand(2, 3);
-        $denom_equiv = $denom_base * $mult;
-        $numer_equiv = $numer_base * $mult;
         
-        $operator = 'equiv';
-        $answer = $numer_equiv;
-        $n1 = $numer_base;
-        $n2 = $denom_base;
+        $denom = $denom_base * $mult;
+        $numer = $numer_base * $mult;
+        
+        $operator = 'fraccion'; // Cambiamos a fraccion simple
+        $answer = $numer;
+        $n1 = $numer;
+        $n2 = $denom;
         $fraction_data = [
-            'type' => 'equiv',
-            'numer_base' => $numer_base,
-            'denom_base' => $denom_base,
-            'denom_equiv' => $denom_equiv,
+            'type' => 'basica',
+            'numer' => $numer,
+            'denom' => $denom,
             'food' => $foods[array_rand($foods)]
         ];
         break;
@@ -112,7 +114,7 @@ send_json([
     'n1' => $n1,
     'n2' => $n2,
     'operator' => $operator,
-    'answer' => ($operator === 'fraccion' || $operator === 'equiv') ? ['numer' => $answer, 'denom' => ($operator === 'fraccion' ? $denom : $denom_equiv)] : $answer,
+    'answer' => ($operator === 'fraccion') ? ['numer' => $n1, 'denom' => $n2] : $answer,
     'total_questions' => (int)$level['total_questions'],
     'fraction_data' => $fraction_data,
     'level_info' => [

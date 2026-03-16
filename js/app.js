@@ -513,11 +513,15 @@ document.addEventListener('DOMContentLoaded', () => {
                                class="candy-input-answer" disabled>
                     </div>
 
-                    <div id="fractionAnswerContainer" class="max-w-xs mx-auto mb-8 hidden flex flex-col items-center gap-2">
-                        <input type="number" id="numerField" placeholder="Numerador"
-                               class="candy-input-answer text-4xl w-32 py-2" style="border-bottom: 4px solid var(--text-dark); border-radius: 12px 12px 0 0">
-                        <input type="number" id="denomField" placeholder="Denominador"
-                               class="candy-input-answer text-4xl w-32 py-2" style="border-radius: 0 0 12px 12px">
+                    <div id="fractionAnswerContainer" class="max-w-xs mx-auto mb-8 hidden">
+                        <div class="flex flex-col items-center gap-2">
+                             <input type="number" id="numerField" placeholder="?"
+                                    class="candy-input-answer text-5xl w-32 py-2 text-center" 
+                                    style="border-bottom: 6px solid var(--text-dark); border-radius: 15px 15px 0 0; background: white;">
+                             <input type="number" id="denomField" placeholder="?"
+                                    class="candy-input-answer text-5xl w-32 py-2 text-center" 
+                                    style="border-radius: 0 0 15px 15px; background: white;">
+                        </div>
                     </div>
 
                     <!-- Submit Button -->
@@ -1038,7 +1042,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-        if (data.operator === 'fraccion' || data.operator === 'equiv') {
+        if (data.operator === 'fraccion') {
             document.getElementById('answerContainer').classList.add('hidden');
             document.getElementById('fractionAnswerContainer').classList.remove('hidden');
             document.getElementById('numerField').value = '';
@@ -1047,11 +1051,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('denomField').disabled = false;
             document.getElementById('numerField').focus();
             
-            if (data.operator === 'fraccion') {
-                document.getElementById('equation').innerHTML = renderFractionVisual(data.fraction_data);
-            } else {
-                document.getElementById('equation').innerHTML = renderEquivFractionVisual(data.fraction_data);
-            }
+            document.getElementById('equation').innerHTML = renderFractionVisual(data.fraction_data);
         } else {
             document.getElementById('answerContainer').classList.remove('hidden');
             document.getElementById('fractionAnswerContainer').classList.add('hidden');
@@ -1239,53 +1239,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
-    }
-
-    function renderEquivFractionVisual(data) {
-        const { numer_base, denom_base, denom_equiv, food } = data;
-        return `
-            <div class="flex flex-col items-center gap-6 animate-pop-in">
-                <div class="candy-card p-3 mb-2 bg-orange-100 border-orange-200">
-                    <h3 class="text-xl font-black text-orange-600 font-fredoka uppercase tracking-wider flex items-center gap-2">
-                        <span>🍕</span> Pizzas Equivalentes
-                    </h3>
-                </div>
-                <div class="flex items-center gap-6">
-                    <div class="flex flex-col items-center">
-                        <div class="relative p-4 bg-[#FDF2E9] rounded-2xl border-2 border-dashed border-[#E67E22] shadow-sm mb-3">
-                             ${renderSmallPie(numer_base, denom_base, food)}
-                        </div>
-                        <div class="flex flex-col items-center justify-center text-2xl font-black font-fredoka">
-                            <span class="border-b-4 border-slate-800 px-2 pb-1">${numer_base}</span>
-                            <span class="pt-1 text-slate-400">${denom_base}</span>
-                        </div>
-                    </div>
-                    <div class="text-5xl font-black text-[#E67E22] -mt-8 animate-pulse">＝</div>
-                    <div class="flex flex-col items-center">
-                        <div class="relative p-4 bg-[#FDF2E9] rounded-2xl border-4 border-[#E67E22] shadow-xl mb-3">
-                             ${renderSmallPie(0, denom_equiv, food, true)}
-                        </div>
-                        <div class="flex flex-col items-center justify-center text-2xl font-black font-fredoka" style="color: var(--primary)">
-                            <span class="border-b-4 border-orange-600 px-3 pb-1 text-orange-600">?</span>
-                            <span class="pt-1 text-slate-400">${denom_equiv}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function renderSmallPie(numer, denom, food, isQuestion = false) {
-        const radius = 35;
-        const centerX = 50;
-        const centerY = 50;
-        let paths = '';
-        for (let i = 0; i < denom; i++) {
-            const startAngle = (i * 360) / denom;
-            const endAngle = ((i + 1) * 360) / denom;
-            paths += getPizzaSlice(centerX, centerY, radius, startAngle, endAngle, isQuestion ? false : i < numer);
-        }
-        return `<svg viewBox="0 0 100 100" class="w-24 h-24 drop-shadow-sm">${paths}</svg>`;
     }
 
     function showFeedback(correct) {
