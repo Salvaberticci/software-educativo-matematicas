@@ -1506,11 +1506,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
-                <div class="admin-card">
-                    <h4 class="text-xl font-bold mb-6 flex items-center gap-2"><span>📈</span> Distribución por Niveles</h4>
-                    <div id="levelDistChart" class="h-64 flex items-end gap-2 border-b border-slate-700 pb-2">
-                        <!-- Bars by JS -->
-                        <p class="w-full text-center opacity-30 text-sm">Cargando distribución...</p>
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-10">
+                    <div class="xl:col-span-2 admin-card">
+                        <h4 class="text-xl font-bold mb-6 flex items-center gap-2"><span>📈</span> Distribución de Progreso</h4>
+                        <div id="levelDistChart" class="h-64 flex items-end gap-2 border-b border-slate-700 pb-2">
+                            <p class="w-full text-center opacity-30 text-sm">Cargando distribución...</p>
+                        </div>
+                    </div>
+                    <div class="admin-card border-orange-500/20 bg-orange-500/5">
+                        <h4 class="text-xl font-bold mb-6 flex items-center gap-2 text-orange-400"><span>🚨</span> Áreas Críticas</h4>
+                        <div id="criticalAreasList" class="space-y-4">
+                            <p class="text-sm text-slate-500 italic">Analizando debilidades...</p>
+                        </div>
                     </div>
                 </div>
             `;
