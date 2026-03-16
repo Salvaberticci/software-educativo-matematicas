@@ -477,6 +477,72 @@ document.addEventListener('DOMContentLoaded', () => {
                                         <div id="bossHpBar" class="h-full bg-gradient-to-r from-red-500 to-orange-400 transition-all duration-500" style="width: 100%"></div>
                                     </div>
                                 </div>
+
+                                <div class="relative w-full">
+                                    <p id="bossShout" class="bg-white px-6 py-4 rounded-3xl shadow-lg border-2 border-slate-100 text-lg font-bold text-slate-600 text-center italic animate-bounce-in min-h-[3rem] flex items-center justify-center">
+                                        ¡Preparate para el reto!
+                                    </p>
+                                    <div class="absolute -top-3 left-1/2 -track-x-1/2 w-6 h-6 bg-white border-l-2 border-t-2 border-slate-100 rotate-45" style="left: 50%; transform: translateX(-50%) rotate(45deg);"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Columna Derecha: Ejercicios -->
+                        <div class="flex flex-col gap-6">
+                            <!-- Progress & Timer -->
+                            <div class="candy-card p-6 animate-slide-down">
+                                <div class="flex justify-between items-center mb-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1">Tu Progreso</span>
+                                        <h4 id="questionCounter" class="text-3xl font-black" style="color: var(--primary)">1 / 10</h4>
+                                    </div>
+                                    <div id="feedback" class="text-5xl opacity-0 scale-50 transition-all duration-300">✨</div>
+                                </div>
+                                <div class="progress-bar-track" style="height: 16px;">
+                                    <div id="timerBar" class="progress-bar-fill" style="height: 100%; width: 100%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Exercise Area -->
+                            <div class="candy-card p-10 text-center relative overflow-visible animate-bounce-in min-h-[400px] flex flex-col justify-center items-center">
+                                <!-- Mascot icon -->
+                                <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full flex items-center justify-center text-5xl border-4 border-white shadow-xl"
+                                     style="background: linear-gradient(135deg, hsl(52,94%,72%), hsl(45,100%,62%)); animation: floating 2.5s ease-in-out infinite">
+                                    🤔
+                                </div>
+
+                                <!-- Equation -->
+                                <div id="equation" class="font-bold mb-10 tracking-wider flex items-center justify-center text-6xl text-gray-400 w-full" style="font-size: clamp(3rem, 10vw, 6rem);">
+                                    <span class="animate-pulse">⏳</span>
+                                </div>
+
+                                <!-- Inputs -->
+                                <div id="answerContainer" class="w-full max-w-sm mb-8">
+                                    <input type="number" id="answerField" autofocus placeholder="?"
+                                           class="candy-input-answer text-5xl" disabled>
+                                </div>
+
+                                <div id="fractionAnswerContainer" class="w-full max-w-sm mb-8 hidden">
+                                    <div class="flex flex-col items-center gap-2">
+                                         <input type="number" id="numerField" placeholder="?"
+                                                class="candy-input-answer text-6xl w-40 py-4 text-center" 
+                                                style="border-bottom: 8px solid var(--text-dark); border-radius: 20px 20px 0 0; background: white;">
+                                         <input type="number" id="denomField" placeholder="?"
+                                                class="candy-input-answer text-6xl w-40 py-4 text-center" 
+                                                style="border-radius: 0 0 20px 20px; background: white;">
+                                    </div>
+                                </div>
+
+                                <!-- Submit btn -->
+                                <button id="submitBtn" onclick="submitAnswer()" class="candy-btn candy-btn-primary w-full max-w-sm py-6 text-3xl" disabled>
+                                    ¡Listo! 🍬
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback overlay -->
                 <div id="feedback" class="fixed inset-0 pointer-events-none flex items-center justify-center z-50 transition-all duration-300 opacity-0 scale-50">
                     <div class="text-[10rem]"></div>
                 </div>
