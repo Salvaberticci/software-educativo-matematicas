@@ -108,6 +108,12 @@ send_json([
     'operator' => $operator,
     'answer' => $answer,
     'total_questions' => (int)$level['total_questions'],
-    'fraction_data' => $fraction_data
+    'fraction_data' => $fraction_data,
+    'level_info' => [
+        'story_intro' => $level['story_intro'],
+        'boss_name' => $level['boss_name'],
+        'boss_icon' => $level['boss_icon'],
+        'theme_id' => $level['theme_id']
+    ]
 ]);
 ?>

@@ -448,17 +448,46 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="min-h-screen p-4 pb-8">
                 <!-- Top Bar -->
                 <div class="max-w-2xl mx-auto flex justify-between items-center mb-6 animate-slide-down">
-                    <button onclick="render('levelMap')" class="candy-btn candy-btn-secondary px-5 py-2">
-                        ← Escapar
-                    </button>
-                    <div class="candy-card px-6 py-2">
-                        <span class="text-2xl font-bold" style="color: var(--primary)" id="questionCounter">1 / 10</span>
-                    </div>
-                    <div class="candy-card px-5 py-2 flex items-center gap-2">
-                        <img src="assets/img/coin.gif" width="28" height="28" class="inline-block" alt="Moneda">
-                        <span id="gameCoins" class="text-xl font-bold" style="color: hsl(35,100%,45%)">${state.activeChild.coins}</span>
+                    <button onclick="render('levelMap')" class="candy-btn candy-btn-secondary px-4 py-2 text-xs">← Rendirse</button>
+                    <div class="flex items-center gap-2">
+                        <img src="assets/img/coin.gif" width="24" height="24" alt="Monedas">
+                        <span id="gameCoins" class="font-bold text-xl" style="color: hsl(35,100%,45%)">${state.activeChild.coins}</span>
                     </div>
                 </div>
+
+                <!-- Main Game Container -->
+                <div class="max-w-2xl mx-auto candy-card p-6 md:p-10 relative overflow-hidden" style="min-height: 500px">
+                    
+                    <!-- Boss Area (Hidden by default) -->
+                    <div id="bossArea" class="hidden animate-slide-down mb-8">
+                        <div class="flex flex-col items-center">
+                            <div class="flex items-center gap-4 mb-2 w-full">
+                                <div id="bossIcon" class="text-5xl floating">👺</div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span id="bossName" class="font-black text-xs uppercase tracking-widest text-red-600">Jefe Final</span>
+                                        <span id="bossHpText" class="font-bold text-[10px] text-slate-400">100 / 100</span>
+                                    </div>
+                                    <div class="h-4 w-full bg-slate-200 rounded-full border-2 border-white shadow-sm overflow-hidden">
+                                        <div id="bossHpBar" class="h-full bg-gradient-to-r from-red-500 to-orange-400 transition-all duration-500" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="bossShout" class="bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-100 text-xs font-bold text-slate-500 relative mb-4 italic">
+                                ¡No podrás conmigo!
+                                <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 border-8 border-transparent border-t-white"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Header -->
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1">Tu Progreso</span>
+                            <h4 id="questionCounter" class="text-2xl font-black" style="color: var(--primary)">1 / 10</h4>
+                        </div>
+                        <div id="feedback" class="text-4xl opacity-0 scale-50 transition-all duration-300">✨</div>
+                    </div>
 
                 <!-- Timer Bar -->
                 <div class="max-w-2xl mx-auto mb-8 progress-bar-track" style="height: 14px;">
@@ -917,25 +946,113 @@ document.addEventListener('DOMContentLoaded', () => {
         total: 10,
         currentAnswer: 0,
         startTime: 0,
-        timer: null
+        timer: null,
+        levelInfo: null,
+        bossHp: 3,
+        maxBossHp: 3
     };
 
     window.startLevel = async (levelId) => {
-        gameData.levelId = levelId;
-        gameData.currentQuestion = 1;
-        gameData.correct = 0;
-        gameData.startTime = Date.now();
-        await render('game');
-        nextQuestion();
+        try {
+            // First, fetch the problem to get the story/boss metadata
+            const res = await fetch(`api/generate_problem.php?level_id=${levelId}`);
+            const data = await res.json();
+            
+            gameData.levelId = levelId;
+            gameData.currentQuestion = 1;
+            gameData.correct = 0;
+            gameData.startTime = Date.now();
+            gameData.levelInfo = data.level_info;
+            gameData.maxBossHp = 3; // Fixed for now, last 3 questions
+            gameData.bossHp = 3;
+
+            // Show Story Intro Modal
+            await Swal.fire({
+                title: '🏰 ¡Nueva Aventura!',
+                html: `
+                    <div class="text-center p-4">
+                        <div class="text-6xl mb-4 animate-bounce-in">📖</div>
+                        <p class="text-lg font-medium leading-relaxed" style="color: var(--text-dark)">${gameData.levelInfo.story_intro || '¡Tu viaje continúa!'}</p>
+                        <div class="mt-6 p-4 bg-red-100 rounded-xl border-2 border-red-200">
+                             <p class="text-[10px] font-black uppercase text-red-500 tracking-widest mb-1">Cuidado con el Jefe</p>
+                             <div class="flex items-center justify-center gap-3">
+                                <span class="text-3xl">${gameData.levelInfo.boss_icon || '👹'}</span>
+                                <span class="font-black text-slate-800">${gameData.levelInfo.boss_name || 'Desconocido'}</span>
+                             </div>
+                        </div>
+                    </div>
+                `,
+                confirmButtonText: '¡ACEPTAR EL RETO! ⚔️',
+                confirmButtonColor: 'var(--primary)',
+                background: '#fff url(assets/img/adventure/modal_bg.png)',
+                showClass: { popup: 'animate__animated animate__zoomIn' },
+                hideClass: { popup: 'animate__animated animate__zoomOut' }
+            });
+
+            await render('game');
+            // We already have the data for the first question
+            processQuestionData(data);
+        } catch (err) {
+            Swal.fire('Error', 'No se pudo iniciar el nivel', 'error');
+        }
     };
+
+    function processQuestionData(data) {
+        gameData.currentAnswer = data.answer;
+        gameData.total = data.total_questions || 10;
+        document.getElementById('questionCounter').innerText = `${gameData.currentQuestion} / ${gameData.total}`;
+
+        // Boss Phase Logic: Last 3 questions
+        const bossThreshold = gameData.total - 2;
+        if (gameData.currentQuestion >= bossThreshold) {
+            const bossArea = document.getElementById('bossArea');
+            if (bossArea.classList.contains('hidden')) {
+                bossArea.classList.remove('hidden');
+                document.getElementById('bossName').innerText = gameData.levelInfo.boss_name || 'Jefe Final';
+                document.getElementById('bossIcon').innerText = gameData.levelInfo.boss_icon || '👺';
+                updateBossUI();
+                playSound('win'); // Short fanfare for boss arrival
+            }
+        }
+
+        if (data.operator === 'fraccion') {
+            document.getElementById('equation').innerHTML = renderFractionVisual(data.fraction_data);
+        } else if (data.operator === 'equiv') {
+            document.getElementById('equation').innerHTML = renderEquivFractionVisual(data.fraction_data);
+        } else {
+            document.getElementById('equation').innerText = `${data.n1} ${data.operator} ${data.n2}`;
+            document.getElementById('equation').style.color = 'var(--text-dark)';
+        }
+        
+        document.getElementById('answerField').value = '';
+        document.getElementById('answerField').disabled = false;
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('answerField').focus();
+
+        startTimer();
+    }
+
+    function updateBossUI() {
+        const hpBar = document.getElementById('bossHpBar');
+        const hpText = document.getElementById('bossHpText');
+        if (!hpBar || !hpText) return;
+
+        const pct = (gameData.bossHp / gameData.maxBossHp) * 100;
+        hpBar.style.width = `${pct}%`;
+        hpText.innerText = `${gameData.bossHp} / ${gameData.maxBossHp}`;
+
+        const bossShout = document.getElementById('bossShout');
+        if (gameData.bossHp === 3) bossShout.innerText = '¡Nadie ha pasado por aquí!';
+        else if (gameData.bossHp === 2) bossShout.innerText = '¡Argh! ¡Eso dolió, pero no me detendrás!';
+        else if (gameData.bossHp === 1) bossShout.innerText = '¡IMPOSIBLE! ¡Me rindo... casi!';
+        else bossShout.innerText = '¡NOOOO! ¡Derrotado!';
+    }
 
     async function nextQuestion() {
         if (gameData.currentQuestion > gameData.total) {
             finishGame();
             return;
         }
-
-        document.getElementById('questionCounter').innerText = `${gameData.currentQuestion} / ${gameData.total}`;
 
         try {
             document.getElementById('equation').innerHTML = '<span class="animate-pulse text-6xl text-gray-400 flex items-center justify-center">⏳</span>';
@@ -946,25 +1063,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch(`api/generate_problem.php?level_id=${gameData.levelId}`);
             const data = await res.json();
 
-            gameData.currentAnswer = data.answer;
-            gameData.total = data.total_questions || 10;
-            document.getElementById('questionCounter').innerText = `${gameData.currentQuestion} / ${gameData.total}`;
-
-            if (data.operator === 'fraccion') {
-                document.getElementById('equation').innerHTML = renderFractionVisual(data.fraction_data);
-            } else if (data.operator === 'equiv') {
-                document.getElementById('equation').innerHTML = renderEquivFractionVisual(data.fraction_data);
-            } else {
-                document.getElementById('equation').innerText = `${data.n1} ${data.operator} ${data.n2}`;
-                document.getElementById('equation').style.color = 'var(--text-dark)';
-            }
-            
-            document.getElementById('answerField').value = '';
-            document.getElementById('answerField').disabled = false;
-            document.getElementById('submitBtn').disabled = false;
-            document.getElementById('answerField').focus();
-
-            startTimer();
+            processQuestionData(data);
         } catch (err) {
             Swal.fire('Error', 'Error al generar pregunta', 'error');
         }
@@ -997,6 +1096,17 @@ document.addEventListener('DOMContentLoaded', () => {
             gameData.correct++;
             state.activeChild.coins += 5;
             document.getElementById('gameCoins').innerText = state.activeChild.coins;
+            
+            // Damage Boss if in boss phase
+            const bossThreshold = gameData.total - 2;
+            if (gameData.currentQuestion >= bossThreshold) {
+                gameData.bossHp--;
+                updateBossUI();
+                const bossIcon = document.getElementById('bossIcon');
+                bossIcon.classList.add('animate-shake');
+                setTimeout(() => bossIcon.classList.remove('animate-shake'), 500);
+            }
+
             confetti({
                 particleCount: 100,
                 spread: 70,
@@ -1005,6 +1115,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             playSound('wrong');
+            // Boss Laughs/Counters if in boss phase
+            const bossThreshold = gameData.total - 2;
+            if (gameData.currentQuestion >= bossThreshold) {
+                document.getElementById('bossShout').innerText = '¡JAJAJA! ¡Demasiado lento!';
+            }
         }
 
         showFeedback(isCorrect);
@@ -1162,11 +1277,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     state.activeChild.current_level++;
                 }
                 playSound('win');
+                
+                let winTitle = '¡Nivel Completado!';
+                let winText = `Lograste ${gameData.correct} aciertos y ganaste ${data.coins_earned} monedas.`;
+
+                if (gameData.bossHp <= 0) {
+                    winTitle = '¡VICTORIA ÉPICA! 🏆';
+                    winText = `¡Has derrotado al ${gameData.levelInfo.boss_name}! El reino está a salvo. Ganaste ${data.coins_earned} monedas.`;
+                    confetti({ particleCount: 200, spread: 100, origin: { y: 0.5 } });
+                }
+
                 Swal.fire({
-                    title: '¡Juego Terminado!',
-                    text: `Lograste ${gameData.correct} aciertos y ganaste ${data.coins_earned} monedas.`,
+                    title: winTitle,
+                    text: winText,
                     icon: 'success',
-                    confirmButtonText: '¡Genial! 🍭'
+                    confirmButtonText: '¡Genial! 🍭',
+                    background: '#fff url(assets/img/adventure/victory_bg.png)',
                 });
                 render('levelMap');
             }
