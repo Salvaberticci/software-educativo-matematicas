@@ -561,8 +561,23 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
 
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                        <div class="candy-card p-8 flex flex-col">
+                            <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">🔍 Diagnóstico por Tema</h4>
+                            <div class="w-full h-[300px] flex justify-center overflow-hidden flex-1">
+                                <canvas id="diagChartChild"></canvas>
+                            </div>
+                        </div>
+                        <div class="candy-card p-8 border-orange-500/20" style="background: linear-gradient(135deg, rgba(251, 146, 60, 0.05), transparent);">
+                            <h4 class="text-xl font-bold mb-6 text-orange-600 flex items-center gap-2"><span>🚨</span> Áreas Críticas</h4>
+                            <div id="criticalAreasChild" class="space-y-4">
+                                <p class="text-sm text-slate-400 italic">Analizando debilidades...</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="candy-card p-8 mb-10">
-                        <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">🔍 Historial de Actividad y Progresos</h4>
+                        <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">📊 Historial de Actividad y Progresos</h4>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left">
                                 <thead>
@@ -1313,6 +1328,16 @@ document.addEventListener('DOMContentLoaded', () => {
             initPerformanceChart(history);
             initHitsChart(stats.total_hits || 0, stats.total_errors || 0);
 
+            // Diagnostics & Critical Areas
+            const diagnostics = Array.isArray(data.diagnostics) ? data.diagnostics : [];
+            initDiagChartChild(diagnostics);
+            renderCriticalAreasChild(diagnostics);
+
+            // Diagnostics & Critical Areas
+            const diagnostics = Array.isArray(data.diagnostics) ? data.diagnostics : [];
+            initDiagChartChild(diagnostics);
+            renderCriticalAreasChild(diagnostics);
+
         } catch (err) {
             console.error('Error dashboard:', err);
             const ds = document.getElementById('dashStats');
@@ -1979,8 +2004,108 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    let diagChartChild = null;
+    function initDiagChartChild(diagnostics) {
+        const ctxEl = document.getElementById('diagChartChild');
+        if (!ctxEl) return;
+        const ctx = ctxEl.getContext('2d');
+        if (diagChartChild) diagChartChild.destroy();
+
+        const labels = diagnostics.map(d => {
+            const level = state.levels.find(l => l.id == d.level_id);
+            return level ? level.name.split(' ')[0] + ' ' + (level.name.split(' ')[1] || '') : `Nivel ${d.level_id}`;
+        });
+
+        diagChartChild = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Aciertos',
+                        data: diagnostics.map(d => d.total_hits),
+                        backgroundColor: 'hsl(150, 80%, 45%)',
+                        borderRadius: 8,
+                    },
+                    {
+                        label: 'Fallas',
+                        data: diagnostics.map(d => d.total_errors),
+                        backgroundColor: 'hsl(0, 80%, 65%)',
+                        borderRadius: 8,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true, grid: { display: false }, ticks: { font: { family: 'Fredoka' } } },
+                    y: { stacked: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { family: 'Fredoka' } } }
+                },
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { family: 'Fredoka', weight: 'bold' } } }
+                }
+            }
+        });
+    }
+
+    function renderCriticalAreasChild(diagnostics) {
+        const container = document.getElementById('criticalAreasChild');
+        if (!container) return;
+
+        const analyzed = diagnostics.map(d => {
+            const total = parseInt(d.total_hits) + parseInt(d.total_errors);
+            const errorRate = total > 0 ? (d.total_errors / total) * 100 : 0;
+            const level = state.levels.find(l => l.id == d.level_id);
+            return {
+                id: d.level_id,
+                name: level ? level.name : `Nivel ${d.level_id}`,
+                errorRate: errorRate,
+                total: total
+            };
+        }).filter(a => a.total > 0 && a.errorRate > 20)
+          .sort((a,b) => b.errorRate - a.errorRate)
+          .slice(0, 3);
+
+        if (analyzed.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-6">
+                    <div class="text-4xl mb-2">⭐</div>
+                    <p class="font-bold text-green-600">¡Todo va genial!</p>
+                    <p class="text-xs text-slate-500">No se detectan debilidades importantes por ahora.</p>
+                </div>
+            `;
+            return;
+        }
+
+        const adviceMap = {
+            'Suma': 'Refuerza sumas con objetos reales o el ábaco.',
+            'Resta': 'Usa la recta numérica para practicar los saltos hacia atrás.',
+            'Reloj': 'Practica con un reloj de cartón moviendo las manecillas.',
+            'Fracción': '¡Hora de la pizza! Cortar comida es genial para entender fracciones.',
+            'Equiv': 'Busca diferentes formas de representar un mismo número.'
+        };
+
+        container.innerHTML = analyzed.map(a => {
+            let advice = 'Repasar los conceptos de este nivel.';
+            for (let [key, val] of Object.entries(adviceMap)) {
+                if (a.name.includes(key)) { advice = val; break; }
+            }
+
+            return `
+                <div class="p-4 rounded-2xl" style="background: rgba(255,255,255,0.4); border: 1px solid rgba(0,0,0,0.05)">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-sm" style="color: var(--text-dark)">${a.name}</span>
+                        <span class="text-[10px] bg-red-100 text-red-600 font-bold px-2 py-0.5 rounded-full">${Math.round(a.errorRate)}% error</span>
+                    </div>
+                    <p class="text-[11px] leading-relaxed" style="color: var(--text-medium)">
+                        <b class="text-orange-500">CONSEJO:</b> ${advice}
+                    </p>
+                </div>
+            `;
+        }).join('');
+    }
+
     checkSession();
 });
-
-
 

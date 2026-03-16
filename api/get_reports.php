@@ -47,10 +47,24 @@ if ($_SESSION['role'] === 'parent') {
         $stmt->execute([$child_id]);
         $history = $stmt->fetchAll();
 
+        // New Detailed Diagnostics (Hits/Errors per Level)
+        $stmt = $pdo->prepare("SELECT 
+            level_id,
+            SUM(score_correct) as total_hits,
+            SUM(score_total - score_correct) as total_errors,
+            COUNT(*) as sessions_count
+            FROM game_sessions
+            WHERE child_id = ?
+            GROUP BY level_id
+            ORDER BY level_id ASC");
+        $stmt->execute([$child_id]);
+        $diagnostics = $stmt->fetchAll();
+
         send_json([
             'logs' => $logs,
             'stats' => $stats,
-            'history' => $history
+            'history' => $history,
+            'diagnostics' => $diagnostics
         ]);
     } else {
         send_json(['logs' => $logs]);
