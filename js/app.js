@@ -445,92 +445,38 @@ document.addEventListener('DOMContentLoaded', () => {
         `,
 
         game: () => `
-            <div class="min-h-screen p-4 pb-8">
-                <!-- Top Bar -->
-                <div class="max-w-2xl mx-auto flex justify-between items-center mb-6 animate-slide-down">
-                    <button onclick="render('levelMap')" class="candy-btn candy-btn-secondary px-4 py-2 text-xs">← Rendirse</button>
-                    <div class="flex items-center gap-2">
-                        <img src="assets/img/coin.gif" width="24" height="24" alt="Monedas">
-                        <span id="gameCoins" class="font-bold text-xl" style="color: hsl(35,100%,45%)">${state.activeChild.coins}</span>
+            <div class="min-h-screen p-4 pb-8 flex items-center justify-center">
+                <div class="w-full max-w-6xl">
+                    <!-- Top Bar -->
+                    <div class="flex justify-between items-center mb-6 animate-slide-down px-4">
+                        <button onclick="render('levelMap')" class="candy-btn candy-btn-secondary px-4 py-2 text-xs">← Rendirse</button>
+                        <div class="flex items-center gap-2">
+                            <img src="assets/img/coin.gif" width="24" height="24" alt="Monedas">
+                            <span id="gameCoins" class="font-bold text-xl" style="color: hsl(35,100%,45%)">${state.activeChild.coins}</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Main Game Container -->
-                <div class="max-w-2xl mx-auto candy-card p-6 md:p-10 relative overflow-hidden" style="min-height: 500px">
-                    
-                    <!-- Boss Area (Hidden by default) -->
-                    <div id="bossArea" class="hidden animate-slide-down mb-8">
-                        <div class="flex flex-col items-center">
-                            <div class="flex items-center gap-4 mb-2 w-full">
-                                <div id="bossIcon" class="text-5xl floating">👺</div>
-                                <div class="flex-1">
+                    <!-- Layout: Grid if Boss, Single if Normal -->
+                    <div id="gameLayout" class="grid grid-cols-1 ${gameData.levelInfo.boss_name ? 'lg:grid-cols-2' : ''} gap-8 items-start">
+                        
+                        <!-- Columna Izquierda: Jefe (Sólo si existe) -->
+                        <div id="bossArea" class="${gameData.levelInfo.boss_name ? '' : 'hidden'} candy-card p-8 flex flex-col items-center justify-center animate-slide-right min-h-[400px]" 
+                             style="background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(241, 245, 249, 0.9)); border: 4px solid var(--primary);">
+                            <div class="flex flex-col items-center w-full">
+                                <div id="bossIcon" class="mb-6 transform hover:scale-110 transition-transform">
+                                    <!-- Icon or Image populated by JS -->
+                                </div>
+                                <h3 id="bossName" class="text-2xl font-black uppercase tracking-widest text-red-600 mb-4 text-center">Jefe Final</h3>
+                                
+                                <div class="w-full max-w-xs mb-6">
                                     <div class="flex justify-between items-center mb-1">
-                                        <span id="bossName" class="font-black text-xs uppercase tracking-widest text-red-600">Jefe Final</span>
-                                        <span id="bossHpText" class="font-bold text-[10px] text-slate-400">100 / 100</span>
+                                        <span class="font-bold text-xs uppercase text-slate-400">Energía del Jefe</span>
+                                        <span id="bossHpText" class="font-bold text-xs text-red-500">3 / 3</span>
                                     </div>
-                                    <div class="h-4 w-full bg-slate-200 rounded-full border-2 border-white shadow-sm overflow-hidden">
+                                    <div class="h-5 w-full bg-slate-200 rounded-full border-2 border-white shadow-inner overflow-hidden">
                                         <div id="bossHpBar" class="h-full bg-gradient-to-r from-red-500 to-orange-400 transition-all duration-500" style="width: 100%"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <p id="bossShout" class="bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-100 text-xs font-bold text-slate-500 relative mb-4 italic">
-                                ¡No podrás conmigo!
-                                <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 border-8 border-transparent border-t-white"></span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Progress Header -->
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] uppercase font-black tracking-widest text-slate-400 mb-1">Tu Progreso</span>
-                            <h4 id="questionCounter" class="text-2xl font-black" style="color: var(--primary)">1 / 10</h4>
-                        </div>
-                        <div id="feedback" class="text-4xl opacity-0 scale-50 transition-all duration-300">✨</div>
-                    </div>
-
-                <!-- Timer Bar -->
-                <div class="max-w-2xl mx-auto mb-8 progress-bar-track" style="height: 14px;">
-                    <div id="timerBar" class="progress-bar-fill" style="height: 100%; width: 100%;"></div>
-                </div>
-
-                <!-- Game Card -->
-                <div class="max-w-2xl mx-auto candy-card p-12 text-center relative overflow-visible animate-bounce-in">
-                    <!-- Emoji mascot on top -->
-                    <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full flex items-center justify-center text-5xl border-4 border-white"
-                         style="background: linear-gradient(135deg, hsl(52,94%,72%), hsl(45,100%,62%)); box-shadow: 0 6px 0 hsl(45,100%,50%), 0 10px 25px hsla(52,94%,60%,0.4); animation: floating 2.5s ease-in-out infinite">
-                        🤔
-                    </div>
-
-                    <!-- Equation -->
-                    <div id="equation" class="font-bold my-12 tracking-wider flex items-center justify-center text-6xl text-gray-400" style="font-size: clamp(3rem, 10vw, 6rem);">
-                        <span class="animate-pulse">⏳</span>
-                    </div>
-
-                    <!-- Answer Field -->
-                    <div id="answerContainer" class="max-w-xs mx-auto mb-8">
-                        <input type="number" id="answerField" autofocus placeholder="?"
-                               class="candy-input-answer" disabled>
-                    </div>
-
-                    <div id="fractionAnswerContainer" class="max-w-xs mx-auto mb-8 hidden">
-                        <div class="flex flex-col items-center gap-2">
-                             <input type="number" id="numerField" placeholder="?"
-                                    class="candy-input-answer text-5xl w-32 py-2 text-center" 
-                                    style="border-bottom: 6px solid var(--text-dark); border-radius: 15px 15px 0 0; background: white;">
-                             <input type="number" id="denomField" placeholder="?"
-                                    class="candy-input-answer text-5xl w-32 py-2 text-center" 
-                                    style="border-radius: 0 0 15px 15px; background: white;">
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button id="submitBtn" onclick="submitAnswer()" class="candy-btn candy-btn-primary w-full max-w-sm py-5 text-2xl" disabled>
-                        ¡Listo! 🍬
-                    </button>
-                </div>
-
-                <!-- Feedback overlay -->
                 <div id="feedback" class="fixed inset-0 pointer-events-none flex items-center justify-center z-50 transition-all duration-300 opacity-0 scale-50">
                     <div class="text-[10rem]"></div>
                 </div>
