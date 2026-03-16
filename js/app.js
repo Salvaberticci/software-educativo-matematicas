@@ -527,27 +527,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
                         <div class="candy-card p-8 flex flex-col">
-                            <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">📈 Desempeño Semanal</h4>
-                            <div class="w-full flex justify-center overflow-hidden flex-1">
-                                <canvas id="performanceChart" width="500" height="280"></canvas>
+                            <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">📈 Desempeño Semanal (Aciertos)</h4>
+                            <div class="w-full h-[300px] flex justify-center overflow-hidden flex-1">
+                                <canvas id="performanceChart"></canvas>
                             </div>
                         </div>
-                        <div class="candy-card p-8" style="min-height: 380px">
-                            <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">🔍 Historial de Actividad y Progresos</h4>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left">
-                                    <thead>
-                                        <tr style="border-bottom: 2px solid rgba(0,0,0,0.06)">
-                                            <th class="pb-4 font-bold uppercase text-xs" style="color: var(--text-light)">Acción</th>
-                                            <th class="pb-4 font-bold uppercase text-xs" style="color: var(--text-light)">Detalle</th>
-                                            <th class="pb-4 font-bold uppercase text-xs" style="color: var(--text-light)">Fecha/Hora</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="auditLogsBody" class="text-sm">
-                                        <!-- Populated by JS -->
-                                    </tbody>
-                                </table>
+                        <div class="candy-card p-8 flex flex-col">
+                            <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">🎯 Balance de Aciertos y Fallas</h4>
+                            <div class="w-full h-[300px] flex justify-center overflow-hidden flex-1">
+                                <canvas id="hitsChart"></canvas>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="candy-card p-8 mb-10">
+                        <h4 class="text-xl font-bold mb-6" style="color: var(--text-dark)">🔍 Historial de Actividad y Progresos</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid rgba(0,0,0,0.06)">
+                                        <th class="pb-4 font-bold uppercase text-xs" style="color: var(--text-light)">Acción</th>
+                                        <th class="pb-4 font-bold uppercase text-xs" style="color: var(--text-light)">Detalle</th>
+                                        <th class="pb-4 font-bold uppercase text-xs" style="color: var(--text-light)">Fecha/Hora</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditLogsBody" class="text-sm">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -1177,9 +1184,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tr >
                         `).join('');
 
-            // Chart
+            // Charts
             const history = Array.isArray(data.history) ? data.history : [];
-            initChart(history);
+            initPerformanceChart(history);
+            initHitsChart(stats.total_hits || 0, stats.total_errors || 0);
 
         } catch (err) {
             console.error('Error dashboard:', err);
@@ -1189,7 +1197,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let performanceChart = null;
-    function initChart(history) {
+    let hitsChart = null;
+
+    function initPerformanceChart(history) {
         const ctx = document.getElementById('performanceChart').getContext('2d');
         if (performanceChart) performanceChart.destroy();
 
@@ -1245,6 +1255,75 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
+        });
+    }
+
+    function initHitsChart(hits, errors) {
+        const ctx = document.getElementById('hitsChart').getContext('2d');
+        if (hitsChart) hitsChart.destroy();
+
+        const total = hits + errors;
+        const hitsPercent = total > 0 ? Math.round((hits / total) * 100) : 0;
+
+        hitsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Aciertos', 'Fallas'],
+                datasets: [{
+                    data: [hits, errors],
+                    backgroundColor: [
+                        'hsl(150, 80%, 45%)', // Green for hits
+                        'hsl(0, 80%, 65%)'    // Red for errors
+                    ],
+                    borderWidth: 5,
+                    borderColor: '#ffffff',
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { family: 'Fredoka', size: 14, weight: 'bold' },
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(255,255,255,0.95)',
+                        titleColor: '#333',
+                        bodyColor: '#666',
+                        borderColor: 'rgba(0,0,0,0.1)',
+                        borderWidth: 1,
+                        padding: 12,
+                        cornerRadius: 12,
+                        callbacks: {
+                            label: function(context) {
+                                const val = context.raw;
+                                const pct = total > 0 ? Math.round((val / total) * 100) : 0;
+                                return ` ${context.label}: ${val} (${pct}%)`;
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: [{
+                id: 'centerText',
+                afterDraw: (chart) => {
+                    const { ctx, chartArea: { left, top, right, bottom } } = chart;
+                    ctx.save();
+                    ctx.font = 'bold 2rem Fredoka';
+                    ctx.fillStyle = 'hsl(150, 80%, 35%)';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(hitsPercent + '%', (left + right) / 2, (top + bottom) / 2);
+                    ctx.restore();
+                }
+            }]
         });
     }
 

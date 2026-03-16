@@ -25,7 +25,9 @@ if ($_SESSION['role'] === 'parent') {
         // Sessions stats
         $stmt = $pdo->prepare("SELECT 
             COALESCE(AVG(score_correct/score_total), 0) as avg_score, 
-            COALESCE(AVG(time_sec), 0) as avg_time 
+            COALESCE(AVG(time_sec), 0) as avg_time,
+            COALESCE(SUM(score_correct), 0) as total_hits,
+            COALESCE(SUM(score_total - score_correct), 0) as total_errors
             FROM game_sessions WHERE child_id = ?");
         $stmt->execute([$child_id]);
         $stats = $stmt->fetch();
