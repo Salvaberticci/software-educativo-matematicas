@@ -1015,6 +1015,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
+    function getPizzaSlice(centerX, centerY, radius, startAngle, endAngle, isSelected) {
+        const startRad = (Math.PI * (startAngle - 90)) / 180;
+        const endRad = (Math.PI * (endAngle - 90)) / 180;
+        const x1 = centerX + radius * Math.cos(startRad);
+        const y1 = centerY + radius * Math.sin(startRad);
+        const x2 = centerX + radius * Math.cos(endRad);
+        const y2 = centerY + radius * Math.sin(endRad);
+        
+        const pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
+        
+        if (!isSelected) {
+            return `<path d="${pathData}" fill="rgba(0,0,0,0.03)" stroke="rgba(0,0,0,0.1)" stroke-width="1" />`;
+        }
+
+        // Selected slice: Pizza style
+        // Cheese layer
+        let slice = `<path d="${pathData}" fill="#FFD93D" stroke="#F1C40F" stroke-width="1" />`;
+        
+        // Toppings (Pepperoni)
+        const midAngle = (startAngle + endAngle) / 2;
+        const midRad = (Math.PI * (midAngle - 90)) / 180;
+        const pDist = radius * 0.65;
+        const px = centerX + pDist * Math.cos(midRad);
+        const py = centerY + pDist * Math.sin(midRad);
+        slice += `<circle cx="${px}" cy="${py}" r="${radius * 0.12}" fill="#D63031" />`;
+        
+        // Crust (thicker orange border on the outer edge)
+        slice += `<path d="M ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2}" fill="none" stroke="#E67E22" stroke-width="${radius * 0.15}" stroke-linecap="round" />`;
+
+        return slice;
+    }
+
     function renderFractionVisual(data) {
         const { numer, denom, food } = data;
         const radius = 60;
@@ -1025,29 +1057,26 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < denom; i++) {
             const startAngle = (i * 360) / denom;
             const endAngle = ((i + 1) * 360) / denom;
-            const x1 = centerX + radius * Math.cos((Math.PI * (startAngle - 90)) / 180);
-            const y1 = centerY + radius * Math.sin((Math.PI * (startAngle - 90)) / 180);
-            const x2 = centerX + radius * Math.cos((Math.PI * (endAngle - 90)) / 180);
-            const y2 = centerY + radius * Math.sin((Math.PI * (endAngle - 90)) / 180);
-            
-            const largeArcFlag = 0;
-            const pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
-            const fillColor = i < numer ? 'var(--primary)' : 'rgba(255,255,255,0.8)';
-            paths += `<path d="${pathData}" fill="${fillColor}" stroke="#fff" stroke-width="2" />`;
+            paths += getPizzaSlice(centerX, centerY, radius, startAngle, endAngle, i < numer);
         }
 
         return `
-            <div class="flex flex-col items-center gap-4">
-                <p class="text-xl font-bold mb-2">¿Cuántas partes de la ${food} hay?</p>
-                <div class="relative w-40 h-40 mb-4">
-                    <svg viewBox="0 0 160 160" class="w-full h-full drop-shadow-lg">
+            <div class="flex flex-col items-center gap-4 animate-pop-in">
+                <div class="candy-card p-3 mb-2 bg-orange-100 border-orange-200">
+                    <h3 class="text-xl font-black text-orange-600 font-fredoka uppercase tracking-wider flex items-center gap-2">
+                        <span>🍕</span> ¡Desafío de Pizza!
+                    </h3>
+                </div>
+                <p class="text-sm font-bold text-slate-500 mb-2">¿Cuántas porciones de pizza hay en la caja?</p>
+                <div class="relative w-48 h-48 mb-4 p-4 bg-[#FDF2E9] rounded-2xl border-4 border-[#E67E22] shadow-xl overflow-hidden">
+                    <div class="absolute top-2 left-2 text-[8px] text-[#E67E22] font-black opacity-40">CANDY PIZZA CO.</div>
+                    <svg viewBox="0 0 160 160" class="w-full h-full drop-shadow-md">
                         ${paths}
                     </svg>
-                    <div class="absolute inset-0 flex items-center justify-center text-4xl pointer-events-none opacity-20">${food}</div>
                 </div>
-                <div class="flex flex-col items-center justify-center text-4xl font-bold">
-                    <span class="border-b-4 border-gray-800 px-3 pb-1">?</span>
-                    <span class="pt-1">${denom}</span>
+                <div class="flex flex-col items-center justify-center text-5xl font-black font-fredoka">
+                    <span class="border-b-8 border-slate-800 px-5 pb-2 text-orange-600">?</span>
+                    <span class="pt-2 text-slate-400">${denom}</span>
                 </div>
             </div>
         `;
@@ -1056,26 +1085,30 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderEquivFractionVisual(data) {
         const { numer_base, denom_base, denom_equiv, food } = data;
         return `
-            <div class="flex flex-col items-center gap-6">
-                <p class="text-xl font-bold mb-2 font-fredoka">¡Encuentra la fracción equivalente!</p>
+            <div class="flex flex-col items-center gap-6 animate-pop-in">
+                <div class="candy-card p-3 mb-2 bg-orange-100 border-orange-200">
+                    <h3 class="text-xl font-black text-orange-600 font-fredoka uppercase tracking-wider flex items-center gap-2">
+                        <span>🍕</span> Pizzas Equivalentes
+                    </h3>
+                </div>
                 <div class="flex items-center gap-6">
                     <div class="flex flex-col items-center">
-                        <div class="bg-white rounded-xl p-2 shadow-sm border-2 border-dashed border-gray-200 mb-3">
+                        <div class="relative p-4 bg-[#FDF2E9] rounded-2xl border-2 border-dashed border-[#E67E22] shadow-sm mb-3">
                              ${renderSmallPie(numer_base, denom_base, food)}
                         </div>
-                        <div class="flex flex-col items-center justify-center text-2xl font-bold">
-                            <span class="border-b-4 border-gray-800 px-2 pb-1">${numer_base}</span>
-                            <span class="pt-1">${denom_base}</span>
+                        <div class="flex flex-col items-center justify-center text-2xl font-black font-fredoka">
+                            <span class="border-b-4 border-slate-800 px-2 pb-1">${numer_base}</span>
+                            <span class="pt-1 text-slate-400">${denom_base}</span>
                         </div>
                     </div>
-                    <div class="text-5xl font-bold text-gray-400 -mt-8">＝</div>
+                    <div class="text-5xl font-black text-[#E67E22] -mt-8 animate-pulse">＝</div>
                     <div class="flex flex-col items-center">
-                        <div class="bg-white rounded-xl p-2 shadow-sm border-2 border-dashed border-gray-200 mb-3">
+                        <div class="relative p-4 bg-[#FDF2E9] rounded-2xl border-4 border-[#E67E22] shadow-xl mb-3">
                              ${renderSmallPie(0, denom_equiv, food, true)}
                         </div>
-                        <div class="flex flex-col items-center justify-center text-2xl font-bold" style="color: var(--primary)">
-                            <span class="border-b-4 border-primary px-3 pb-1">?</span>
-                            <span class="pt-1 text-gray-800">${denom_equiv}</span>
+                        <div class="flex flex-col items-center justify-center text-2xl font-black font-fredoka" style="color: var(--primary)">
+                            <span class="border-b-4 border-orange-600 px-3 pb-1 text-orange-600">?</span>
+                            <span class="pt-1 text-slate-400">${denom_equiv}</span>
                         </div>
                     </div>
                 </div>
@@ -1091,15 +1124,9 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < denom; i++) {
             const startAngle = (i * 360) / denom;
             const endAngle = ((i + 1) * 360) / denom;
-            const x1 = centerX + radius * Math.cos((Math.PI * (startAngle - 90)) / 180);
-            const y1 = centerY + radius * Math.sin((Math.PI * (startAngle - 90)) / 180);
-            const x2 = centerX + radius * Math.cos((Math.PI * (endAngle - 90)) / 180);
-            const y2 = centerY + radius * Math.sin((Math.PI * (endAngle - 90)) / 180);
-            const pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
-            const fillColor = (isQuestion) ? 'rgba(0,0,0,0.05)' : (i < numer ? 'var(--secondary)' : 'rgba(255,255,255,0.8)');
-            paths += `<path d="${pathData}" fill="${fillColor}" stroke="#fff" stroke-width="1.5" />`;
+            paths += getPizzaSlice(centerX, centerY, radius, startAngle, endAngle, isQuestion ? false : i < numer);
         }
-        return `<svg viewBox="0 0 100 100" class="w-24 h-24">${paths}</svg>`;
+        return `<svg viewBox="0 0 100 100" class="w-24 h-24 drop-shadow-sm">${paths}</svg>`;
     }
 
     function showFeedback(correct) {
@@ -1748,9 +1775,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const labels = diagnostics.map(d => {
             const level = state.levels.find(l => l.id == d.level_id);
-            if (level && level.name.includes('Fracción')) {
-                return '🍕 ' + level.name.split(' ')[0];
-            }
             return level ? level.name.split(' ')[0] + ' ' + (level.name.split(' ')[1] || '') : `Nivel ${d.level_id}`;
         });
 
@@ -1787,17 +1811,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         intersect: false,
                         backgroundColor: '#1e293b',
                         titleColor: '#f8fafc',
-                        bodyColor: '#cbd5e1',
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (context.label.includes('🍕')) {
-                                    if (label === 'Aciertos') label = 'Pizzas Horneadas';
-                                    if (label === 'Fallas') label = 'Pedidos con Error';
-                                }
-                                return label + ': ' + context.raw;
-                            }
-                        }
+                        bodyColor: '#cbd5e1'
                     }
                 }
             }
@@ -2021,9 +2035,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const labels = diagnostics.map(d => {
             const level = state.levels.find(l => l.id == d.level_id);
-            if (level && level.name.includes('Fracción')) {
-                return '🍕 ' + level.name.split(' ')[0];
-            }
             return level ? level.name.split(' ')[0] + ' ' + (level.name.split(' ')[1] || '') : `Nivel ${d.level_id}`;
         });
 
@@ -2054,24 +2065,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     y: { stacked: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { family: 'Fredoka' } } }
                 },
                 plugins: {
-                    legend: { position: 'bottom', labels: { font: { family: 'Fredoka', weight: 'bold' } } },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: 'rgba(255,255,255,0.95)',
-                        titleColor: '#333',
-                        bodyColor: '#666',
-                        cornerRadius: 12,
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (context.label.includes('🍕')) {
-                                    if (label === 'Aciertos') label = 'Pizzas Horneadas';
-                                    if (label === 'Fallas') label = 'Pizzas con Error';
-                                }
-                                return label + ': ' + context.raw;
-                            }
-                        }
-                    }
+                    legend: { position: 'bottom', labels: { font: { family: 'Fredoka', weight: 'bold' } } }
                 }
             }
         });
