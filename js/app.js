@@ -1137,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Dashboard ---
     window.updateDashboard = async (childId) => {
         try {
-            const res = await fetch(`api / get_reports.php ? child_id = ${childId} `);
+            const res = await fetch(`api/get_reports.php?child_id=${childId}`);
             const data = await res.json();
 
             // Stats
@@ -1154,7 +1154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentCoins = localChild ? localChild.coins : (stats.current_coins || 0);
 
             document.getElementById('dashStats').innerHTML = `
-                        < div class="stat-card animate-slide-up" >
+                <div class="stat-card animate-slide-up">
                     <span class="stat-card-icon">🎯</span>
                     <p class="font-bold text-sm uppercase mb-1" style="color: var(--text-medium)">Aciertos Promedio</p>
                     <h3 class="text-5xl font-bold" style="background: linear-gradient(135deg, var(--primary), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${Math.round(avgScore * 100)}%</h3>
@@ -1172,17 +1172,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h3 class="text-5xl font-bold" style="color: hsl(35,100%,45%)">${currentCoins}</h3>
                     </div>
                 </div>
-                    `;
+            `;
 
             // Logs
             const safeLogs = Array.isArray(data.logs) ? data.logs : [];
             document.getElementById('auditLogsBody').innerHTML = safeLogs.map(log => `
-                        < tr style = "border-bottom: 1px solid rgba(0,0,0,0.04)" >
+                <tr style="border-bottom: 1px solid rgba(0,0,0,0.04)">
                     <td class="py-3 font-bold" style="color: var(--primary)">${log.action_type || 'Acción'}</td>
                     <td class="py-3" style="color: var(--text-medium)">${log.details || ''}</td>
                     <td class="py-3 font-mono text-xs" style="color: var(--text-light)">${log.timestamp || '--'}</td>
-                </tr >
-                        `).join('');
+                </tr>
+            `).join('');
 
             // Charts
             const history = Array.isArray(data.history) ? data.history : [];
