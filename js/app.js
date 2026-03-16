@@ -833,11 +833,11 @@ document.addEventListener('DOMContentLoaded', () => {
         bar.style.transition = 'none';
 
         setTimeout(() => {
-            bar.style.transition = 'width 10s linear';
+            bar.style.transition = 'width 20s linear';
             bar.style.width = '0%';
         }, 10);
 
-        gameData.timer = setTimeout(() => submitAnswer(true), 10000);
+        gameData.timer = setTimeout(() => submitAnswer(true), 20000);
     }
 
     window.submitAnswer = async (timeout = false) => {
