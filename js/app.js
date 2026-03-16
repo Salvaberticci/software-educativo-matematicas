@@ -190,6 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
         activeChild: null,
         view: 'login',
         children: [],
+        settings: {
+            game_timer_sec: 20,
+            base_reward_price: 200
+        },
         levels: [
             { id: 1,  name: "Sumas Fáciles ➕",          pos: {x: 10, y: 80} },
             { id: 2,  name: "Sumas Grandes ➕",          pos: {x: 22, y: 65} },
@@ -782,6 +786,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success) {
                 state.user = data.user;
                 state.children = data.children;
+                await fetchGlobalSettings();
+                
                 if (state.user.role === 'admin') {
                     render('adminDashboard');
                 } else {
@@ -952,15 +958,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function startTimer() {
         clearInterval(gameData.timer);
         const bar = document.getElementById('timerBar');
+        const duration = parseInt(state.settings.game_timer_sec) || 20;
+
         bar.style.width = '100%';
         bar.style.transition = 'none';
 
         setTimeout(() => {
-            bar.style.transition = 'width 20s linear';
+            bar.style.transition = `width ${duration}s linear`;
             bar.style.width = '0%';
         }, 10);
 
-        gameData.timer = setTimeout(() => submitAnswer(true), 20000);
+        gameData.timer = setTimeout(() => submitAnswer(true), duration * 1000);
     }
 
     window.submitAnswer = async (timeout = false) => {
@@ -1548,35 +1556,76 @@ document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML = `
                  <div class="mb-10">
                     <h2 class="text-3xl font-bold mb-2">Ajustes Globales</h2>
-                    <p class="text-slate-400">Parámetros operativos críticos</p>
+                    <p class="text-slate-400">Parámetros operativos críticos del sistema</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="admin-card opacity-50 cursor-not-allowed">
-                        <h4 class="text-lg font-bold mb-4">⏱️ Tiempos de Juego</h4>
+                    <div class="admin-card">
+                        <h4 class="text-lg font-bold mb-4 flex items-center gap-2"><span>⏱️</span> Tiempos de Juego</h4>
                         <div class="space-y-4">
                             <div>
                                 <label class="text-xs text-slate-500 font-bold uppercase">Segundos por pregunta</label>
-                                <input type="number" disabled value="20" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-500 mt-1">
+                                <input type="number" id="cfg-timer" value="${state.settings.game_timer_sec}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white mt-1">
+                                <p class="text-[10px] text-slate-500 mt-2">Dificultad base. Recomendado: 15-30s.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="admin-card opacity-50 cursor-not-allowed">
-                        <h4 class="text-lg font-bold mb-4">💰 Economía (Premios)</h4>
+                    <div class="admin-card">
+                        <h4 class="text-lg font-bold mb-4 flex items-center gap-2"><span>💰</span> Economía (Premios)</h4>
                         <div class="space-y-4">
                             <div>
-                                <label class="text-xs text-slate-500 font-bold uppercase">Precio Base Premios</label>
-                                <input type="number" disabled value="200" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-slate-500 mt-1">
+                                <label class="text-xs text-slate-500 font-bold uppercase">Precio Base Recompensas</label>
+                                <input type="number" id="cfg-rewards" value="${state.settings.base_reward_price}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white mt-1">
+                                <p class="text-[10px] text-slate-500 mt-2">Monedas necesarias para canjear un premio.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-8 p-6 bg-blue-900/20 border border-blue-500/30 rounded-2xl flex items-center gap-4">
-                    <span class="text-2xl">💡</span>
-                    <p class="text-sm text-blue-300">Estas funciones serán habilitadas en la próxima fase para permitirte ajustar la dificultad del juego de forma dinámica.</p>
+                
+                <div class="mt-10 flex justify-end">
+                    <button onclick="saveGlobalSettings()" class="bg-green-600 hover:bg-green-700 text-white px-10 py-4 rounded-2xl font-bold transition-all shadow-lg active:scale-95 flex items-center gap-3">
+                        💾 Guardar Ajustes Globales
+                    </button>
                 </div>
             `;
         }
     }
+
+    async function fetchGlobalSettings() {
+        try {
+            const res = await fetch('api/admin_actions.php?action=get_settings');
+            const data = await res.json();
+            if (data.success) {
+                state.settings = { ...state.settings, ...data.settings };
+            }
+        } catch (err) {
+            console.error('Error fetching settings:', err);
+        }
+    }
+
+    window.saveGlobalSettings = async () => {
+        const timer = document.getElementById('cfg-timer').value;
+        const rewards = document.getElementById('cfg-rewards').value;
+
+        const formData = new FormData();
+        formData.append('settings[game_timer_sec]', timer);
+        formData.append('settings[base_reward_price]', rewards);
+
+        try {
+            const res = await fetch('api/admin_actions.php?action=update_settings', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                Swal.fire('Éxito', 'Configuración guardada correctamente', 'success');
+                await fetchGlobalSettings();
+            } else {
+                Swal.fire('Error', data.error, 'error');
+            }
+        } catch (err) {
+            Swal.fire('Error', 'Error al guardar configuración', 'error');
+        }
+    };
 
     async function fetchAdminStats() {
         try {
@@ -1742,6 +1791,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success) {
                 state.user = data.user;
                 state.children = data.children;
+                await fetchGlobalSettings();
 
                 if (state.user.role === 'admin') {
                     return render('adminDashboard');

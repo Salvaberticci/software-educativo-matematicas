@@ -1,11 +1,12 @@
 <?php
 // api/admin_actions.php
 require_once '../includes/functions.php';
-check_admin();
+check_auth();
 
 $action = $_GET['action'] ?? '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    check_admin();
     if ($action === 'create_user') {
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
@@ -56,6 +57,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             log_action('admin_delete_user', "Admin eliminó al usuario: " . $user['email']);
             send_json(['success' => true, 'message' => "Usuario eliminado"]);
 
+        } catch (Exception $e) {
+            send_json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+
+    if ($action === 'update_settings') {
+        $settings = $_POST['settings'] ?? [];
+        if (empty($settings)) send_json(['success' => false, 'error' => 'No se proporcionaron ajustes']);
+
+        try {
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare("INSERT INTO global_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = ?");
+            foreach ($settings as $key => $value) {
+                $stmt->execute([$key, $value, $value]);
+            }
+            $pdo->commit();
+            log_action('admin_update_settings', "Admin actualizó los ajustes globales");
+            send_json(['success' => true, 'message' => "Ajustes actualizados correctamente"]);
+        } catch (Exception $e) {
+            if ($pdo->inTransaction()) $pdo->rollBack();
+            send_json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if ($action === 'get_settings') {
+        try {
+            $stmt = $pdo->query("SELECT setting_key, setting_value FROM global_settings");
+            $settings = [];
+            while ($row = $stmt->fetch()) {
+                $settings[$row['setting_key']] = $row['setting_value'];
+            }
+            send_json(['success' => true, 'settings' => $settings]);
         } catch (Exception $e) {
             send_json(['success' => false, 'error' => $e->getMessage()]);
         }

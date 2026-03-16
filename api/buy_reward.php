@@ -17,11 +17,16 @@ try {
     // 1. Check Reward Cost
     $stmt = $pdo->prepare("SELECT * FROM rewards WHERE id = ?");
     $stmt->execute([$reward_id]);
-    $reward = $stmt->fetch();
-
     if (!$reward) {
         throw new Exception('Recompensa no encontrada');
     }
+
+    // Apply Global Economy Multiplier to maintain consistency with get_rewards.php
+    $sStmt = $pdo->prepare("SELECT setting_value FROM global_settings WHERE setting_key = 'base_reward_price'");
+    $sStmt->execute();
+    $basePrice = $sStmt->fetchColumn() ?: 200;
+    $multiplier = $basePrice / 50;
+    $reward['cost'] = (int)round($reward['cost'] * $multiplier);
 
     // 2. Check Child Coins
     $stmt = $pdo->prepare("SELECT coins FROM children WHERE id = ?");
