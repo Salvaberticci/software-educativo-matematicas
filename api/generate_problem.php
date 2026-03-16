@@ -23,17 +23,18 @@ $n2 = rand($level['min_val'], $level['max_val']);
 $operator = '+';
 $answer = 0;
 
+// Fraction specifics
+$fraction_data = null;
+$foods = ['🍕', '🍰', '🧆', '🍫', '🎂', '🥧', '🍩', '🍪', '🥨', '🥐', '🌮', '🥪'];
+
 switch ($level['operation']) {
     case 'suma':
         $operator = '+';
         $answer = $n1 + $n2;
         break;
     case 'resta':
-        // Ensure positive result for subtraction
         if ($n1 < $n2) {
-            $temp = $n1;
-            $n1 = $n2;
-            $n2 = $temp;
+            $temp = $n1; $n1 = $n2; $n2 = $temp;
         }
         $operator = '-';
         $answer = $n1 - $n2;
@@ -43,35 +44,60 @@ switch ($level['operation']) {
         $answer = $n1 * $n2;
         break;
     case 'division':
-        // Generate a valid integer division n1 / n2 = answer
-        // We'll use n1 as the divisor and n2 as the result, then n1 * n2 is the dividend
-        $divisor = rand($level['min_val'], $level['max_val']);
-        if ($divisor == 0) $divisor = 1;
-        $res = rand(1, 10); // Quotient
-        $dividend = $divisor * $res;
-        
-        $n1 = $dividend;
+        $divisor = rand(max(1, $level['min_val']), $level['max_val']);
+        $res = rand(1, 10);
+        $n1 = $divisor * $res;
         $n2 = $divisor;
         $operator = '÷';
         $answer = $res;
         break;
+    case 'fraccion_basica':
+        $denom = rand(2, 8);
+        $numer = rand(1, $denom - 1);
+        $operator = 'fraccion';
+        $answer = $numer;
+        $n1 = $numer;
+        $n2 = $denom;
+        $fraction_data = [
+            'type' => 'basica',
+            'numer' => $numer,
+            'denom' => $denom,
+            'food' => $foods[array_rand($foods)]
+        ];
+        break;
+    case 'fraccion_equiv':
+        $denom_base = rand(2, 4);
+        $numer_base = rand(1, $denom_base - 1);
+        $mult = rand(2, 3);
+        $denom_equiv = $denom_base * $mult;
+        $numer_equiv = $numer_base * $mult;
+        
+        $operator = 'equiv';
+        $answer = $numer_equiv;
+        $n1 = $numer_base;
+        $n2 = $denom_base;
+        $fraction_data = [
+            'type' => 'equiv',
+            'numer_base' => $numer_base,
+            'denom_base' => $denom_base,
+            'denom_equiv' => $denom_equiv,
+            'food' => $foods[array_rand($foods)]
+        ];
+        break;
     case 'aleatorio':
-        $ops = ['suma', 'resta', 'multiplicacion', 'division'];
+        $ops = ['suma', 'resta', 'multiplicacion', 'division', 'fraccion_basica'];
         $op = $ops[array_rand($ops)];
-        // Recursive call (simplified logic)
         if ($op === 'suma') { $operator = '+'; $answer = $n1 + $n2; }
         elseif ($op === 'resta') { 
             if ($n1 < $n2) { $t = $n1; $n1 = $n2; $n2 = $t; }
             $operator = '-'; $answer = $n1 - $n2; 
         }
         elseif ($op === 'multiplicacion') { $operator = '×'; $answer = $n1 * $n2; }
-        else {
-            $divisor = rand(1, 10);
-            $res = rand(1, 10);
-            $n1 = $divisor * $res;
-            $n2 = $divisor;
-            $operator = '÷';
-            $answer = $res;
+        elseif ($op === 'division') {
+            $d = rand(1, 10); $r = rand(1, 10); $n1 = $d * $r; $n2 = $d; $operator = '÷'; $answer = $r;
+        } else {
+            $denom = rand(2, 6); $numer = rand(1, $denom - 1); $operator = 'fraccion'; $answer = $numer; $n1 = $numer; $n2 = $denom;
+            $fraction_data = ['type' => 'basica', 'numer' => $numer, 'denom' => $denom, 'food' => $foods[array_rand($foods)]];
         }
         break;
 }
@@ -80,6 +106,8 @@ send_json([
     'n1' => $n1,
     'n2' => $n2,
     'operator' => $operator,
-    'answer' => $answer
+    'answer' => $answer,
+    'total_questions' => (int)$level['total_questions'],
+    'fraction_data' => $fraction_data
 ]);
 ?>

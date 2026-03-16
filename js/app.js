@@ -180,16 +180,16 @@ document.addEventListener('DOMContentLoaded', () => {
         view: 'login',
         children: [],
         levels: [
-            { id: 1, name: "Sumas Básicas 🦸‍♂️", pos: {x: 8, y: 70} },
-            { id: 2, name: "Restas Rápidas 👧", pos: {x: 20, y: 85} },
-            { id: 3, name: "Sumas Grandes 🦸‍♂️", pos: {x: 35, y: 75} },
-            { id: 4, name: "Restas Duras 👧", pos: {x: 25, y: 45} },
-            { id: 5, name: "Tablas 1 al 5 🐉", pos: {x: 45, y: 25} },
-            { id: 6, name: "Todas las Tablas 🐉", pos: {x: 65, y: 40} },
-            { id: 7, name: "Multiplicación Fuerte 👨‍🚀", pos: {x: 80, y: 65} },
-            { id: 8, name: "Iniciando División 👨‍🚀", pos: {x: 92, y: 80} },
-            { id: 9, name: "Divisiones Máximas 👑", pos: {x: 85, y: 45} },
-            { id: 10, name: "¡El Gran Desafío Final! 🏰", pos: {x: 75, y: 20} }
+            { id: 1,  name: "Sumas Fáciles ➕",          pos: {x: 10, y: 80} },
+            { id: 2,  name: "Sumas Grandes ➕",          pos: {x: 22, y: 65} },
+            { id: 3,  name: "Restas Fáciles ➖",         pos: {x: 35, y: 80} },
+            { id: 4,  name: "Restas Desafiantes ➖",     pos: {x: 40, y: 50} },
+            { id: 5,  name: "Tablas x1-x5 ✖️",         pos: {x: 55, y: 35} },
+            { id: 6,  name: "Tablas x6-x10 ✖️",        pos: {x: 65, y: 60} },
+            { id: 7,  name: "Fracciones 🍕",            pos: {x: 75, y: 40} },
+            { id: 8,  name: "Fracciones Equiv. 🍕",     pos: {x: 82, y: 70} },
+            { id: 9,  name: "Combinado 📊",             pos: {x: 88, y: 45} },
+            { id: 10, name: "¡Castillo del Dragón! 🏰", pos: {x: 85, y: 18} }
         ]
     };
 
@@ -367,14 +367,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <!-- Adventure Map -->
                 <div class="max-w-6xl mx-auto candy-card p-3 relative overflow-hidden bg-blue-50">
-                    <div class="overflow-x-auto overflow-y-hidden relative rounded-2xl border-4 border-white shadow-inner bg-blue-100 scrollbar-hide" style="height: 600px; cursor: grab;">
-                        <div style="min-width: 1200px; height: 100%; position: relative; background: url('assets/img/adventure/map.png') center/cover no-repeat;">
-                            
-                            <!-- Decor: Castle & Dragon -->
-                            <div class="absolute z-10 flex items-end" style="top: 2%; right: 2%; width: 280px; pointer-events: none;">
-                                <img src="assets/img/adventure/dragon.png" class="w-24 h-auto drop-shadow-md animate-pulse" style="animation-duration: 3s; margin-right: -40px; margin-bottom: 20px; z-index: 2;" alt="Dragon">
-                                <img src="assets/img/adventure/castle.png" class="w-full h-auto drop-shadow-lg" alt="Castle">
-                            </div>
+                    <div class="relative rounded-2xl border-4 border-white shadow-inner bg-blue-100 aspect-video w-full" style="max-height: 70vh;">
+                        <div style="width: 100%; height: 100%; position: relative; background: url('assets/img/adventure/map.png?v=2') center/100% 100% no-repeat;">
+
 
                             <!-- Level Nodes -->
                             ${state.levels.map((level, i) => {
@@ -808,8 +803,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
 
             gameData.currentAnswer = data.answer;
-            document.getElementById('equation').innerText = `${data.n1} ${data.operator} ${data.n2}`;
-            document.getElementById('equation').style.color = 'var(--text-dark)';
+            gameData.total = data.total_questions || 10;
+            document.getElementById('questionCounter').innerText = `${gameData.currentQuestion} / ${gameData.total}`;
+
+            if (data.operator === 'fraccion') {
+                document.getElementById('equation').innerHTML = renderFractionVisual(data.fraction_data);
+            } else if (data.operator === 'equiv') {
+                document.getElementById('equation').innerHTML = renderEquivFractionVisual(data.fraction_data);
+            } else {
+                document.getElementById('equation').innerText = `${data.n1} ${data.operator} ${data.n2}`;
+                document.getElementById('equation').style.color = 'var(--text-dark)';
+            }
+            
             document.getElementById('answerField').value = '';
             document.getElementById('answerField').disabled = false;
             document.getElementById('submitBtn').disabled = false;
@@ -862,6 +867,84 @@ document.addEventListener('DOMContentLoaded', () => {
             gameData.currentQuestion++;
             nextQuestion();
         }, 1000);
+    }
+
+    function renderFractionVisual(data) {
+        const { numer, denom, food } = data;
+        const radius = 60;
+        const centerX = 80;
+        const centerY = 80;
+        let paths = '';
+
+        for (let i = 0; i < denom; i++) {
+            const startAngle = (i * 360) / denom;
+            const endAngle = ((i + 1) * 360) / denom;
+            const x1 = centerX + radius * Math.cos((Math.PI * (startAngle - 90)) / 180);
+            const y1 = centerY + radius * Math.sin((Math.PI * (startAngle - 90)) / 180);
+            const x2 = centerX + radius * Math.cos((Math.PI * (endAngle - 90)) / 180);
+            const y2 = centerY + radius * Math.sin((Math.PI * (endAngle - 90)) / 180);
+            
+            const largeArcFlag = 0;
+            const pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+            const fillColor = i < numer ? 'var(--primary)' : 'rgba(255,255,255,0.8)';
+            paths += `<path d="${pathData}" fill="${fillColor}" stroke="#fff" stroke-width="2" />`;
+        }
+
+        return `
+            <div class="flex flex-col items-center gap-4">
+                <p class="text-xl font-bold mb-2">¿Cuántas partes de la ${food} hay?</p>
+                <div class="relative w-40 h-40">
+                    <svg viewBox="0 0 160 160" class="w-full h-full drop-shadow-lg">
+                        ${paths}
+                    </svg>
+                    <div class="absolute inset-0 flex items-center justify-center text-4xl pointer-events-none opacity-20">${food}</div>
+                </div>
+                <div class="text-3xl font-bold">? / ${denom}</div>
+            </div>
+        `;
+    }
+
+    function renderEquivFractionVisual(data) {
+        const { numer_base, denom_base, denom_equiv, food } = data;
+        return `
+            <div class="flex flex-col items-center gap-6">
+                <p class="text-xl font-bold mb-2 font-fredoka">¡Encuentra la fracción equivalente!</p>
+                <div class="flex items-center gap-8">
+                    <div class="flex flex-col items-center">
+                        <div class="bg-white rounded-xl p-2 shadow-sm border-2 border-dashed border-gray-200">
+                             ${renderSmallPie(numer_base, denom_base, food)}
+                        </div>
+                        <div class="text-2xl font-bold mt-2">${numer_base} / ${denom_base}</div>
+                    </div>
+                    <div class="text-4xl text-gray-300">＝</div>
+                    <div class="flex flex-col items-center">
+                        <div class="bg-white rounded-xl p-2 shadow-sm border-2 border-dashed border-gray-200">
+                             ${renderSmallPie(0, denom_equiv, food, true)}
+                        </div>
+                        <div class="text-2xl font-bold mt-2">? / ${denom_equiv}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderSmallPie(numer, denom, food, isQuestion = false) {
+        const radius = 35;
+        const centerX = 50;
+        const centerY = 50;
+        let paths = '';
+        for (let i = 0; i < denom; i++) {
+            const startAngle = (i * 360) / denom;
+            const endAngle = ((i + 1) * 360) / denom;
+            const x1 = centerX + radius * Math.cos((Math.PI * (startAngle - 90)) / 180);
+            const y1 = centerY + radius * Math.sin((Math.PI * (startAngle - 90)) / 180);
+            const x2 = centerX + radius * Math.cos((Math.PI * (endAngle - 90)) / 180);
+            const y2 = centerY + radius * Math.sin((Math.PI * (endAngle - 90)) / 180);
+            const pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
+            const fillColor = (isQuestion) ? 'rgba(0,0,0,0.05)' : (i < numer ? 'var(--secondary)' : 'rgba(255,255,255,0.8)');
+            paths += `<path d="${pathData}" fill="${fillColor}" stroke="#fff" stroke-width="1.5" />`;
+        }
+        return `<svg viewBox="0 0 100 100" class="w-24 h-24">${paths}</svg>`;
     }
 
     function showFeedback(correct) {

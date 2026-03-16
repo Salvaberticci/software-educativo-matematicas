@@ -14,33 +14,38 @@ if ($child_id <= 0 || $level_id <= 0) {
     send_json(['error' => 'Datos inválidos'], 400);
 }
 
-// Security & Anti-Cheat Validation
-if ($score_correct > $score_total) {
-    send_json(['error' => 'Puntaje inválido: Aciertos > Total'], 400);
-}
-
-if ($score_total > 10) { // Assuming max 10 questions per session
-   send_json(['error' => 'Puntaje inválido: Total excesivo'], 400);
-}
-
-// Basic time validation (e.g., minimum 1 sec per question is too fast for a human child)
-if ($score_total > 0 && $time_sec < ($score_total * 1)) {
-     log_action('cheat_attempt', "Posible trampa detectada (Speedhack). Child: $child_id, Time: $time_sec");
-     // We might trigger an error or just log it. For now, let's block it.
-     send_json(['error' => '¡Demasiado rápido! Tómate tu tiempo.'], 400);
-}
-
 try {
+    // 0. Fetch Level Data
+    $stmt = $pdo->prepare("SELECT target_score, total_questions FROM levels WHERE id = ?");
+    $stmt->execute([$level_id]);
+    $level = $stmt->fetch();
+
+    if (!$level) {
+        send_json(['error' => 'Nivel no encontrado'], 404);
+    }
+
+    $db_total = (int)$level['total_questions'];
+
+    // Security & Anti-Cheat Validation
+    if ($score_correct > $score_total) {
+        send_json(['error' => 'Puntaje inválido: Aciertos > Total'], 400);
+    }
+
+    if ($score_total > $db_total) {
+        send_json(['error' => 'Puntaje inválido: Total excesivo'], 400);
+    }
+
+    // Basic time validation (e.g., minimum 0.5 sec per question for the fast kids)
+    if ($score_total > 0 && $time_sec < ($score_total * 0.5)) {
+         log_action('cheat_attempt', "Posible trampa detectada (Speedhack). Child: $child_id, Time: $time_sec");
+         send_json(['error' => '¡Demasiado rápido! Tómate tu tiempo.'], 400);
+    }
+
     $pdo->beginTransaction();
 
     // 1. Save Session
     $stmt = $pdo->prepare("INSERT INTO game_sessions (child_id, level_id, score_correct, score_total, time_sec) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([$child_id, $level_id, $score_correct, $score_total, $time_sec]);
-
-    // 2. Fetch Level Target
-    $stmt = $pdo->prepare("SELECT target_score FROM levels WHERE id = ?");
-    $stmt->execute([$level_id]);
-    $level = $stmt->fetch();
 
     // 3. Update Coins (5 coins per correct answer)
     $coins_earned = $score_correct * 5;
