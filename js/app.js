@@ -1333,11 +1333,6 @@ document.addEventListener('DOMContentLoaded', () => {
             initDiagChartChild(diagnostics);
             renderCriticalAreasChild(diagnostics);
 
-            // Diagnostics & Critical Areas
-            const diagnostics = Array.isArray(data.diagnostics) ? data.diagnostics : [];
-            initDiagChartChild(diagnostics);
-            renderCriticalAreasChild(diagnostics);
-
         } catch (err) {
             console.error('Error dashboard:', err);
             const ds = document.getElementById('dashStats');
