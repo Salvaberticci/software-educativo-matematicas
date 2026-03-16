@@ -1018,29 +1018,28 @@ document.addEventListener('DOMContentLoaded', () => {
         gameData.total = data.total_questions || 10;
         document.getElementById('questionCounter').innerText = `${gameData.currentQuestion} / ${gameData.total}`;
 
-            // Boss Phase Logic: Last 3 questions
-            const bossThreshold = gameData.total - 2;
-            if (gameData.currentQuestion >= bossThreshold) {
-                const bossArea = document.getElementById('bossArea');
-                if (bossArea.classList.contains('hidden')) {
-                    bossArea.classList.remove('hidden');
-                    document.getElementById('bossName').innerText = gameData.levelInfo.boss_name || 'Jefe Final';
-                    
-                    // Render Icon or Image
-                    const iconEl = document.getElementById('bossIcon');
-                    const bIcon = gameData.levelInfo.boss_icon || '👺';
-                    if (bIcon.includes('.png')) {
-                        iconEl.innerHTML = `<img src="assets/img/bosses/${bIcon}" class="w-20 h-20 object-contain drop-shadow-lg" alt="Boss">`;
-                        iconEl.classList.remove('text-5xl');
-                    } else {
-                        iconEl.innerText = bIcon;
-                        iconEl.classList.add('text-5xl');
-                    }
-                    
-                    updateBossUI();
-                    playSound('win');
+        // Show Boss area immediately if it's a boss level
+        if (gameData.levelInfo.boss_name) {
+            const bossArea = document.getElementById('bossArea');
+            if (bossArea.classList.contains('hidden')) {
+                bossArea.classList.remove('hidden');
+                document.getElementById('bossName').innerText = gameData.levelInfo.boss_name;
+                
+                const iconEl = document.getElementById('bossIcon');
+                const bIcon = gameData.levelInfo.boss_icon || '👺';
+                if (bIcon.includes('.png')) {
+                    iconEl.innerHTML = `<img src="assets/img/bosses/${bIcon}" class="w-20 h-20 object-contain drop-shadow-lg" alt="Boss">`;
+                    iconEl.classList.remove('text-5xl');
+                } else {
+                    iconEl.innerText = bIcon;
+                    iconEl.classList.add('text-5xl');
                 }
+                updateBossUI();
+                
+                // Initial shout
+                updateBossShout('start');
             }
+        }
 
         if (data.operator === 'fraccion') {
             document.getElementById('answerContainer').classList.add('hidden');
@@ -1074,12 +1073,43 @@ document.addEventListener('DOMContentLoaded', () => {
         const pct = (gameData.bossHp / gameData.maxBossHp) * 100;
         hpBar.style.width = `${pct}%`;
         hpText.innerText = `${gameData.bossHp} / ${gameData.maxBossHp}`;
+    }
 
+    function updateBossShout(type) {
         const bossShout = document.getElementById('bossShout');
-        if (gameData.bossHp === 3) bossShout.innerText = '¡Nadie ha pasado por aquí!';
-        else if (gameData.bossHp === 2) bossShout.innerText = '¡Argh! ¡Eso dolió, pero no me detendrás!';
-        else if (gameData.bossHp === 1) bossShout.innerText = '¡IMPOSIBLE! ¡Me rindo... casi!';
-        else bossShout.innerText = '¡NOOOO! ¡Derrotado!';
+        if (!bossShout || !gameData.levelInfo.boss_name) return;
+
+        const phrases = {
+            'Duende Sumón': {
+                'start': ['¡Suma esto a tu derrota!', '¡Mis cálculos dicen que vas a perder!'],
+                'correct': ['¡Argh! ¡Suerte de principiante!', '¡Eso fue fácil!'],
+                'wrong': ['¡JAJAJA! ¡Ni siquiera estuviste cerca!', '¡Suma mal y llorarás!']
+            },
+            'Dragón Numérico': {
+                'start': ['¡Mi fuego es tan caliente como estos números!', '¡RUAAAR! ¡Resuelve esto!'],
+                'correct': ['¡Quemaste mis defensas!', '¡Inesperado!'],
+                'wrong': ['¡Siente el calor del error!', '¡Demasiado lento para mis alas!']
+            },
+            'Mago Restador': {
+                'start': ['¡Desapareceré tus puntos!', '¡Abra Kadabra! ¡Resta sin miedo!'],
+                'correct': ['¡Mi truco falló!', '¡Imposible!'],
+                'wrong': ['¡Puf! ¡Tus puntos se esfumaron!', '¡Menos es más... difícil para ti!']
+            },
+            'Reina Multiplicadora': {
+                'start': ['¡Mis ejércitos se multiplican!', '¡Doble o nada, pequeño héroe!'],
+                'correct': ['¡Dividiste mi poder!', '¡No puede ser!'],
+                'wrong': ['¡Multiplica tu esfuerzo o perderás!', '¡Siete veces siete... y te vencí!']
+            },
+            'Chef Caos': {
+                'start': ['¡Mi receta para el desastre te espera!', '¡Corta la pizza, no tus esperanzas!'],
+                'correct': ['¡Quemaste mi pizza!', '¡Sabor amargo!'],
+                'wrong': ['¡Media victoria no sirve de nada!', '¡Una pizca de duda y una porción de error!']
+            }
+        };
+
+        const bossName = gameData.levelInfo.boss_name;
+        const pool = phrases[bossName] ? phrases[bossName][type] : ['¡No podrás conmigo!', '¡Sigue intentando!', '¡JA!'];
+        bossShout.innerText = pool[Math.floor(Math.random() * pool.length)];
     }
 
     async function nextQuestion() {
@@ -1141,14 +1171,17 @@ document.addEventListener('DOMContentLoaded', () => {
             state.activeChild.coins += 5;
             document.getElementById('gameCoins').innerText = state.activeChild.coins;
             
-            // Damage Boss if in boss phase
-            const bossThreshold = gameData.total - 2;
-            if (gameData.currentQuestion >= bossThreshold) {
-                gameData.bossHp--;
-                updateBossUI();
-                const bossIcon = document.getElementById('bossIcon');
-                bossIcon.classList.add('animate-shake');
-                setTimeout(() => bossIcon.classList.remove('animate-shake'), 500);
+            // Damage Boss if in boss level
+            if (gameData.levelInfo.boss_name) {
+                const bossThreshold = gameData.total - 2;
+                if (gameData.currentQuestion >= bossThreshold) {
+                    gameData.bossHp--;
+                    updateBossUI();
+                    const bossIcon = document.getElementById('bossIcon');
+                    bossIcon.classList.add('animate-shake');
+                    setTimeout(() => bossIcon.classList.remove('animate-shake'), 500);
+                }
+                updateBossShout('correct');
             }
 
             confetti({
@@ -1159,10 +1192,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             playSound('wrong');
-            // Boss Laughs/Counters if in boss phase
-            const bossThreshold = gameData.total - 2;
-            if (gameData.currentQuestion >= bossThreshold) {
-                document.getElementById('bossShout').innerText = '¡JAJAJA! ¡Demasiado lento!';
+            if (gameData.levelInfo.boss_name) {
+                updateBossShout('wrong');
             }
         }
 
