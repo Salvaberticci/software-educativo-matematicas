@@ -1683,6 +1683,149 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `).join('');
         }
+
+        // Diagnostics and Critical Areas
+        if (data.performance) initAdminGlobalChart(data.performance);
+        if (data.diagnostics) {
+            initDiagnosticChart(data.diagnostics);
+            populateCriticalAreas(data.diagnostics);
+        }
+    }
+
+    let adminGlobalChart = null;
+    let adminDiagChart = null;
+
+    function initAdminGlobalChart(perf) {
+        const ctx = document.getElementById('adminGlobalPerformance');
+        if (!ctx) return;
+        if (adminGlobalChart) adminGlobalChart.destroy();
+        adminGlobalChart = new Chart(ctx.getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Aciertos', 'Fallas'],
+                datasets: [{
+                    data: [perf.hits, perf.errors],
+                    backgroundColor: ['#10b981', '#ef4444'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#94a3b8', font: { weight: 'bold' } } }
+                },
+                cutout: '70%'
+            }
+        });
+    }
+
+    function initDiagnosticChart(diagnostics) {
+        const ctx = document.getElementById('adminDiagnosticChart');
+        if (!ctx) return;
+        if (adminDiagChart) adminDiagChart.destroy();
+
+        const labels = diagnostics.map(d => {
+            const level = state.levels.find(l => l.id == d.level_id);
+            return level ? level.name.split(' ')[0] + ' ' + (level.name.split(' ')[1] || '') : `Nivel ${d.level_id}`;
+        });
+
+        adminDiagChart = new Chart(ctx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Aciertos',
+                        data: diagnostics.map(d => d.total_hits),
+                        backgroundColor: '#10b981',
+                        borderRadius: 6,
+                    },
+                    {
+                        label: 'Fallas',
+                        data: diagnostics.map(d => d.total_errors),
+                        backgroundColor: '#ef4444',
+                        borderRadius: 6,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+                    y: { stacked: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: '#1e293b',
+                        titleColor: '#f8fafc',
+                        bodyColor: '#cbd5e1'
+                    }
+                }
+            }
+        });
+    }
+
+    function populateCriticalAreas(diagnostics) {
+        const container = document.getElementById('criticalAreasList');
+        if (!container) return;
+
+        const analyzed = diagnostics.map(d => {
+            const total = parseInt(d.total_hits) + parseInt(d.total_errors);
+            const errorRate = total > 0 ? (d.total_errors / total) * 100 : 0;
+            const level = state.levels.find(l => l.id == d.level_id);
+            return {
+                id: d.level_id,
+                name: level ? level.name : `Nivel ${d.level_id}`,
+                errorRate: errorRate,
+                total: total
+            };
+        }).filter(a => a.total > 0 && a.errorRate > 20)
+          .sort((a,b) => b.errorRate - a.errorRate)
+          .slice(0, 3);
+
+        if (analyzed.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-6">
+                    <div class="text-3xl mb-2">⭐</div>
+                    <p class="text-sm text-green-400 font-bold">¡Buen trabajo!</p>
+                    <p class="text-[10px] text-slate-500">No se detectan áreas críticas de atención inmediata.</p>
+                </div>
+            `;
+            return;
+        }
+
+        const adviceMap = {
+            'Suma': 'Reforzar el concepto de agrupación y el valor posicional con bloques base diez.',
+            'Resta': 'Practicar la recta numérica y el concepto de "quitar" con objetos físicos.',
+            'Reloj': 'Usar relojes analógicos manipulables y asociar horas con rutinas diarias.',
+            'Fracción': 'Utilizar regletas de colores o círculos de fracciones para visualizar partes-todo.',
+            'Equiv': 'Realizar juegos de emparejamiento con diferentes representaciones de una misma cantidad.'
+        };
+
+        container.innerHTML = analyzed.map(a => {
+            let advice = 'Revisar conceptos base de este nivel.';
+            for (let [key, val] of Object.entries(adviceMap)) {
+                if (a.name.includes(key)) { advice = val; break; }
+            }
+
+            return `
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h5 class="font-bold text-sm text-slate-200">${a.name}</h5>
+                        <span class="text-[10px] bg-red-900/30 text-red-400 px-2 py-0.5 rounded-full border border-red-500/20">${Math.round(a.errorRate)}% falla</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        <span class="text-orange-400 font-bold uppercase text-[9px]">Sugerencia:</span> ${advice}
+                    </p>
+                </div>
+            `;
+        }).join('');
     }
 
     function populateUsersTable(users) {
