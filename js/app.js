@@ -342,16 +342,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="min-h-screen p-4 pb-36">
                 <!-- Header -->
                 <header class="max-w-4xl mx-auto flex justify-between items-center mb-10 animate-slide-down">
-                    <div class="candy-card px-5 py-3 flex items-center gap-3">
-                        <span class="text-3xl floating">
-                            ${(state.activeChild.theme_icon && state.activeChild.theme_icon.includes('.png'))
-                ? `<img src="/software-educativo-matematicas/assets/img/icons/${state.activeChild.theme_icon}" alt="Avatar" style="width: 36px; height: 36px; object-fit: contain;">`
-                : (state.activeChild.theme_icon || (state.activeChild.avatar_id == 2 ? '👧' : '👦'))}
-                        </span>
-                        <div>
-                            <p class="font-bold leading-tight" style="color: var(--text-dark)">${state.activeChild.name}</p>
-                            <p class="text-xs font-bold uppercase" style="color: var(--secondary)">${state.activeChild.grade}\u00ba Grado</p>
+                    <div class="flex items-center gap-4">
+                        <div class="candy-card px-5 py-3 flex items-center gap-3">
+                            <span class="text-3xl filter drop-shadow-sm">
+                                ${getAvatarEmoji(state.activeChild.avatar_id)}
+                            </span>
+                            <div>
+                                <p class="font-bold leading-tight" style="color: var(--text-dark)">${state.activeChild.name}</p>
+                                <p class="text-xs font-bold uppercase" style="color: var(--secondary)">${state.activeChild.grade}\u00ba Grado</p>
+                            </div>
                         </div>
+                        ${state.user.role === 'admin' ? `
+                            <button onclick="render('adminDashboard')" class="candy-card px-5 py-3 hover:scale-110 transition-transform bg-purple-500 text-white border-purple-300" title="Centro de Mando Administrativo">
+                                <span class="text-2xl">⚙️</span>
+                                <span class="hidden md:inline font-bold ml-1 text-sm uppercase">Admin</span>
+                            </button>
+                        ` : ''}
                     </div>
                     <div class="candy-card px-5 py-3 flex items-center gap-2">
                         <img src="assets/img/coin.gif" width="32" height="32" class="inline-block animate-bounce-in" alt="Moneda">
@@ -559,6 +565,82 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
+        `,
+
+        adminDashboard: () => `
+            <div class="min-h-screen p-8 bg-purple-50">
+                <div class="max-w-7xl mx-auto">
+                    <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 animate-slide-down">
+                        <div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-4xl">👑</span>
+                                <h2 class="text-4xl font-bold drop-shadow-md text-purple-700">Panel Superior Administrativo</h2>
+                            </div>
+                            <p class="font-medium text-purple-500">Control total del ecosistema Candy Quest</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button onclick="render('levelMap')" class="candy-btn candy-btn-secondary px-7 py-2">Volver ←</button>
+                        </div>
+                    </header>
+
+                    <!-- Global Stats Totals -->
+                    <div id="adminTotals" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10 stagger">
+                        <div class="stat-card animate-slide-up bg-white">
+                            <span class="stat-card-icon">👥</span>
+                            <p class="font-bold text-xs uppercase text-gray-400">Padres Totales</p>
+                            <h3 id="adminTotalUsers" class="text-4xl font-bold text-purple-600">--</h3>
+                        </div>
+                        <div class="stat-card animate-slide-up bg-white" style="animation-delay: 0.1s">
+                            <span class="stat-card-icon">🧒</span>
+                            <p class="font-bold text-xs uppercase text-gray-400">Niños Registrados</p>
+                            <h3 id="adminTotalChildren" class="text-4xl font-bold text-blue-500">--</h3>
+                        </div>
+                        <div class="stat-card animate-slide-up bg-white" style="animation-delay: 0.2s">
+                            <span class="stat-card-icon">🎮</span>
+                            <p class="font-bold text-xs uppercase text-gray-400">Partidas Jugadas</p>
+                            <h3 id="adminTotalSessions" class="text-4xl font-bold text-green-500">--</h3>
+                        </div>
+                        <div class="stat-card animate-slide-up bg-white" style="animation-delay: 0.3s">
+                            <span class="stat-card-icon">⚡</span>
+                            <p class="font-bold text-xs uppercase text-gray-400">Efectividad Global</p>
+                            <h3 id="adminGlobalHits" class="text-4xl font-bold text-orange-500">--%</h3>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left: Users List -->
+                        <div class="lg:col-span-2 candy-card p-6 bg-white shadow-xl">
+                            <div class="flex justify-between items-center mb-6">
+                                <h4 class="text-xl font-bold text-gray-700 font-fredoka">📁 Gestión de Usuarios y Familias</h4>
+                                <span class="text-xs bg-purple-100 text-purple-600 px-3 py-1 rounded-full font-bold">Últimos 50</span>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead class="bg-gray-50 border-b-2 border-gray-100 uppercase text-xs font-bold text-gray-400">
+                                        <tr>
+                                            <th class="px-4 py-3">Email de Padre</th>
+                                            <th class="px-4 py-3">Hijos</th>
+                                            <th class="px-4 py-3 text-center">Registro</th>
+                                            <th class="px-4 py-3 text-right">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="adminUsersTable" class="text-sm divide-y divide-gray-50">
+                                        <!-- Load users via JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Right: System Activity Logs -->
+                        <div class="candy-card p-6 bg-white overflow-hidden flex flex-col shadow-xl">
+                            <h4 class="text-xl font-bold text-gray-700 mb-6 font-fredoka">📋 Bitácora Maestra</h4>
+                            <div class="flex-1 overflow-y-auto pr-2 space-y-4 max-h-[600px]" id="adminMasterLogs">
+                                <!-- Load logs via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         `
     };
 
@@ -600,6 +682,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (state.view === 'dashboard') {
             updateDashboard(document.getElementById('dashChildSelect').value);
+        }
+        if (state.view === 'adminDashboard') {
+            loadAdminStats();
         }
         if (state.view === 'levelMap') {
             const player = document.getElementById('playerCharacter');
@@ -1326,6 +1411,53 @@ document.addEventListener('DOMContentLoaded', () => {
             }]
         });
     }
+
+    // --- Administrator Functions ---
+    window.loadAdminStats = async () => {
+        try {
+            const res = await fetch('api/get_admin_stats.php');
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error);
+
+            // Totals
+            document.getElementById('adminTotalUsers').innerText = data.totals.users;
+            document.getElementById('adminTotalChildren').innerText = data.totals.children;
+            document.getElementById('adminTotalSessions').innerText = data.totals.sessions;
+            
+            const p = data.performance;
+            const total = parseInt(p.hits) + parseInt(p.errors);
+            const pct = total > 0 ? Math.round((p.hits / total) * 100) : 0;
+            document.getElementById('adminGlobalHits').innerText = pct + '%';
+
+            // Users Table
+            document.getElementById('adminUsersTable').innerHTML = data.users.map(u => `
+                <tr>
+                    <td class="px-4 py-4 font-bold text-gray-700">${u.email}</td>
+                    <td class="px-4 py-4"><span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">${u.children_count}</span></td>
+                    <td class="px-4 py-4 text-center text-gray-400 text-xs">${new Date(u.created_at).toLocaleDateString()}</td>
+                    <td class="px-4 py-4 text-right">
+                        <button onclick="Swal.fire('Gestión', 'Función de edición en desarrollo para: ${u.email}', 'info')" class="text-purple-500 hover:bg-purple-50 p-2 rounded-lg transition-colors">⚙️</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Master Logs
+            document.getElementById('adminMasterLogs').innerHTML = data.logs.map(log => `
+                <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="text-xs font-bold uppercase ${log.action_type.includes('failed') ? 'text-red-500' : 'text-purple-600'}">${log.action_type}</span>
+                        <span class="text-[10px] text-gray-400 font-mono">${log.timestamp.split(' ')[1]}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-1">${log.details}</p>
+                    <div class="text-[10px] text-gray-400">${log.email || 'Sistema'}</div>
+                </div>
+            `).join('');
+
+        } catch (err) {
+            console.error('Admin Error:', err);
+            Swal.fire('Error', 'No se pudieron cargar las estadísticas maestras', 'error');
+        }
+    };
 
     window.logout = async () => {
         await fetch('api/auth.php?action=logout');
