@@ -1233,9 +1233,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${paths}
                     </svg>
                 </div>
-                <div class="flex flex-col items-center justify-center text-5xl font-black font-fredoka">
-                    <span class="border-b-8 border-slate-800 px-5 pb-2 text-orange-600">?</span>
-                    <span class="pt-2 text-slate-400">${denom}</span>
                 </div>
             </div>
         `;
