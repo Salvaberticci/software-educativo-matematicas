@@ -25,19 +25,7 @@ if ($child_id > 0) {
 
 $rewards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Apply Global Economy Multiplier
-// Base price in DB for level 1 items is 50.
-// We scale based on global_settings.base_reward_price
-try {
-    $sStmt = $pdo->prepare("SELECT setting_value FROM global_settings WHERE setting_key = 'base_reward_price'");
-    $sStmt->execute();
-    $basePrice = $sStmt->fetchColumn() ?: 200;
-    $multiplier = $basePrice / 50;
-    
-    foreach ($rewards as &$r) {
-        $r['cost'] = round($r['cost'] * $multiplier);
-    }
-} catch (Exception $e) {}
+// Prices are now taken directly from the database to honor manual adjustments.
 
 send_json([
     'success' => true,
