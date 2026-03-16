@@ -1748,6 +1748,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const labels = diagnostics.map(d => {
             const level = state.levels.find(l => l.id == d.level_id);
+            if (level && level.name.includes('Fracción')) {
+                return '🍕 ' + level.name.split(' ')[0];
+            }
             return level ? level.name.split(' ')[0] + ' ' + (level.name.split(' ')[1] || '') : `Nivel ${d.level_id}`;
         });
 
@@ -1784,7 +1787,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         intersect: false,
                         backgroundColor: '#1e293b',
                         titleColor: '#f8fafc',
-                        bodyColor: '#cbd5e1'
+                        bodyColor: '#cbd5e1',
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (context.label.includes('🍕')) {
+                                    if (label === 'Aciertos') label = 'Pizzas Horneadas';
+                                    if (label === 'Fallas') label = 'Pedidos con Error';
+                                }
+                                return label + ': ' + context.raw;
+                            }
+                        }
                     }
                 }
             }
@@ -2008,6 +2021,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const labels = diagnostics.map(d => {
             const level = state.levels.find(l => l.id == d.level_id);
+            if (level && level.name.includes('Fracción')) {
+                return '🍕 ' + level.name.split(' ')[0];
+            }
             return level ? level.name.split(' ')[0] + ' ' + (level.name.split(' ')[1] || '') : `Nivel ${d.level_id}`;
         });
 
@@ -2038,7 +2054,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     y: { stacked: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { family: 'Fredoka' } } }
                 },
                 plugins: {
-                    legend: { position: 'bottom', labels: { font: { family: 'Fredoka', weight: 'bold' } } }
+                    legend: { position: 'bottom', labels: { font: { family: 'Fredoka', weight: 'bold' } } },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(255,255,255,0.95)',
+                        titleColor: '#333',
+                        bodyColor: '#666',
+                        cornerRadius: 12,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (context.label.includes('🍕')) {
+                                    if (label === 'Aciertos') label = 'Pizzas Horneadas';
+                                    if (label === 'Fallas') label = 'Pizzas con Error';
+                                }
+                                return label + ': ' + context.raw;
+                            }
+                        }
+                    }
                 }
             }
         });
