@@ -966,6 +966,11 @@ document.addEventListener('DOMContentLoaded', () => {
             gameData.maxBossHp = 3; // Fixed for now, last 3 questions
             gameData.bossHp = 3;
 
+            const bossIconData = gameData.levelInfo.boss_icon || '👹';
+            const bossDisplayBase = bossIconData.includes('.png') 
+                ? `<img src="assets/img/bosses/${bossIconData}" class="w-24 h-24 mx-auto object-contain drop-shadow-md mb-2">`
+                : `<span class="text-3xl">${bossIconData}</span>`;
+
             // Show Story Intro Modal
             await Swal.fire({
                 title: '🏰 ¡Nueva Aventura!',
@@ -976,7 +981,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="mt-6 p-4 bg-red-100 rounded-xl border-2 border-red-200">
                              <p class="text-[10px] font-black uppercase text-red-500 tracking-widest mb-1">Cuidado con el Jefe</p>
                              <div class="flex items-center justify-center gap-3">
-                                <span class="text-3xl">${gameData.levelInfo.boss_icon || '👹'}</span>
+                                ${bossDisplayBase}
                                 <span class="font-black text-slate-800">${gameData.levelInfo.boss_name || 'Desconocido'}</span>
                              </div>
                         </div>
@@ -1002,18 +1007,29 @@ document.addEventListener('DOMContentLoaded', () => {
         gameData.total = data.total_questions || 10;
         document.getElementById('questionCounter').innerText = `${gameData.currentQuestion} / ${gameData.total}`;
 
-        // Boss Phase Logic: Last 3 questions
-        const bossThreshold = gameData.total - 2;
-        if (gameData.currentQuestion >= bossThreshold) {
-            const bossArea = document.getElementById('bossArea');
-            if (bossArea.classList.contains('hidden')) {
-                bossArea.classList.remove('hidden');
-                document.getElementById('bossName').innerText = gameData.levelInfo.boss_name || 'Jefe Final';
-                document.getElementById('bossIcon').innerText = gameData.levelInfo.boss_icon || '👺';
-                updateBossUI();
-                playSound('win'); // Short fanfare for boss arrival
+            // Boss Phase Logic: Last 3 questions
+            const bossThreshold = gameData.total - 2;
+            if (gameData.currentQuestion >= bossThreshold) {
+                const bossArea = document.getElementById('bossArea');
+                if (bossArea.classList.contains('hidden')) {
+                    bossArea.classList.remove('hidden');
+                    document.getElementById('bossName').innerText = gameData.levelInfo.boss_name || 'Jefe Final';
+                    
+                    // Render Icon or Image
+                    const iconEl = document.getElementById('bossIcon');
+                    const bIcon = gameData.levelInfo.boss_icon || '👺';
+                    if (bIcon.includes('.png')) {
+                        iconEl.innerHTML = `<img src="assets/img/bosses/${bIcon}" class="w-20 h-20 object-contain drop-shadow-lg" alt="Boss">`;
+                        iconEl.classList.remove('text-5xl');
+                    } else {
+                        iconEl.innerText = bIcon;
+                        iconEl.classList.add('text-5xl');
+                    }
+                    
+                    updateBossUI();
+                    playSound('win');
+                }
             }
-        }
 
         if (data.operator === 'fraccion') {
             document.getElementById('equation').innerHTML = renderFractionVisual(data.fraction_data);
