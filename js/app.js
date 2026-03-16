@@ -1033,14 +1033,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show Boss area immediately if it's a boss level
         if (gameData.levelInfo.boss_name) {
             const bossArea = document.getElementById('bossArea');
-            if (bossArea.classList.contains('hidden')) {
+            if (bossArea) {
                 bossArea.classList.remove('hidden');
                 document.getElementById('bossName').innerText = gameData.levelInfo.boss_name;
                 
                 const iconEl = document.getElementById('bossIcon');
                 const bIcon = gameData.levelInfo.boss_icon || '👺';
                 if (bIcon.includes('.png')) {
-                    iconEl.innerHTML = `<img src="assets/img/bosses/${bIcon}" class="w-20 h-20 object-contain drop-shadow-lg" alt="Boss">`;
+                    iconEl.innerHTML = `<img src="assets/img/bosses/${bIcon}" class="w-32 h-32 object-contain drop-shadow-lg" alt="Boss">`;
                     iconEl.classList.remove('text-5xl');
                 } else {
                     iconEl.innerText = bIcon;
@@ -1048,8 +1048,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 updateBossUI();
                 
-                // Initial shout
-                updateBossShout('start');
+                // Initial shout only on first question
+                if (gameData.currentQuestion === 1) {
+                    updateBossShout('start');
+                }
             }
         }
 
