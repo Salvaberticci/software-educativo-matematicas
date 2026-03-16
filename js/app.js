@@ -893,13 +893,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
             <div class="flex flex-col items-center gap-4">
                 <p class="text-xl font-bold mb-2">¿Cuántas partes de la ${food} hay?</p>
-                <div class="relative w-40 h-40">
+                <div class="relative w-40 h-40 mb-4">
                     <svg viewBox="0 0 160 160" class="w-full h-full drop-shadow-lg">
                         ${paths}
                     </svg>
                     <div class="absolute inset-0 flex items-center justify-center text-4xl pointer-events-none opacity-20">${food}</div>
                 </div>
-                <div class="text-3xl font-bold">? / ${denom}</div>
+                <div class="flex flex-col items-center justify-center text-4xl font-bold">
+                    <span class="border-b-4 border-gray-800 px-3 pb-1">?</span>
+                    <span class="pt-1">${denom}</span>
+                </div>
             </div>
         `;
     }
@@ -909,19 +912,25 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
             <div class="flex flex-col items-center gap-6">
                 <p class="text-xl font-bold mb-2 font-fredoka">¡Encuentra la fracción equivalente!</p>
-                <div class="flex items-center gap-8">
+                <div class="flex items-center gap-6">
                     <div class="flex flex-col items-center">
-                        <div class="bg-white rounded-xl p-2 shadow-sm border-2 border-dashed border-gray-200">
+                        <div class="bg-white rounded-xl p-2 shadow-sm border-2 border-dashed border-gray-200 mb-3">
                              ${renderSmallPie(numer_base, denom_base, food)}
                         </div>
-                        <div class="text-2xl font-bold mt-2">${numer_base} / ${denom_base}</div>
+                        <div class="flex flex-col items-center justify-center text-2xl font-bold">
+                            <span class="border-b-4 border-gray-800 px-2 pb-1">${numer_base}</span>
+                            <span class="pt-1">${denom_base}</span>
+                        </div>
                     </div>
-                    <div class="text-4xl text-gray-300">＝</div>
+                    <div class="text-5xl font-bold text-gray-400 -mt-8">＝</div>
                     <div class="flex flex-col items-center">
-                        <div class="bg-white rounded-xl p-2 shadow-sm border-2 border-dashed border-gray-200">
+                        <div class="bg-white rounded-xl p-2 shadow-sm border-2 border-dashed border-gray-200 mb-3">
                              ${renderSmallPie(0, denom_equiv, food, true)}
                         </div>
-                        <div class="text-2xl font-bold mt-2">? / ${denom_equiv}</div>
+                        <div class="flex flex-col items-center justify-center text-2xl font-bold" style="color: var(--primary)">
+                            <span class="border-b-4 border-primary px-3 pb-1">?</span>
+                            <span class="pt-1 text-gray-800">${denom_equiv}</span>
+                        </div>
                     </div>
                 </div>
             </div>
