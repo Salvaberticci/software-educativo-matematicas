@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-03-2026 a las 02:53:21
+-- Tiempo de generación: 18-03-2026 a las 18:29:36
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -137,7 +137,69 @@ INSERT INTO `audit_logs` (`id`, `user_id`, `action_type`, `details`, `timestamp`
 (95, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-11 21:22:35'),
 (96, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 3 (LEGO Ninjago)', '2026-03-11 21:26:46'),
 (97, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 4 (Los Jóvenes Titanes)', '2026-03-11 21:27:16'),
-(98, 3, 'game_session_saved', 'Niño ID: 6, Nivel ID: 2, Aciertos: 9', '2026-03-11 21:43:58');
+(98, 3, 'game_session_saved', 'Niño ID: 6, Nivel ID: 2, Aciertos: 9', '2026-03-11 21:43:58'),
+(99, 3, 'logout', NULL, '2026-03-13 18:40:36'),
+(100, NULL, 'logout', NULL, '2026-03-13 18:40:36'),
+(101, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-13 18:43:00'),
+(102, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 19 (Princesita Sofía)', '2026-03-13 18:46:45'),
+(103, 3, 'logout', NULL, '2026-03-13 18:54:11'),
+(104, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-13 18:56:16'),
+(105, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-13 18:58:22'),
+(106, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 3 (LEGO Ninjago)', '2026-03-13 19:00:03'),
+(107, 3, 'reward_purchased', 'Niño ID: 4 compró Reward ID: 8 (Jurassic World)', '2026-03-13 19:00:36'),
+(108, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 12 (Gabby\'s Dollhouse)', '2026-03-13 19:01:13'),
+(109, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 13 (Bluey)', '2026-03-13 19:01:22'),
+(110, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 17 (Peppa Pig)', '2026-03-13 19:01:56'),
+(111, 3, 'reward_purchased', 'Niño ID: 6 compró Reward ID: 20 (Masha y el Oso)', '2026-03-13 19:02:21'),
+(112, 2, 'logout', NULL, '2026-03-16 17:36:45'),
+(113, NULL, 'login_failed', 'Intento fallido para: test@mathquest.demo', '2026-03-16 17:37:07'),
+(114, 5, 'login_success', 'Usuario logueado: test@mathquest.demo', '2026-03-16 17:37:14'),
+(115, 5, 'game_session_saved', 'Niño ID: 7, Nivel ID: 9, Aciertos: 2', '2026-03-16 17:38:43'),
+(116, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-16 18:37:25'),
+(117, NULL, 'login_failed', 'Intento fallido para: admin@candyquest.demo', '2026-03-16 18:49:03'),
+(118, NULL, 'login_failed', 'Intento fallido para: admin@candyquest.demo', '2026-03-16 18:49:09'),
+(119, NULL, 'login_failed', 'Intento fallido para: admin@candyquest.demo', '2026-03-16 18:49:17'),
+(120, NULL, 'login_failed', 'Intento fallido para: admin@candyquest.demo', '2026-03-16 18:50:00'),
+(121, 1, 'login_success', 'Usuario logueado: admin@mathquest.com', '2026-03-16 18:50:25'),
+(122, 1, 'logout', NULL, '2026-03-16 18:51:24'),
+(123, 6, 'login_success', 'Usuario logueado: admin@candyquest.demo', '2026-03-16 18:51:30'),
+(124, 6, 'child_profile_created', 'Nuevo perfil creado: prueba (Grado: 1)', '2026-03-16 18:51:38'),
+(125, 6, 'admin_update_settings', 'Admin actualizó los ajustes globales', '2026-03-16 19:09:30'),
+(126, 6, 'logout', NULL, '2026-03-16 19:09:37'),
+(127, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-16 19:10:07'),
+(128, 3, 'logout', NULL, '2026-03-16 19:10:10'),
+(129, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-16 19:10:16'),
+(130, 3, 'logout', NULL, '2026-03-16 19:10:18'),
+(131, 4, 'login_success', 'Usuario logueado: maria@gmail.com', '2026-03-16 19:10:47'),
+(132, 4, 'logout', NULL, '2026-03-16 19:18:07'),
+(133, 8, 'login_success', 'Usuario logueado: tester@candyquest.demo', '2026-03-16 19:18:15'),
+(134, 8, 'game_session_saved', 'Niño ID: 9, Nivel ID: 8, Aciertos: 0', '2026-03-16 20:18:20'),
+(135, 8, 'game_session_saved', 'Niño ID: 9, Nivel ID: 5, Aciertos: 9', '2026-03-16 20:40:23'),
+(136, 8, 'game_session_saved', 'Niño ID: 9, Nivel ID: 8, Aciertos: 0', '2026-03-16 21:01:34'),
+(137, 8, 'game_session_saved', 'Niño ID: 9, Nivel ID: 8, Aciertos: 9', '2026-03-16 21:13:42'),
+(138, 8, 'game_session_saved', 'Niño ID: 9, Nivel ID: 5, Aciertos: 8', '2026-03-16 21:14:42'),
+(139, 8, 'game_session_saved', 'Niño ID: 9, Nivel ID: 4, Aciertos: 7', '2026-03-16 21:16:22'),
+(140, 8, 'game_session_saved', 'Niño ID: 9, Nivel ID: 10, Aciertos: 16', '2026-03-16 21:20:08'),
+(141, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-16 21:23:48'),
+(142, 3, 'logout', NULL, '2026-03-16 21:23:52'),
+(143, NULL, 'login_failed', 'Intento fallido para: test@mathquest.demo', '2026-03-16 21:23:59'),
+(144, NULL, 'login_failed', 'Intento fallido para: test@mathquest.demo', '2026-03-16 21:24:06'),
+(145, 5, 'login_success', 'Usuario logueado: test@mathquest.demo', '2026-03-16 21:25:04'),
+(146, 5, 'logout', NULL, '2026-03-16 21:59:56'),
+(147, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-16 22:00:01'),
+(148, 3, 'logout', NULL, '2026-03-16 22:00:03'),
+(149, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-16 22:00:21'),
+(150, 3, 'game_session_saved', 'Niño ID: 3, Nivel ID: 1, Aciertos: 9', '2026-03-16 22:01:50'),
+(151, 3, 'game_session_saved', 'Niño ID: 3, Nivel ID: 1, Aciertos: 10', '2026-03-16 22:02:32'),
+(152, 3, 'logout', NULL, '2026-03-16 22:03:21'),
+(153, 1, 'login_success', 'Usuario logueado: admin@mathquest.com', '2026-03-16 22:03:39'),
+(154, 1, 'logout', NULL, '2026-03-16 22:03:58'),
+(155, 3, 'login_success', 'Usuario logueado: salvatoreberticci19@gmail.com', '2026-03-16 22:05:57'),
+(156, 3, 'game_session_saved', 'Niño ID: 3, Nivel ID: 2, Aciertos: 9', '2026-03-16 22:07:29'),
+(157, 3, 'game_session_saved', 'Niño ID: 3, Nivel ID: 3, Aciertos: 10', '2026-03-16 22:08:36'),
+(158, 3, 'reward_purchased', 'Niño ID: 3 compró Reward ID: 5 (Sonic Prime)', '2026-03-16 22:49:36'),
+(159, 3, 'logout', NULL, '2026-03-17 16:27:11'),
+(160, NULL, 'logout', NULL, '2026-03-17 16:27:11');
 
 -- --------------------------------------------------------
 
@@ -163,10 +225,13 @@ CREATE TABLE `children` (
 INSERT INTO `children` (`id`, `user_id_parent`, `name`, `grade`, `avatar_id`, `coins`, `current_level`, `equipped_reward_id`) VALUES
 (1, 2, 'Juan', 2, 1, 0, 1, NULL),
 (2, 2, 'Sofia', 1, 1, 0, 1, NULL),
-(3, 3, 'Explorador', 1, 1, 150, 2, 4),
-(4, 3, 'Juan', 1, 1, 800, 7, 7),
+(3, 3, 'Explorador', 1, 1, 257, 4, 5),
+(4, 3, 'Juan', 1, 1, 250, 7, 3),
 (5, 4, 'Explorador', 1, 1, 0, 1, NULL),
-(6, 3, 'Olay', 2, 2, 1795, 3, 18);
+(6, 3, 'Olay', 2, 2, 245, 3, NULL),
+(7, 5, 'Demo Explorer', 6, 1, 9999, 11, NULL),
+(8, 6, 'prueba', 1, 1, 0, 1, NULL),
+(9, 8, 'Super Tester', 6, 1, 10244, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -205,7 +270,35 @@ INSERT INTO `child_inventory` (`id`, `child_id`, `reward_id`, `purchased_at`) VA
 (25, 3, 8, '2026-03-11 13:14:15'),
 (26, 3, 9, '2026-03-11 13:14:54'),
 (27, 3, 3, '2026-03-11 21:26:46'),
-(28, 3, 4, '2026-03-11 21:27:16');
+(28, 3, 4, '2026-03-11 21:27:16'),
+(29, 6, 19, '2026-03-13 18:46:45'),
+(30, 4, 3, '2026-03-13 19:00:03'),
+(31, 4, 8, '2026-03-13 19:00:36'),
+(32, 6, 12, '2026-03-13 19:01:13'),
+(33, 6, 13, '2026-03-13 19:01:22'),
+(34, 6, 17, '2026-03-13 19:01:56'),
+(35, 6, 20, '2026-03-13 19:02:21'),
+(36, 9, 1, '2026-03-16 19:12:20'),
+(37, 9, 2, '2026-03-16 19:12:20'),
+(38, 9, 3, '2026-03-16 19:12:20'),
+(39, 9, 4, '2026-03-16 19:12:20'),
+(40, 9, 5, '2026-03-16 19:12:20'),
+(41, 9, 6, '2026-03-16 19:12:20'),
+(42, 9, 7, '2026-03-16 19:12:20'),
+(43, 9, 8, '2026-03-16 19:12:20'),
+(44, 9, 9, '2026-03-16 19:12:20'),
+(45, 9, 10, '2026-03-16 19:12:20'),
+(46, 9, 11, '2026-03-16 19:12:20'),
+(47, 9, 12, '2026-03-16 19:12:20'),
+(48, 9, 13, '2026-03-16 19:12:20'),
+(49, 9, 14, '2026-03-16 19:12:20'),
+(50, 9, 15, '2026-03-16 19:12:20'),
+(51, 9, 16, '2026-03-16 19:12:20'),
+(52, 9, 17, '2026-03-16 19:12:20'),
+(53, 9, 18, '2026-03-16 19:12:20'),
+(54, 9, 19, '2026-03-16 19:12:20'),
+(55, 9, 20, '2026-03-16 19:12:20'),
+(56, 3, 5, '2026-03-16 22:49:36');
 
 -- --------------------------------------------------------
 
@@ -228,81 +321,67 @@ CREATE TABLE `game_sessions` (
 --
 
 INSERT INTO `game_sessions` (`id`, `child_id`, `level_id`, `score_correct`, `score_total`, `time_sec`, `timestamp`) VALUES
-(1, 4, 1, 10, 10, 38, '2026-01-10 18:20:56'),
-(2, 4, 2, 10, 10, 48, '2026-01-12 14:59:10'),
-(3, 4, 2, 3, 10, 26, '2026-01-14 21:00:18'),
-(4, 4, 3, 8, 10, 44, '2026-01-14 21:04:54'),
-(5, 4, 4, 6, 10, 59, '2026-01-22 20:25:43'),
-(6, 4, 4, 7, 10, 51, '2026-01-22 20:27:43'),
-(7, 4, 5, 10, 10, 29, '2026-02-25 20:14:13'),
-(8, 4, 6, 6, 10, 41, '2026-02-25 20:14:59'),
-(9, 4, 6, 8, 10, 42, '2026-02-25 20:16:41'),
-(10, 1, 3, 8, 10, 58, '2026-02-20 02:52:45'),
-(11, 1, 3, 6, 10, 48, '2026-02-21 02:52:45'),
-(12, 1, 3, 10, 10, 119, '2026-02-22 02:52:45'),
-(13, 1, 3, 6, 10, 68, '2026-02-22 02:52:45'),
-(14, 1, 1, 7, 10, 108, '2026-02-22 02:52:45'),
-(15, 1, 3, 9, 10, 92, '2026-02-23 02:52:45'),
-(16, 1, 3, 10, 10, 70, '2026-02-23 02:52:45'),
-(17, 1, 1, 8, 10, 91, '2026-02-23 02:52:45'),
-(18, 1, 1, 10, 10, 50, '2026-02-24 02:52:45'),
-(19, 1, 1, 7, 10, 52, '2026-02-25 02:52:45'),
-(20, 1, 3, 10, 10, 82, '2026-02-25 02:52:45'),
-(21, 1, 1, 7, 10, 74, '2026-02-25 02:52:45'),
-(22, 1, 3, 8, 10, 72, '2026-02-26 02:52:45'),
-(23, 1, 1, 8, 10, 75, '2026-02-26 02:52:45'),
-(24, 1, 2, 9, 10, 55, '2026-02-26 02:52:45'),
-(25, 2, 2, 4, 10, 46, '2026-02-20 02:52:45'),
-(26, 2, 3, 9, 10, 43, '2026-02-21 02:52:45'),
-(27, 2, 3, 5, 10, 54, '2026-02-21 02:52:45'),
-(28, 2, 2, 6, 10, 38, '2026-02-22 02:52:45'),
-(29, 2, 1, 9, 10, 106, '2026-02-23 02:52:45'),
-(30, 2, 3, 10, 10, 91, '2026-02-24 02:52:45'),
-(31, 2, 1, 9, 10, 55, '2026-02-24 02:52:45'),
-(32, 2, 1, 10, 10, 77, '2026-02-25 02:52:45'),
-(33, 2, 1, 7, 10, 95, '2026-02-25 02:52:45'),
-(34, 2, 1, 7, 10, 42, '2026-02-26 02:52:45'),
-(35, 2, 2, 10, 10, 107, '2026-02-26 02:52:45'),
-(36, 2, 3, 8, 10, 72, '2026-02-26 02:52:45'),
-(37, 3, 2, 4, 10, 91, '2026-02-20 02:52:45'),
-(38, 3, 3, 10, 10, 37, '2026-02-21 02:52:45'),
-(39, 3, 1, 9, 10, 79, '2026-02-21 02:52:45'),
-(40, 3, 1, 7, 10, 111, '2026-02-21 02:52:45'),
-(41, 3, 3, 9, 10, 98, '2026-02-22 02:52:45'),
-(42, 3, 3, 8, 10, 118, '2026-02-22 02:52:45'),
-(43, 3, 3, 9, 10, 84, '2026-02-23 02:52:45'),
-(44, 3, 1, 8, 10, 44, '2026-02-24 02:52:45'),
-(45, 3, 1, 10, 10, 32, '2026-02-24 02:52:45'),
-(46, 3, 2, 6, 10, 96, '2026-02-24 02:52:45'),
-(47, 3, 2, 9, 10, 34, '2026-02-25 02:52:45'),
-(48, 3, 2, 10, 10, 38, '2026-02-25 02:52:45'),
-(49, 3, 3, 9, 10, 109, '2026-02-26 02:52:45'),
-(50, 4, 1, 6, 10, 118, '2026-02-20 02:52:45'),
-(51, 4, 2, 9, 10, 108, '2026-02-20 02:52:45'),
-(52, 4, 3, 9, 10, 65, '2026-02-21 02:52:45'),
-(53, 4, 3, 10, 10, 77, '2026-02-21 02:52:45'),
-(54, 4, 2, 10, 10, 30, '2026-02-22 02:52:45'),
-(55, 4, 3, 6, 10, 105, '2026-02-23 02:52:45'),
-(56, 4, 1, 7, 10, 103, '2026-02-24 02:52:45'),
-(57, 4, 1, 9, 10, 57, '2026-02-25 02:52:45'),
-(58, 4, 3, 10, 10, 111, '2026-02-25 02:52:45'),
-(59, 4, 2, 7, 10, 61, '2026-02-25 02:52:45'),
-(60, 4, 1, 10, 10, 108, '2026-02-26 02:52:45'),
-(61, 5, 3, 10, 10, 47, '2026-02-20 02:52:45'),
-(62, 5, 3, 10, 10, 59, '2026-02-21 02:52:45'),
-(63, 5, 3, 10, 10, 62, '2026-02-21 02:52:45'),
-(64, 5, 3, 10, 10, 91, '2026-02-21 02:52:45'),
-(65, 5, 2, 6, 10, 114, '2026-02-22 02:52:45'),
-(66, 5, 2, 8, 10, 71, '2026-02-23 02:52:45'),
-(67, 5, 1, 8, 10, 78, '2026-02-23 02:52:45'),
-(68, 5, 3, 7, 10, 48, '2026-02-24 02:52:45'),
-(69, 5, 1, 8, 10, 81, '2026-02-24 02:52:45'),
-(70, 5, 2, 10, 10, 103, '2026-02-25 02:52:45'),
-(71, 5, 2, 8, 10, 104, '2026-02-25 02:52:45'),
-(72, 5, 1, 10, 10, 85, '2026-02-26 02:52:45'),
-(73, 3, 1, 10, 10, 40, '2026-02-25 21:55:54'),
-(74, 6, 1, 10, 10, 32, '2026-02-27 20:25:22'),
-(75, 6, 2, 9, 10, 28, '2026-03-11 21:43:58');
+(77, 9, 1, 9, 10, 54, '2026-03-15 00:20:23'),
+(78, 9, 1, 10, 10, 48, '2026-03-17 00:20:23'),
+(79, 9, 1, 8, 10, 33, '2026-03-17 00:20:23'),
+(80, 9, 1, 10, 10, 35, '2026-03-16 00:20:23'),
+(81, 9, 1, 8, 10, 24, '2026-03-10 00:20:23'),
+(82, 9, 2, 9, 10, 51, '2026-03-17 00:20:23'),
+(83, 9, 2, 6, 10, 56, '2026-03-14 00:20:23'),
+(84, 9, 2, 7, 10, 48, '2026-03-11 00:20:23'),
+(85, 9, 2, 7, 10, 43, '2026-03-10 00:20:23'),
+(86, 9, 2, 7, 10, 39, '2026-03-11 00:20:23'),
+(87, 9, 3, 5, 10, 44, '2026-03-17 00:20:23'),
+(88, 9, 3, 5, 10, 23, '2026-03-14 00:20:23'),
+(89, 9, 3, 5, 10, 30, '2026-03-12 00:20:23'),
+(90, 9, 4, 3, 10, 37, '2026-03-17 00:20:23'),
+(91, 9, 4, 4, 10, 41, '2026-03-17 00:20:23'),
+(92, 9, 4, 4, 10, 45, '2026-03-10 00:20:23'),
+(93, 9, 4, 2, 10, 21, '2026-03-14 00:20:23'),
+(94, 9, 5, 5, 10, 40, '2026-03-16 00:20:23'),
+(95, 9, 5, 7, 10, 49, '2026-03-13 00:20:23'),
+(96, 9, 5, 4, 10, 19, '2026-03-17 00:20:23'),
+(97, 9, 5, 5, 10, 15, '2026-03-11 00:20:23'),
+(98, 9, 5, 7, 10, 37, '2026-03-17 00:20:23'),
+(99, 9, 6, 1, 10, 15, '2026-03-13 00:20:23'),
+(100, 9, 6, 3, 10, 46, '2026-03-17 00:20:23'),
+(101, 9, 6, 2, 10, 26, '2026-03-10 00:20:23'),
+(102, 9, 6, 4, 10, 16, '2026-03-13 00:20:23'),
+(103, 9, 7, 4, 10, 37, '2026-03-17 00:20:23'),
+(104, 9, 7, 4, 10, 44, '2026-03-16 00:20:23'),
+(105, 9, 7, 6, 10, 35, '2026-03-11 00:20:23'),
+(106, 9, 7, 4, 10, 58, '2026-03-13 00:20:23'),
+(107, 9, 8, 0, 10, 221, '2026-03-16 20:18:20'),
+(108, 9, 5, 9, 10, 46, '2026-03-16 20:40:23'),
+(109, 9, 8, 0, 10, 164, '2026-03-16 21:01:34'),
+(110, 9, 8, 9, 10, 113, '2026-03-16 21:13:42'),
+(111, 9, 5, 8, 10, 33, '2026-03-16 21:14:42'),
+(112, 9, 4, 7, 10, 94, '2026-03-16 21:16:22'),
+(113, 9, 10, 16, 20, 219, '2026-03-16 21:20:08'),
+(114, 3, 1, 9, 10, 37, '2026-03-16 22:01:50'),
+(115, 3, 1, 10, 10, 35, '2026-03-16 22:02:31'),
+(116, 3, 2, 9, 10, 63, '2026-03-16 22:07:29'),
+(117, 3, 3, 10, 10, 32, '2026-03-16 22:08:35');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `global_settings`
+--
+
+CREATE TABLE `global_settings` (
+  `setting_key` varchar(50) NOT NULL,
+  `setting_value` varchar(255) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `global_settings`
+--
+
+INSERT INTO `global_settings` (`setting_key`, `setting_value`, `updated_at`) VALUES
+('base_reward_price', '200', '2026-03-16 19:04:58'),
+('game_timer_sec', '20', '2026-03-16 19:04:58');
 
 -- --------------------------------------------------------
 
@@ -317,24 +396,29 @@ CREATE TABLE `levels` (
   `min_val` int(11) NOT NULL,
   `max_val` int(11) NOT NULL,
   `target_score` int(11) DEFAULT 7,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `total_questions` int(11) DEFAULT 10,
+  `story_intro` text DEFAULT NULL,
+  `boss_name` varchar(50) DEFAULT NULL,
+  `boss_icon` varchar(50) DEFAULT NULL,
+  `theme_id` varchar(30) DEFAULT 'forest'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `levels`
 --
 
-INSERT INTO `levels` (`id`, `grade`, `operation`, `min_val`, `max_val`, `target_score`, `created_at`) VALUES
-(1, 1, 'suma', 1, 10, 7, '2026-01-10 17:52:38'),
-(2, 1, 'resta', 1, 10, 7, '2026-01-10 17:52:38'),
-(3, 2, 'suma', 5, 20, 7, '2026-01-10 17:52:38'),
-(4, 2, 'resta', 5, 20, 7, '2026-01-10 17:52:38'),
-(5, 3, 'multiplicacion', 1, 5, 7, '2026-01-10 17:52:38'),
-(6, 3, 'multiplicacion', 1, 10, 7, '2026-01-10 17:52:38'),
-(7, 4, 'multiplicacion', 5, 12, 7, '2026-03-11 21:14:19'),
-(8, 4, 'division', 2, 10, 7, '2026-03-11 21:14:19'),
-(9, 5, 'division', 5, 20, 7, '2026-03-11 21:14:19'),
-(10, 6, 'aleatorio', 10, 50, 7, '2026-03-11 21:14:19');
+INSERT INTO `levels` (`id`, `grade`, `operation`, `min_val`, `max_val`, `target_score`, `created_at`, `total_questions`, `story_intro`, `boss_name`, `boss_icon`, `theme_id`) VALUES
+(1, 2, 'suma', 1, 10, 7, '2026-03-16 17:40:59', 10, '¡Bienvenido al Bosque de las Sumas! El Duende Sumón ha escondido tus dulces. Resuelve estas sumas para recuperarlos.', 'Duende Sumón', 'boss_duende.png', 'forest'),
+(2, 2, 'suma', 10, 50, 7, '2026-03-16 17:40:59', 10, 'El Gran Dragón de los Números está bloqueando el puente. ¡Necesitamos sumas poderosas para pasar!', 'Dragón Numérico', 'boss_dragon.png', 'lava'),
+(3, 2, 'resta', 1, 10, 7, '2026-03-16 17:40:59', 10, '¡Oh no! El Mago Restador está desapareciendo las manzanas de la aldea. ¡Ayúdanos!', 'Mago Restador', 'boss_mago.png', 'magic'),
+(4, 3, 'resta', 10, 50, 7, '2026-03-16 17:40:59', 10, NULL, NULL, NULL, 'forest'),
+(5, 3, 'multiplicacion', 1, 5, 7, '2026-03-16 17:40:59', 10, 'La Reina Multiplicadora ha triplicado los problemas en el Reino de los Caramelos.', 'Reina Multiplicadora', 'boss_reina.png', 'candy'),
+(6, 4, 'multiplicacion', 6, 10, 7, '2026-03-16 17:40:59', 10, NULL, NULL, NULL, 'forest'),
+(7, 4, 'fraccion_basica', 2, 6, 7, '2026-03-16 17:40:59', 10, '¡Alerta de Pizza! El Chef Caos está cortando las pizzas de forma extraña. ¡Asegura las fracciones!', 'Chef Caos', 'boss_chef.png', 'pizzeria'),
+(8, 5, 'fraccion_equiv', 2, 8, 7, '2026-03-16 17:40:59', 10, NULL, NULL, NULL, 'forest'),
+(9, 5, 'aleatorio', 1, 50, 7, '2026-03-16 17:40:59', 10, NULL, NULL, NULL, 'forest'),
+(10, 6, 'aleatorio', 1, 100, 14, '2026-03-16 17:40:59', 20, 'Has llegado al coraz¾n del Castillo Matemßtico. El Gran Drag¾n custodia el tesoro final. Solo el mßs sabio podrß derrotarlo.', 'Gran Drag¾n', 'boss_dragon.png', 'royal');
 
 -- --------------------------------------------------------
 
@@ -358,26 +442,26 @@ CREATE TABLE `rewards` (
 --
 
 INSERT INTO `rewards` (`id`, `name`, `cost`, `icon`, `category`, `target_avatar_id`, `theme_class`, `bgm_file`) VALUES
-(1, 'Pokémon: Horizontes', 50, 'icon_pokemon.png', 'avatar', 1, 'theme-pokemon', 'bgm_pokemon.mp3'),
-(2, 'Ben 10', 100, 'icon_ben10.png', 'avatar', 1, 'theme-ben10', 'bgm_ben10.mp3'),
-(3, 'LEGO Ninjago', 150, 'icon_ninjago.png', 'avatar', 1, 'theme-ninjago', 'bgm_ninjago.mp3'),
-(4, 'Los Jóvenes Titanes', 200, 'icon_teentitans.png', 'avatar', 1, 'theme-teentitans', 'bgm_teentitans.mp3'),
-(5, 'Sonic Prime', 250, 'icon_sonic.png', 'avatar', 1, 'theme-sonic', 'bgm_sonic.mp3'),
-(6, 'Avatar: La leyenda de Aang', 300, 'icon_avatar.png', 'avatar', 1, 'theme-avatar', 'bgm_avatar.mp3'),
-(7, 'Paw Patrol', 350, 'icon_pawpatrol.png', 'avatar', 1, 'theme-pawpatrol', 'bgm_pawpatrol.mp3'),
-(8, 'Jurassic World', 400, 'icon_jurassic.png', 'avatar', 1, 'theme-jurassic', 'bgm_jurassic.mp3'),
-(9, 'Bob Esponja', 450, 'icon_spongebob.png', 'avatar', 1, 'theme-spongebob', 'bgm_spongebob.mp3'),
-(10, 'Dragon Ball', 500, 'icon_dragonball.png', 'avatar', 1, 'theme-dragonball', 'bgm_dragonball.mp3'),
-(11, 'Miraculous Ladybug', 50, 'icon_ladybug.png', 'avatar', 2, 'theme-ladybug', 'bgm_ladybug.mp3'),
-(12, 'Gabby\'s Dollhouse', 100, 'icon_gabby.png', 'avatar', 2, 'theme-gabby', 'bgm_gabby.mp3'),
-(13, 'Bluey', 150, 'icon_bluey.png', 'avatar', 2, 'theme-bluey', 'bgm_bluey.mp3'),
-(14, 'My Little Pony', 200, 'icon_mlp.png', 'avatar', 2, 'theme-mlp', 'bgm_mlp.mp3'),
-(15, 'Barbie', 250, 'icon_barbie.png', 'avatar', 2, 'theme-barbie', 'bgm_barbie.mp3'),
-(16, 'El Club Winx', 300, 'icon_winx.png', 'avatar', 2, 'theme-winx', 'bgm_winx.mp3'),
-(17, 'Peppa Pig', 350, 'icon_peppa.png', 'avatar', 2, 'theme-peppa', 'bgm_peppa.mp3'),
-(18, 'Princesas de Disney', 400, 'icon_disneyprincess.png', 'avatar', 2, 'theme-disneyprincess', 'bgm_disneyprincess.mp3'),
-(19, 'Princesita Sofía', 450, 'icon_sofia.png', 'avatar', 2, 'theme-sofia', 'bgm_sofia.mp3'),
-(20, 'Masha y el Oso', 500, 'icon_masha.png', 'avatar', 2, 'theme-masha', 'bgm_masha.mp3');
+(1, 'Pokémon: Horizontes', 17, 'icon_pokemon.png', 'avatar', 1, 'theme-pokemon', 'bgm_pokemon.mp3'),
+(2, 'Ben 10', 33, 'icon_ben10.png', 'avatar', 1, 'theme-ben10', 'bgm_ben10.mp3'),
+(3, 'LEGO Ninjago', 50, 'icon_ninjago.png', 'avatar', 1, 'theme-ninjago', 'bgm_ninjago.mp3'),
+(4, 'Los Jóvenes Titanes', 67, 'icon_teentitans.png', 'avatar', 1, 'theme-teentitans', 'bgm_teentitans.mp3'),
+(5, 'Sonic Prime', 83, 'icon_sonic.png', 'avatar', 1, 'theme-sonic', 'bgm_sonic.mp3'),
+(6, 'Avatar: La leyenda de Aang', 100, 'icon_avatar.png', 'avatar', 1, 'theme-avatar', 'bgm_avatar.mp3'),
+(7, 'Paw Patrol', 117, 'icon_pawpatrol.png', 'avatar', 1, 'theme-pawpatrol', 'bgm_pawpatrol.mp3'),
+(8, 'Jurassic World', 133, 'icon_jurassic.png', 'avatar', 1, 'theme-jurassic', 'bgm_jurassic.mp3'),
+(9, 'Bob Esponja', 150, 'icon_spongebob.png', 'avatar', 1, 'theme-spongebob', 'bgm_spongebob.mp3'),
+(10, 'Dragon Ball', 167, 'icon_dragonball.png', 'avatar', 1, 'theme-dragonball', 'bgm_dragonball.mp3'),
+(11, 'Miraculous Ladybug', 17, 'icon_ladybug.png', 'avatar', 2, 'theme-ladybug', 'bgm_ladybug.mp3'),
+(12, 'Gabby\'s Dollhouse', 33, 'icon_gabby.png', 'avatar', 2, 'theme-gabby', 'bgm_gabby.mp3'),
+(13, 'Bluey', 50, 'icon_bluey.png', 'avatar', 2, 'theme-bluey', 'bgm_bluey.mp3'),
+(14, 'My Little Pony', 67, 'icon_mlp.png', 'avatar', 2, 'theme-mlp', 'bgm_mlp.mp3'),
+(15, 'Barbie', 83, 'icon_barbie.png', 'avatar', 2, 'theme-barbie', 'bgm_barbie.mp3'),
+(16, 'El Club Winx', 100, 'icon_winx.png', 'avatar', 2, 'theme-winx', 'bgm_winx.mp3'),
+(17, 'Peppa Pig', 117, 'icon_peppa.png', 'avatar', 2, 'theme-peppa', 'bgm_peppa.mp3'),
+(18, 'Princesas de Disney', 133, 'icon_disneyprincess.png', 'avatar', 2, 'theme-disneyprincess', 'bgm_disneyprincess.mp3'),
+(19, 'Princesita Sofía', 150, 'icon_sofia.png', 'avatar', 2, 'theme-sofia', 'bgm_sofia.mp3'),
+(20, 'Masha y el Oso', 167, 'icon_masha.png', 'avatar', 2, 'theme-masha', 'bgm_masha.mp3');
 
 -- --------------------------------------------------------
 
@@ -398,10 +482,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password_hash`, `role`, `created_at`) VALUES
-(1, 'admin@mathquest.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', '2026-01-10 17:52:38'),
+(1, 'admin@mathquest.com', '$2y$10$fOFbOVquP7fIizuwQksm8O0bKc46wKVX9zY047Up9Ito.loEEoyX.', 'admin', '2026-01-10 17:52:38'),
 (2, 'papa@ejemplo.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'parent', '2026-01-10 17:52:38'),
 (3, 'salvatoreberticci19@gmail.com', '$2y$10$r8ePNamCIV58b8M0JO4dwOyb3WtmxJcFTz3D5n/tofEg/bKtgZp5O', 'parent', '2026-01-10 18:00:36'),
-(4, 'maria@gmail.com', '$2y$10$dVuHuiAIdcWGeOtiGL/U1u.eRTFyGMqCRegh5ZWH8AOd1fF0SdKee', 'parent', '2026-02-24 23:42:31');
+(4, 'maria@gmail.com', '$2y$10$dVuHuiAIdcWGeOtiGL/U1u.eRTFyGMqCRegh5ZWH8AOd1fF0SdKee', 'parent', '2026-02-24 23:42:31'),
+(5, 'test@mathquest.demo', '$2y$10$DXIhom37U1tU..E6CQCdu.P9enVspCetuEXb8x4rvxK/aZlZruQH.', 'parent', '2026-03-16 17:29:52'),
+(6, 'admin@candyquest.demo', '$2y$10$qp5HbcEH5Eg3c.M4xblKgepi9Z/eyMvJVNhSTJVM9xIx0JmJz91iS', 'admin', '2026-03-16 18:51:15'),
+(8, 'tester@candyquest.demo', '$2y$10$L9jGOpZnCupFB.jp45oXLO1Pi9FuhdfuzZQfY9tWFpUOEh6QAKKSm', 'parent', '2026-03-16 19:12:20');
 
 --
 -- Índices para tablas volcadas
@@ -438,6 +525,12 @@ ALTER TABLE `game_sessions`
   ADD KEY `level_id` (`level_id`);
 
 --
+-- Indices de la tabla `global_settings`
+--
+ALTER TABLE `global_settings`
+  ADD PRIMARY KEY (`setting_key`);
+
+--
 -- Indices de la tabla `levels`
 --
 ALTER TABLE `levels`
@@ -464,25 +557,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
 -- AUTO_INCREMENT de la tabla `children`
 --
 ALTER TABLE `children`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `child_inventory`
 --
 ALTER TABLE `child_inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `game_sessions`
 --
 ALTER TABLE `game_sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT de la tabla `levels`
@@ -500,7 +593,7 @@ ALTER TABLE `rewards`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
