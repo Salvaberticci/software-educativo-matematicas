@@ -2399,6 +2399,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let pvpState = {
         p1Hp: 5,
         p2Hp: 5,
+        p1Hits: 0,
+        p2Hits: 0,
+        p1Misses: 0,
+        p2Misses: 0,
         correctBtn: -1,
         active: false,
         p1Locked: false,
@@ -2406,7 +2410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.initPvpMode = function() {
-        pvpState = { p1Hp: 5, p2Hp: 5, correctBtn: -1, active: true, p1Locked: false, p2Locked: false };
+        pvpState = { p1Hp: 5, p2Hp: 5, p1Hits: 0, p2Hits: 0, p1Misses: 0, p2Misses: 0, correctBtn: -1, active: true, p1Locked: false, p2Locked: false };
         
         // Reset UI filters
         document.getElementById('pvpArea1').style.filter = 'none';
@@ -2554,11 +2558,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const isCorrect = (btnIndex === pvpState.correctBtn);
 
         if (isCorrect) {
+            if (playerNum === 1) pvpState.p1Hits++;
+            else pvpState.p2Hits++;
             playSound('correct');
             // Deal damage to the OTHER player
             const targetPlayer = playerNum === 1 ? 2 : 1;
             dealPvpDamage(targetPlayer);
         } else {
+            if (playerNum === 1) pvpState.p1Misses++;
+            else pvpState.p2Misses++;
             playSound('pvp_locked');
             // Punish THIS player by locking them
             lockPvpPlayer(playerNum);
@@ -2615,8 +2623,21 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const winnerColor = winnerId === 1 ? 'text-blue-400' : 'text-red-500';
         document.getElementById('pvpEquation').innerHTML = `
-            <div class="text-3xl md:text-5xl ${winnerColor} drop-shadow-lg mb-4 leading-tight">¡GANA JUGADOR ${winnerId}! 🎉</div>
-            <button onclick="initPvpMode()" class="candy-btn candy-btn-primary px-8 py-3 text-2xl mt-4">Revancha ⚔️</button>
+            <div class="text-3xl md:text-5xl ${winnerColor} drop-shadow-lg mb-2 leading-tight">¡GANA JUGADOR ${winnerId}! 🎉</div>
+            <div class="flex justify-center gap-6 text-sm md:text-base text-slate-300 bg-slate-800/90 p-3 rounded-xl border border-slate-700 w-max mx-auto mb-4 px-6 shadow-xl">
+                <div class="text-center">
+                    <div class="text-blue-400 font-bold mb-1 border-b border-blue-900/50 pb-1">JUGADOR 1</div>
+                    <div class="flex items-center justify-between gap-4"><span>Aciertos:</span> <span class="text-green-400 font-black">${pvpState.p1Hits}</span></div>
+                    <div class="flex items-center justify-between gap-4"><span>Fallos:</span> <span class="text-red-400 font-black">${pvpState.p1Misses}</span></div>
+                </div>
+                <div class="w-px bg-slate-600 rounded-full"></div>
+                <div class="text-center">
+                    <div class="text-red-400 font-bold mb-1 border-b border-red-900/50 pb-1">JUGADOR 2</div>
+                    <div class="flex items-center justify-between gap-4"><span>Aciertos:</span> <span class="text-green-400 font-black">${pvpState.p2Hits}</span></div>
+                    <div class="flex items-center justify-between gap-4"><span>Fallos:</span> <span class="text-red-400 font-black">${pvpState.p2Misses}</span></div>
+                </div>
+            </div>
+            <button onclick="initPvpMode()" class="candy-btn candy-btn-primary px-8 py-3 text-2xl">Revancha ⚔️</button>
         `;
         
         // Disable all buttons
