@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
 
                 <!-- Bottom Nav -->
-                <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-sm bottom-nav p-2 flex justify-around">
+                <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-lg bottom-nav p-2 flex justify-around">
                     <button class="nav-btn">🗺️<span>Mapa</span></button>
                     <button onclick="render('pvpArena')" class="nav-btn text-red-500 hover:scale-110 transition-transform">⚔️<span class="font-bold text-red-500">Duelo</span></button>
                     <button onclick="render('rewards')" class="nav-btn">🎁<span>Premios</span></button>
