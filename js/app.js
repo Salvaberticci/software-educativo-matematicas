@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
         correct: new Audio('assets/sounds/correct.mp3'),
         wrong: new Audio('assets/sounds/wrong.mp3'),
         win: new Audio('assets/sounds/win.mp3'),
+        pvp_damage: new Audio('assets/sounds/pvp_damage.mp3'),
+        pvp_locked: new Audio('assets/sounds/pvp_locked.mp3'),
+        pvp_win: new Audio('assets/sounds/pvp_win.mp3'),
     };
 
     // Configure loops / volume
@@ -45,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (name !== 'bgm') sounds[name].currentTime = 0;
 
             // Ducking: Pause BGM during 'win' sound
-            if (name === 'win') {
+            if (name === 'win' || name === 'pvp_win') {
                 sounds.bgm.pause();
-                sounds.win.onended = () => {
+                sounds[name].onended = () => {
                     if (soundEnabled) sounds.bgm.play().catch(() => { });
                 };
             }
@@ -2556,13 +2559,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetPlayer = playerNum === 1 ? 2 : 1;
             dealPvpDamage(targetPlayer);
         } else {
-            playSound('wrong');
+            playSound('pvp_locked');
             // Punish THIS player by locking them
             lockPvpPlayer(playerNum);
         }
     };
 
     function dealPvpDamage(targetPlayer) {
+        playSound('pvp_damage');
         if (targetPlayer === 1) pvpState.p1Hp--;
         else pvpState.p2Hp--;
         
@@ -2603,7 +2607,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function endPvpMatch(winnerId) {
         pvpState.active = false;
-        playSound('win');
+        playSound('pvp_win');
         
         if(window.confetti) {
              confetti({ particleCount: 200, spread: 360, origin: {y: 0.4} });
