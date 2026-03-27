@@ -460,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <!-- Equation Center -->
                 <div class="absolute left-1/2 top-[40%] md:top-[20%] -translate-x-1/2 -translate-y-1/2 z-20 text-center w-full max-w-sm pointer-events-none">
-                    <div class="candy-card p-4 md:p-6 bg-slate-900 border-4 border-slate-700 mx-auto w-max shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+                    <div class="candy-card p-4 md:p-6 bg-slate-900 border-4 border-slate-700 mx-auto w-max shadow-[0_0_50px_rgba(0,0,0,0.8)] pointer-events-auto">
                         <span class="text-xs uppercase font-bold text-slate-400 block mb-2">Resuelve Rápido!</span>
                         <div id="pvpEquation" class="text-5xl md:text-7xl font-black text-white" style="text-shadow: 0 0 10px rgba(255,255,255,0.5)">
                             ⏳
